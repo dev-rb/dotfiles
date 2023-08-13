@@ -11,10 +11,20 @@ if wezterm.config_builder then
 end
 
 -- This is where you actually apply your config choices
-
+config.scrollback_lines = 3500
 -- For example, changing the color scheme:
 config.color_scheme = "Argonaut (Gogh)"
-
+-- config.default_gui_startup_args = { 'connect', 'unix' }
+-- config.default_prog = { 'wsl' }
+-- config.unix_domains = {
+--     {
+--       name = "wsl",
+--       connect_automatically = true,
+--       serve_command = {"wsl", "wezterm-mux-server", "--daemonize"},
+--     }
+--   }
+-- config.enable_wayland = false
+wezterm.log_error("System " .. wezterm.target_triple .. " " .. tostring(wezterm.running_under_wsl()))
 config.window_padding = {
 	top = 0,
 	left = 0,
@@ -96,7 +106,49 @@ wezterm.on("update-right-status", function(window, pane)
 	}))
 end)
 
+-- if you are *NOT* lazy-loading smart-splits.nvim (recommended)
+local function is_vim(pane)
+	-- this is set by the plugin, and unset on ExitPre in Neovim
+	return pane:get_user_vars().IS_NVIM == "true"
+end
+
+local direction_keys = {
+	Left = "h",
+	Down = "j",
+	Up = "k",
+	Right = "l",
+	-- reverse lookup
+	h = "Left",
+	j = "Down",
+	k = "Up",
+	l = "Right",
+}
+
+local function split_nav(resize_or_move, key)
+	return {
+		key = key,
+		mods = resize_or_move == "resize" and "META" or "CTRL",
+		action = wezterm.action_callback(function(win, pane)
+			if is_vim(pane) then
+				-- pass the keys through to vim/nvim
+				win:perform_action({
+					SendKey = { key = key, mods = resize_or_move == "resize" and "META" or "CTRL" },
+				}, pane)
+			else
+				if resize_or_move == "resize" then
+					win:perform_action({ AdjustPaneSize = { direction_keys[key], 3 } }, pane)
+				else
+					win:perform_action({ ActivatePaneDirection = direction_keys[key] }, pane)
+				end
+			end
+		end),
+	}
+end
 config.keys = {
+	split_nav("move", "h"),
+	split_nav("move", "j"),
+	split_nav("move", "k"),
+	split_nav("move", "l"),
 	{
 		key = "v",
 		mods = "CTRL|SHIFT|ALT",
@@ -113,6 +165,4 @@ config.keys = {
 		action = wezterm.action.CloseCurrentPane({ confirm = true }),
 	},
 }
-
--- and finally, return the configuration to wezterm
 return config
