@@ -57,20 +57,20 @@ config.tab_bar_style = {
 config.font_size = 10
 config.colors = {
 	tab_bar = {
-		background = "#333333",
+		background = "#000",
 
 		active_tab = {
 			fg_color = "#ffffff",
-			bg_color = "#444444",
+			bg_color = "#111111",
 		},
 
 		new_tab = {
-			bg_color = "#333333",
+			bg_color = "#000",
 			fg_color = "#ffffff",
 		},
 
 		new_tab_hover = {
-			bg_color = "#555555",
+			bg_color = "#151515",
 			fg_color = "#ffffff",
 		},
 	},
@@ -91,7 +91,7 @@ wezterm.on("update-right-status", function(window, pane)
 
 	-- figure out a way to center it
 	window:set_right_status(wezterm.format({
-		{ Background = { Color = "#333333" } },
+		{ Background = { Color = "#000" } },
 		{ Text = date },
 	}))
 end)
