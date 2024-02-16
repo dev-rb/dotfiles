@@ -114,7 +114,7 @@ local function tab_title(tab_info)
 		return string.match(title, "(%w+)/?$")
 	end
 
-	return tab_info.active_pane.current_working_dir:gsub("%.exe", ""):match("(%w+)/?$")
+	return tab_info.active_pane.current_working_dir.file_path:match("(%w+)/?$")
 end
 
 wezterm.on("format-tab-title", function(tab, _, _, _, hover, max_width)
