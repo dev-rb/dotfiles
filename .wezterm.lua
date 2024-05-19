@@ -25,7 +25,7 @@ config.color_scheme = "Argonaut (Gogh)"
 -- Monaspace Neon
 -- JetBrainsMono Nerd Font Mono
 config.font = wezterm.font("JetBrainsMono Nerd Font Mono")
-config.font_size = 10
+config.font_size = 16
 config.line_height = 1.1
 -- config.default_gui_startup_args = { 'connect', 'unix' }
 -- config.default_prog = { 'wsl' }
@@ -37,7 +37,7 @@ config.line_height = 1.1
 --     }
 --   }
 -- config.enable_wayland = false
-wezterm.log_error("System " .. wezterm.target_triple .. " " .. tostring(wezterm.running_under_wsl()))
+-- wezterm.log_error("System " .. wezterm.target_triple .. " " .. tostring(wezterm.running_under_wsl()))
 config.window_padding = {
 	top = 0,
 	left = 0,
@@ -46,25 +46,49 @@ config.window_padding = {
 }
 
 config.default_domain = "WSL:Ubuntu"
-config.window_background_image = "D:/Desktop/Pictures/Wallpapers/wallhaven-vq3xd3.jpg"
-config.window_background_image_hsb = {
-	-- Darken the background image by reducing it to 1/3rd
-	brightness = 0.1,
-
-	-- You can adjust the hue by scaling its value.
-	-- a multiplier of 1.0 leaves the value unchanged.
-	hue = 1.0,
-
-	-- You can adjust the saturation also.
-	saturation = 1.0,
+config.default_cwd = "~"
+config.default_prog = { "wsl.exe" }
+config.unix_domains = {
+	{
+		name = "wsl-mux",
+		serve_command = { "wsl", "wezterm-mux-server", "--daemonize" },
+	},
 }
+
+config.background = {
+	{
+		source = {
+			File = "D:/Desktop/Pictures/Wallpapers/wallhaven-exqwvk.jpg",
+		},
+		width = "Cover",
+		height = "Cover",
+		repeat_x = "NoRepeat",
+		repeat_y = "NoRepeat",
+		vertical_align = "Middle",
+		horizontal_align = "Center",
+		hsb = {
+
+			-- Darken the background image by reducing it to 1/3rd
+			brightness = 0.05,
+
+			-- You can adjust the hue by scaling its value.
+			-- a multiplier of 1.0 leaves the value unchanged.
+			hue = 1.0,
+
+			-- You can adjust the saturation also.
+			saturation = 1.5,
+		},
+	},
+}
+
+config.window_background_image_hsb = {}
 config.window_background_opacity = 1
 config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 config.adjust_window_size_when_changing_font_size = false
 -- config.win32_system_backdrop = "Acrylic"
-config.front_end = "WebGpu"
+config.front_end = "OpenGL"
 config.use_fancy_tab_bar = false
--- config.tab_bar_at_bottom = true
+config.enable_tab_bar = true
 local window_min = space(icons.fae_minimize, 2, 2)
 local window_max = space(icons.fae_maximize, 2, 2)
 local window_close = space(icons.fae_thin_close, 2, 2)
@@ -92,7 +116,7 @@ config.colors = {
 		},
 
 		new_tab = {
-			bg_color = "#000",
+			bg_color = "none",
 			fg_color = "#ffffff",
 		},
 
@@ -107,6 +131,7 @@ config.window_frame = {
 	active_titlebar_bg = "transparent",
 	inactive_titlebar_bg = "transparent",
 }
+
 local function tab_title(tab_info)
 	local title = tab_info.tab_title
 
@@ -222,11 +247,38 @@ local function split_nav(resize_or_move, key)
 		end),
 	}
 end
+-- config.enable_csi_u_key_encoding = true
 config.keys = {
-	split_nav("move", "h"),
-	split_nav("move", "j"),
-	split_nav("move", "k"),
-	split_nav("move", "l"),
+	-- {
+	-- 	key = "T",
+	-- 	mods = "CTRL|SHIFT",
+	-- 	action = wezterm.action_callback(function(win, pane)
+	-- 		win:perform_action({ SendKey = { key = "T", mods = "CTRL|SHIFT" } }, pane)
+	-- 	end),
+	-- },
+	{
+		key = "Q",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.QuitApplication,
+	},
+	-- {
+	-- 	key = "Tab",
+	-- 	mods = "CTRL",
+	-- 	action = wezterm.action_callback(function(win, pane)
+	-- 		win:perform_action({ SendKey = { key = "Tab", mods = "CTRL" } }, pane)
+	-- 	end),
+	-- },
+	-- {
+	-- 	key = "Tab",
+	-- 	mods = "CTRL|SHIFT",
+	-- 	action = wezterm.action_callback(function(win, pane)
+	-- 		win:perform_action({ SendKey = { key = "Tab", mods = "CTRL|SHIFT" } }, pane)
+	-- 	end),
+	-- },
+	-- split_nav("move", "h"),
+	-- split_nav("move", "j"),
+	-- split_nav("move", "k"),
+	-- split_nav("move", "l"),
 	{
 		key = "v",
 		mods = "CTRL|SHIFT|ALT",

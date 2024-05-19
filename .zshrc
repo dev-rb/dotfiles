@@ -105,6 +105,7 @@ eval "$(zoxide init zsh)"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+
 # pnpm
 export PNPM_HOME="/home/dev-rb/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
