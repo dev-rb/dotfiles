@@ -93,9 +93,11 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 
 ### alias
 
-alias ls="ls --color"
+alias ls="eza --icons=always"
+# alias ls="ls --color"
 alias wezterm='wezterm.exe'
 alias zshconfig="nvim ~/dotfiles/.zsh/.zshrc"
+alias cat="bat"
 
 # zoxide
 eval "$(zoxide init zsh)"
@@ -112,4 +114,6 @@ eval "$(fzf --zsh)"
 # fnm
 export PATH="/home/dev-rb/.local/share/fnm:$PATH"
 eval "`fnm env`"
+
+. "$HOME/.cargo/env"
 # zprof
