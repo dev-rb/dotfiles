@@ -117,3 +117,11 @@ eval "`fnm env`"
 
 . "$HOME/.cargo/env"
 # zprof
+
+# pnpm
+export PNPM_HOME="/home/dev-rb/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
