@@ -24,11 +24,13 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/ga
 export PATH=$PATH:/usr/bin
 export PATH=$PATH:/usr/bin/npm
 export PATH=$PATH:~/.local/bin
+export PATH=$PATH:/mnt/e/WezTerm/wezterm.exe
 # export PATH=$PATH:/opt/gradle/gradle-8.2.1/bin
 export JAVA_HOME=/usr/lib/jvm/jdk-20.0.2
 # export PATH=$PATH:$JAVA_HOME/bin
-
+export PATH="$PATH:/mnt/c/Windows/System32"
 export ZSH=$HOME/dotfiles/.zsh
+export PATH="$PATH:/nix/var/nix/profiles/default/bin"
 
 # pnpm
 # export PNPM_HOME="/home/dev-rb/.local/share/pnpm"
@@ -70,7 +72,9 @@ setopt hist_find_no_dups
 ### plugins
 
 # powerlevel10k
-zinit ice depth=1; zinit light romkatv/powerlevel10k
+zinit light romkatv/powerlevel10k
+
+zinit ice depth=1 wait lucid
 
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
@@ -90,6 +94,8 @@ zinit cdreplay -q
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':completion:*:*:git:*' script ~/dotfiles/.zsh/plugins/git-completion.bash
+fpath=(~/dotfiles/.zsh/plugins $fpath)
 
 ### alias
 
@@ -116,7 +122,6 @@ export PATH="/home/dev-rb/.local/share/fnm:$PATH"
 eval "`fnm env`"
 
 . "$HOME/.cargo/env"
-# zprof
 
 # pnpm
 export PNPM_HOME="/home/dev-rb/.local/share/pnpm"
@@ -124,4 +129,15 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
+
+source ~/wezterm.sh
+
+source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+# Nix
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+# End Nix
+
 # pnpm end
+# zprof
