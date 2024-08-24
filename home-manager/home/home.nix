@@ -30,13 +30,13 @@
     # '';
   };
 
-  users.users.dev-rb.shell = pkgs.zsh;
+  users.defaultUserShell = pkgs.zsh;
   
   imports = [
     ./packages.nix
     ./programs/general.nix
     ./programs/zsh.nix
-  ]
+  ];
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a

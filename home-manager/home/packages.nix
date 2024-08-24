@@ -8,7 +8,7 @@
     icons = true;
     git = true;
     extraOptions = [ "--group-directories-first" ];
-  }
+  };
 
   home.packages = with pkgs; [
     # cli
@@ -43,6 +43,6 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
 
-  ]
+  ];
 
 }

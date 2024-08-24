@@ -32,6 +32,8 @@ export PATH="$PATH:/mnt/c/Windows/System32"
 export ZSH=$HOME/dotfiles/.zsh
 export PATH="$PATH:/nix/var/nix/profiles/default/bin"
 
+export NIX_PATH=$NIX_PATH:$HOME/.nix-defexpr/channels
+
 # pnpm
 # export PNPM_HOME="/home/dev-rb/.local/share/pnpm"
 # export PATH="$PNPM_HOME:$PATH"

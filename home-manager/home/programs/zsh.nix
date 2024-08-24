@@ -12,12 +12,14 @@
         src = pkgs.fetchFromGitHub {
           owner = "Aloxaf";
           repo = "fzf-tab";
+          rev = "v1.1.2";
+          sha256 = "7fed01afba9392b6392408b9a0cf888522ed7a10";
         };
       }
     ];
     shellAliases = {
       ls = "eza --icons=always";
       cat = "bat";
-    }
-  }
+    };
+  };
 }
