@@ -30,12 +30,13 @@
     # '';
   };
 
-  users.defaultUserShell = pkgs.zsh;
+  # users.users.defaultUserShell = pkgs.zsh;
   
   imports = [
     ./packages.nix
     ./programs/general.nix
     ./programs/zsh.nix
+    ./programs/nixvim
   ];
 
   # Home Manager can also manage your environment variables through
