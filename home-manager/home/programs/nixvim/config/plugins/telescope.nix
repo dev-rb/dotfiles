@@ -99,6 +99,7 @@
         options = {
           desc = "[F]ind by [G]rep";
         };
+
       }
       {
         mode = "n";

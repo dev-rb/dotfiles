@@ -6,7 +6,7 @@
         light = "latte";
         dark = "macchiato";
       };
-      transparent_background = true;
+      transparent_background = false;
       show_end_of_buffer = false;
       no_italic = false;
       no_bold = false;

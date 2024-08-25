@@ -11,6 +11,14 @@
           "starter"
         ];
       };
+      componentSeparators = {
+        left = "";
+        right = "";
+      };
+      sectionSeparators = {
+        left = "";
+        right = "";
+      };
       #theme = {
       # normal = {
       #   a = {
@@ -31,11 +39,17 @@
       # };
       #};
       inactiveSections = {
+        lualine_a = [ ];
+        lualine_b = [ "diff" ];
+        lualine_c = [ ];
         lualine_x = [
           "filename"
           "filetype"
         ];
-        lualine_b = [ "diff" ];
+        lualine_y = [
+          "filetype"
+          "filename"
+        ];
         lualine_z = [ "location" ];
       };
       sections = {
@@ -43,16 +57,13 @@
           {
             name = "mode";
             fmt = "string.lower";
-            separator.left = "";
-            separator.right = "";
+            separator.left = "";
           }
         ];
         lualine_b = [
           {
             name = "branch";
             icon = "";
-            separator.left = "";
-            separator.right = "";
           }
         ];
         lualine_c = [
@@ -66,21 +77,38 @@
                 hint = "󰝶 ";
               };
             };
-            separator.left = "";
-            separator.right = "";
           }
         ];
         lualine_x = [ "" ];
         lualine_y = [
           {
+            name = "lsp";
+            padding = 0;
+            fmt = ''
+              function()
+                for _, client in ipairs(vim.lsp.get_clients()) do
+                  if client.attached_buffers[vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)] then
+                    return (vim.o.columns > 100 and "  ".. client.name .. " ") or "   LSP "
+                  end
+                end
+
+                return ""
+              end
+
+            '';
+
+          }
+          {
             name = "filetype";
+            padding = 0;
             extraConfig = {
               icon_only = true;
             };
-            separator.left = "";
+            separator.left = "|";
           }
           {
             name = "filename";
+            padding = 0;
             extraConfig = {
               symbols = {
                 modified = "";
@@ -92,7 +120,8 @@
             separator.right = "";
           }
         ];
-        lualine_z = [ ];
+
+        lualine_z = [ "" ];
       };
     };
   };
