@@ -5,7 +5,7 @@
   programs.nixvim = {
     enable = true;
     enableMan = true;
-    # colorscheme = lib.mkForce null;
+    colorscheme = "catppuccin";
 
     defaultEditor = true;
     viAlias = true;
@@ -16,10 +16,9 @@
       maplocalleader = " ";
     };
 
-
     extraPlugins = with pkgs.vimPlugins; [
       #cmp-tailwind-colors
-      #eldritch
+      #catppuccin
       #everforest-lua
       telescope-live-grep-args-nvim
       #markdown
