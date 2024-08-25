@@ -35,6 +35,8 @@
           "filename"
           "filetype"
         ];
+        lualine_b = [ "diff" ];
+        lualine_z = [ "location" ];
       };
       sections = {
         lualine_a = [
@@ -49,11 +51,6 @@
           {
             name = "branch";
             icon = "";
-            separator.left = "";
-            separator.right = "";
-          }
-          {
-            name = "diff";
             separator.left = "";
             separator.right = "";
           }
@@ -81,7 +78,6 @@
               icon_only = true;
             };
             separator.left = "";
-            separator.right = "";
           }
           {
             name = "filename";
@@ -96,13 +92,7 @@
             separator.right = "";
           }
         ];
-        lualine_z = [
-          {
-            name = "location";
-            separator.left = "";
-            separator.right = "";
-          }
-        ];
+        lualine_z = [ ];
       };
     };
   };
