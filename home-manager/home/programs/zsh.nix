@@ -30,6 +30,7 @@
       bindkey '^n' history-search-forward
 
       export PATH="/home/dev-rb/.local/share/fnm:$PATH"
+      export PATH=$PATH:/mnt/e/WezTerm/wezterm.exe
       eval "`fnm env`"
 
       export PNPM_HOME="/home/dev-rb/.local/share/pnpm"
@@ -37,6 +38,8 @@
         *":$PNPM_HOME:"*) ;;
         *) export PATH="$PNPM_HOME:$PATH" ;;
       esac
+
+      source ~/wezterm.sh
 
     '';
   };

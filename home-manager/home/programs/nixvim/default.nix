@@ -17,6 +17,7 @@
     };
 
     extraPlugins = with pkgs.vimPlugins; [
+      # smart-splits-nvim
       #cmp-tailwind-colors
       #catppuccin
       #everforest-lua

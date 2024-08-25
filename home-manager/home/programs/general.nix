@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  programs.zoxide.enable = true; 
+  programs.zoxide.enable = true;
 
-  programs.wezterm.enableZshIntegration = true; 
+  programs.wezterm.enableZshIntegration = true;
 }

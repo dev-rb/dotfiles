@@ -127,7 +127,7 @@
       {
         mode = "n";
         key = "<C-h>";
-        action = "<C-w>h";
+        action.__raw = "function() require('smart-splits').move_cursor_left() end";
         options = {
           desc = "Move focus to the left window";
         };
@@ -135,7 +135,7 @@
       {
         mode = "n";
         key = "<C-l>";
-        action = "<C-w>l";
+        action.__raw = "function() require('smart-splits').move_cursor_right() end";
         options = {
           desc = "Move focus to the right window";
         };
@@ -143,7 +143,7 @@
       {
         mode = "n";
         key = "<C-j>";
-        action = "<C-w>j";
+        action.__raw = "function() require('smart-splits').move_cursor_down() end";
         options = {
           desc = "Move focus to the lower window";
         };
@@ -151,7 +151,7 @@
       {
         mode = "n";
         key = "<C-k>";
-        action = "<C-w>k";
+        action.__raw = "function() require('smart-splits').move_cursor_up() end";
         options = {
           desc = "Move focus to the upper window";
         };
