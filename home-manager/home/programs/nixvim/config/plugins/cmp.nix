@@ -23,7 +23,7 @@
           { name = "path"; }
           { name = "buffer"; }
         ];
-        formatting.format.__raw = "require('cmp-tailwind-colors').format";
+				#formatting.format.__raw = "require('cmp-tailwind-colors').format";
       };
     };
   };
