@@ -11,6 +11,19 @@
             end
           '';
       }
+      {
+        desc = "Loaded persisted session";
+        event = [ "VimEnter" ];
+        callback.__raw = ''
+
+          function()
+            if vim.fn.getcwd() ~= vim.env.HOME then
+              require("persistence").load()
+            end
+          end
+        '';
+
+      }
     ];
   };
 }

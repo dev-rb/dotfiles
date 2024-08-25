@@ -26,9 +26,10 @@
     fnm
 
     # LSPs
-    # lua-language-server
-    # tailwindcss-language-server
-    # typescript-language-server
+    lua-language-server
+    tailwindcss-language-server
+    #unocss-language-server
+    typescript-language-server
 
     nixfmt-rfc-style
 

@@ -1,4 +1,5 @@
 {
+  # https://github.com/nix-community/nixvim/tree/8234ee85eaa2c8b7f2c74f5b4cdf02c4965b07fc/plugins/lsp
   programs.nixvim = {
     plugins.lsp = {
       enable = true;
@@ -119,6 +120,17 @@
       };
       preConfig = ''
         require('lspconfig').mdx_analyzer.setup({})
+        require('lspconfig').unocss.setup({
+          filetypes = { "html", "javascriptreact", "rescript", "typescriptreact", "vue", "svelte", "typescript.tsx" },
+          root_dir = function(fname)
+            return require("lspconfig.util").root_pattern(
+              "unocss.config.js",
+              "unocss.config.ts",
+              "uno.config.js",
+              "uno.config.ts"
+            )(fname)
+          end
+        })
         vim.fn.sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticSignError' })
         vim.fn.sign_define('DiagnosticSignWarn', { text = '', texthl = 'DiagnosticSignWarn' })
         vim.fn.sign_define('DiagnosticSignInfo', { text = '', texthl = 'DiagnosticSignInfo' })

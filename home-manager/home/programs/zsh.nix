@@ -29,6 +29,15 @@
       bindkey '^p' history-search-backward
       bindkey '^n' history-search-forward
 
+      export PATH="/home/dev-rb/.local/share/fnm:$PATH"
+      eval "`fnm env`"
+
+      export PNPM_HOME="/home/dev-rb/.local/share/pnpm"
+      case ":$PATH:" in
+        *":$PNPM_HOME:"*) ;;
+        *) export PATH="$PNPM_HOME:$PATH" ;;
+      esac
+
     '';
   };
 
