@@ -2,7 +2,9 @@
   imports = [
     ./autopairs.nix
     ./cmp.nix
+    ./comment.nix
     ./conform.nix
+    ./indent-blankline.nix
     ./lsp.nix
     ./lualine.nix
     ./oil.nix

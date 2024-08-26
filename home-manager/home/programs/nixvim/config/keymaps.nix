@@ -25,6 +25,27 @@
           desc = "Save file remap";
         };
       }
+      # [[ Comment.nvim ]]
+      {
+        mode = "n";
+        key = "<leader>/";
+        action.__raw = ''
+          function()
+            require("Comment.api").toggle.linewise.current()
+          end
+        '';
+        options = {
+          desc = "Toggle comment";
+        };
+      }
+      {
+        mode = "v";
+        key = "<leader>/";
+        action = "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>";
+        options = {
+          desc = "Toggle comment";
+        };
+      }
       # [[ movement ]]
       {
         mode = "n";
