@@ -17,6 +17,7 @@
     };
 
     extraPlugins = with pkgs.vimPlugins; [
+      nvim-surround
       # smart-splits-nvim
       #cmp-tailwind-colors
       #catppuccin
@@ -24,6 +25,10 @@
       telescope-live-grep-args-nvim
       #markdown
     ];
+
+    extraConfigLua = ''
+      require("nvim-surround").setup({})
+    '';
 
   };
 
