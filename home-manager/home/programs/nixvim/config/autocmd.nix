@@ -1,5 +1,8 @@
 {
   programs.nixvim = {
+    autoGroups = {
+      restore_session = { };
+    };
     autoCmd = [
       {
         desc = "Highlight on yank";
@@ -12,10 +15,11 @@
           '';
       }
       {
+        group = "restore_session";
         desc = "Loaded persisted session";
         event = [ "VimEnter" ];
+        nested = true;
         callback.__raw = ''
-
           function()
             if vim.fn.getcwd() ~= vim.env.HOME then
               require("persistence").load()
