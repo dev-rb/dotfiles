@@ -12,6 +12,8 @@
           "TelescopeResults"
           ""
         ];
+        scope.enabled = false;
+        indent.char = "▏";
       };
 
     };
