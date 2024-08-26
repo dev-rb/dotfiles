@@ -1,5 +1,6 @@
 {
   imports = [
+    ./autopairs.nix
     ./cmp.nix
     ./conform.nix
     ./lsp.nix
