@@ -4,6 +4,7 @@
       enable = true;
       settings = {
         multiplexer = "wezterm";
+        at_edge = "stop";
       };
 
     };
