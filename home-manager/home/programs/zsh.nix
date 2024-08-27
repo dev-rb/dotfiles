@@ -24,6 +24,17 @@
 
     defaultKeymap = "emacs";
 
+    # zprof.enable = true;
+
+    completionInit = "
+      autoload -Uz compinit
+
+      for dump in ~/.zcompdump(N.mh+24); do
+        compinit
+      done
+      compinit -C
+    ";
+
     initExtra = ''
       eval "$(oh-my-posh init zsh --config ~/dotfiles/pure.omp.json)"
       bindkey '^p' history-search-backward

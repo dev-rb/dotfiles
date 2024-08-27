@@ -5,7 +5,7 @@
   programs.nixvim = {
     enable = true;
     enableMan = true;
-    colorscheme = "tokyonight";
+    colorscheme = "carbonfox";
 
     defaultEditor = true;
     viAlias = true;

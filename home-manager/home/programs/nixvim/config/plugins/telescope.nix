@@ -54,13 +54,6 @@
         undo.enable = true;
       };
       keymaps = {
-        "<leader>fa" = {
-          mode = "n";
-          action = "find_files --hidden";
-          options = {
-            desc = "[F]ind [A]ll";
-          };
-        };
         "<leader>ff" = {
           mode = "n";
           action = "find_files";
@@ -92,6 +85,14 @@
       };
     };
     keymaps = [
+      {
+        mode = "n";
+        key = "<leader>fa";
+        action.__raw = "function() require('telescope.builtin').find_files({ hidden = true }) end";
+        options = {
+          desc = "[F]ind [A]ll";
+        };
+      }
       {
         mode = "n";
         key = "<leader>fw";
