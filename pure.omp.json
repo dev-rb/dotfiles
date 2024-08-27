@@ -5,13 +5,7 @@
       "alignment": "left",
       "segments": [
         {
-          "foreground": "#BF616A",
-          "style": "plain",
-          "template": "{{ .UserName }} ",
-          "type": "session"
-        },
-        {
-          "foreground": "#81A1C1",
+          "foreground": "#1DA0D8",
           "properties": {
             "style": "full"
           },
@@ -37,7 +31,7 @@
             "github_icon": ""
           },
           "style": "plain",
-          "template": "{{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}<#FFAFD7> * </>{{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} ",
+          "template": "{{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }} ",
           "type": "git"
         }
       ],
@@ -62,9 +56,9 @@
       "alignment": "left",
       "segments": [
         {
-          "foreground": "#B48EAD",
+          "foreground": "#1DA0D8",
           "foreground_templates": [
-            "{{ if gt .Code 0 }}#BF616A{{ end }}"
+            "{{ if gt .Code 0 }}#d81d1d{{ end }}"
           ],
           "properties": {
             "always_enabled": true
@@ -79,9 +73,9 @@
   ],
   "console_title_template": "{{if .Root}}(Admin){{end}} {{.PWD}}",
   "transient_prompt": {
-    "foreground": "#B48EAD",
+    "foreground": "#85d81d",
     "foreground_templates": [
-      "{{ if gt .Code 0 }}#BF616A{{ end }}"
+      "{{ if gt .Code 0 }}#d81d1d{{ end }}"
     ],
     "template": "\u276f "
   },
