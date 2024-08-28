@@ -5,6 +5,7 @@
     ./comment.nix
     ./conform.nix
     ./indent-blankline.nix
+    ./lazy.nix
     ./lsp.nix
     ./lualine.nix
     ./oil.nix
