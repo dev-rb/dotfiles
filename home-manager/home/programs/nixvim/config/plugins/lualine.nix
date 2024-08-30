@@ -77,6 +77,9 @@
                 hint = "󰝶 ";
               };
             };
+            color = {
+              bg = "nil";
+            };
           }
         ];
         lualine_x = [ "" ];
