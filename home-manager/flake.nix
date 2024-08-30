@@ -14,11 +14,6 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    local-term = {
-      url = "./home/programs/nixvim/config/lua/local-term/init.lua";
-      flake = false;
-    };
-
   };
 
   outputs =

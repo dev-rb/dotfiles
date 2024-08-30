@@ -28,9 +28,11 @@
 
     extraConfigLua = ''
       require("nvim-surround").setup({})
-      require("local-term")
-
     '';
+
+    extraFiles = {
+      "lua/local-term.lua".text = builtins.readFile ./config/lua/local-term/init.lua;
+    };
 
   };
 

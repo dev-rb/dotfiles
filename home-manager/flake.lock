@@ -167,19 +167,6 @@
         "type": "github"
       }
     },
-    "local-term": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-tLQ87If0MLIsBKen3l9yjyFCP3ZdNyUYr0VxnTSDBwc=",
-        "path": "/nix/store/czj9awzpn3nw3k41c1r7skcj8kqksk3g-source/home-manager/home/programs/nixvim/config/lua/local-term/init.lua",
-        "type": "path"
-      },
-      "original": {
-        "path": "/nix/store/czj9awzpn3nw3k41c1r7skcj8kqksk3g-source/home-manager/home/programs/nixvim/config/lua/local-term/init.lua",
-        "type": "path"
-      }
-    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -270,7 +257,6 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "local-term": "local-term",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim"
       }

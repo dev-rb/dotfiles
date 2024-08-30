@@ -13,17 +13,15 @@ local pos_data = {
 }
 
 local config = {
-	term = {
-		winopts = { number = false, relativenumber = false },
-		sizes = { sp = 0.3, vsp = 0.2, ["bo sp"] = 0.3, ["bo vsp"] = 0.2 },
-		float = {
-			relative = "editor",
-			row = 0.3,
-			col = 0.25,
-			width = 0.5,
-			height = 0.4,
-			border = "single",
-		},
+	winopts = { number = false, relativenumber = false },
+	sizes = { sp = 0.3, vsp = 0.2, ["bo sp"] = 0.3, ["bo vsp"] = 0.2 },
+	float = {
+		relative = "editor",
+		row = 0.3,
+		col = 0.25,
+		width = 0.5,
+		height = 0.4,
+		border = "single",
 	},
 }
 
@@ -47,15 +45,8 @@ local function opts_to_id(id)
 end
 
 local function create_float(buffer, float_opts)
-	local opts = {
+	local opts = vim.tbl_deep_extend("force", config.float, float_opts or {})
 
-		relative = "editor",
-		row = 0.3,
-		col = 0.25,
-		width = 0.5,
-		height = 0.4,
-		border = "single",
-	}
 	opts.width = math.ceil(opts.width * vim.o.columns)
 	opts.height = math.ceil(opts.height * vim.o.lines)
 	opts.row = math.ceil(opts.row * vim.o.lines)
@@ -91,7 +82,7 @@ M.display = function(opts)
 
 	api.nvim_win_set_buf(win, opts.buf)
 
-	local winopts = { number = false, relativenumber = false }
+	local winopts = vim.tbl_deep_extend("force", config.winopts, opts.winopts or {})
 
 	for k, v in pairs(winopts) do
 		vim.wo[win][k] = v

@@ -25,6 +25,30 @@
           desc = "Save file remap";
         };
       }
+
+      # [[ Custom terminal ]]
+      {
+        mode = [
+          "n"
+          "t"
+        ];
+        key = "<A-i>";
+        action.__raw = "function() require('local-term').toggle({pos = 'float', id = 'floatTerm'}) end";
+        options = {
+          desc = "Toggle floating terminal";
+        };
+      }
+      {
+        mode = [
+          "n"
+          "t"
+        ];
+        key = "<A-h>";
+        action.__raw = "function() require('local-term').toggle({pos = 'sp', id = 'horizontal'}) end";
+        options = {
+          desc = "Toggle floating terminal";
+        };
+      }
       # [[ Comment.nvim ]]
       {
         mode = "n";
