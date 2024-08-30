@@ -32,6 +32,8 @@
 
     extraFiles = {
       "lua/local-term.lua".text = builtins.readFile ./config/lua/local-term/init.lua;
+      "lua/lsp-utils/init.lua" = builtins.readFile ./config/lua/lsp-utils/init.lua;
+      "lua/lsp-utils/renamer.lua" = builtins.readFile ./config/lua/lsp-utils/renamer.lua;
     };
 
   };

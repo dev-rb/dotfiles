@@ -25,6 +25,14 @@
           desc = "Save file remap";
         };
       }
+      {
+        mode = "n";
+        key = "<leader>ra";
+        action.__raw = "function() require('lsp-utils.renamer')()end";
+        options = {
+          desc = "LSP Rename";
+        };
+      }
 
       # [[ Custom terminal ]]
       {
