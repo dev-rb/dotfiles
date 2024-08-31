@@ -149,8 +149,6 @@
                   end
                   local telescope = require('telescope.builtin')
 
-                  map('<leader>lh', vim.lsp.buf.hover, 'Hover documentation')
-
                   map('gd', telescope.lsp_definitions, '[G]oto [D]efinition')
                   map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
                   map('gr', telescope.lsp_references, '[G]oto [R]eferences')
@@ -159,17 +157,22 @@
                   map('<leader>ltd', telescope.lsp_type_definitions, '[T]ype [D]efinition')
                   map('<leader>lds', telescope.lsp_document_symbols, '[D]ocument [S]ymbols')
                   map('<leader>lws', telescope.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-                  map('<leader>lr', vim.lsp.buf.rename, '[R]ename')
-                  map('<leader>la', vim.lsp.buf.code_action, 'Code [A]ction')
+                  map('<leader>lr', "<cmd> LspRestart <CR>", '[L]SP [R]estart')
+                  map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
+                  local group = vim.api.nvim_create_augroup("LspSignature", { clear = false })
                   local client = vim.lsp.get_client_by_id(event.data.client_id)
 
-                  if client and client.server_capabilities.documentHighlightProvider then
+                  vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
+
+                  if client and client.supports_method('textDocument/documentHighlight') then
                     vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+                      group = group,
                       buffer = event.buf,
                       callback = vim.lsp.buf.document_highlight,
                     })
                     vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+                      group = group;
                       buffer = event.buf,
                       callback = vim.lsp.buf.clear_references,
                     })
