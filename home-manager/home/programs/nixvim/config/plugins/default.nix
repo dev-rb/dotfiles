@@ -8,6 +8,7 @@
     ./lazy.nix
     ./lsp.nix
     ./lualine.nix
+    ./nvim-tree.nix
     ./oil.nix
     ./persistence.nix
     ./smart-splits.nix

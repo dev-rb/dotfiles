@@ -25,7 +25,7 @@
     keymaps = [
       {
         mode = "n";
-        key = "<C-n>";
+        key = "<leader>o";
         action = "<cmd>lua require('oil').toggle_float() <CR>";
         options = {
           desc = "[O]il";
