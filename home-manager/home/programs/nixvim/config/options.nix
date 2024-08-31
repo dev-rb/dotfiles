@@ -1,5 +1,6 @@
 {
   programs.nixvim.opts = {
+    shell = "/bin/zsh";
     breakindent = true;
     clipboard = "unnamedplus";
     cursorline = true;
