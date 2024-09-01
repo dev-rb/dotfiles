@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   programs.nixvim = {
     plugins = {
@@ -6,12 +7,22 @@
         settings = {
           highlight.enable = true;
           indent.enable = true;
-          context_commentstring.enable = true;
-          autotag.enable = true;
+          ensureInstalled = [
+            "css"
+            "html"
+            "javascript"
+            "lua"
+            "python"
+            "scss"
+            "tsx"
+            "typescript"
+          ];
         };
         languageRegister = {
           markdown = "mdx";
         };
+        nixvimInjections = true;
+        grammarPackages = pkgs.vimPlugins.nvim-treesitter.allGrammars;
       };
     };
     filetype = {

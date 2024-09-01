@@ -50,7 +50,7 @@
         };
       };
       extensions = {
-        frecency.enable = true;
+        # frecency.enable = true;
         undo.enable = true;
       };
       keymaps = {
@@ -108,14 +108,6 @@
         action = "<cmd>Telescope undo<CR>";
         options = {
           desc = "[F]ind [U]ndo";
-        };
-      }
-      {
-        mode = "n";
-        key = "<leader>fc";
-        action = "<cmd>Telescope frecency workspace=CWD<CR>";
-        options = {
-          desc = "Find by frecency";
         };
       }
     ];

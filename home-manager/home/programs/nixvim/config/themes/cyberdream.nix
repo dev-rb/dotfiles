@@ -1,6 +1,6 @@
 {
   programs.nixvim.colorschemes.cyberdream = {
-    enable = true;
+    enable = false;
     settings = {
       variant = "dark";
       transparent = true;
