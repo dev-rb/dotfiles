@@ -2,12 +2,14 @@
 
 let
   plugins = config.programs.nixvim.plugins;
+  opts = config.modules.plugins;
 in
 {
   programs.nixvim = {
     plugins.lazy = {
       enable = true;
       plugins = with pkgs.vimPlugins; [
+        { pkg = plenary-nvim; }
         {
           pkg = nvim-cmp;
           dependencies = [
@@ -67,7 +69,7 @@ in
         }
         {
           pkg = telescope-nvim;
-          opts = plugins.telescope.settings;
+          opts = opts.telescope;
           dependencies = [ { pkg = telescope-live-grep-args-nvim; } ];
         }
         {

@@ -8,7 +8,7 @@
 
     performance = {
       byteCompileLua = {
-        enable = true;
+        enable = false;
       };
     };
 
