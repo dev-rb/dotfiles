@@ -116,14 +116,14 @@
           #n = { ["q"] = require("telescope.actions").close };
           #};
         };
-        extensions = {
-          frecency = {
-            enable = true;
-          };
-          undo = {
-            enable = true;
-          };
-        };
+        # extensions = {
+        #   frecency = {
+        #     enable = true;
+        #   };
+        #   undo = {
+        #     enable = true;
+        #   };
+        # };
         keymaps = {
           "<leader>fh" = {
             mode = "n";
