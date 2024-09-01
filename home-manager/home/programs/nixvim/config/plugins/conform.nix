@@ -16,6 +16,22 @@
         lua = [ "stylua" ];
         rust = [ "rustfmt" ];
         nix = [ "nixfmt" ];
+        javascript = [
+          "biome"
+          "prettier"
+        ];
+        javascriptreact = [
+          "biome"
+          "prettier"
+        ];
+        typescript = [
+          "biome"
+          "prettier"
+        ];
+        typescriptreact = [
+          "biome"
+          "prettier"
+        ];
       };
     };
     userCommands = {
