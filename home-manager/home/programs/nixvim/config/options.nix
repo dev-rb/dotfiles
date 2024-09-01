@@ -12,6 +12,16 @@
     number = true;
     relativenumber = false;
     scrolloff = 15;
+    sessionoptions = [
+      "buffers"
+      "curdir"
+      "tabpages"
+      "winsize"
+      "help"
+      "globals"
+      "skiprtp"
+      "folds"
+    ];
     showmode = false;
     signcolumn = "yes";
     smartcase = true;

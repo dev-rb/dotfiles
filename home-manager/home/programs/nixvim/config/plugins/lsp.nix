@@ -118,6 +118,7 @@
           };
         };
       };
+
       preConfig = ''
         require('lspconfig').mdx_analyzer.setup({})
         require('lspconfig').unocss.setup({
