@@ -34,6 +34,15 @@
         };
       }
 
+      {
+        mode = "n";
+        key = "<leader>f";
+        action.__raw = "function() vim.diagnostic.open_float { border = 'rounded' } end";
+        options = {
+          desc = "[F]loating diagnostic";
+        };
+      }
+
       # [[ Custom terminal ]]
       {
         mode = [
