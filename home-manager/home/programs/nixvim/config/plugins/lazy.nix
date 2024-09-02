@@ -10,6 +10,19 @@ in
       plugins = with pkgs.vimPlugins; [
         { pkg = plenary-nvim; }
         {
+          pkg = typescript-tools-nvim;
+          dependencies = [
+            { pkg = nvim-lspconfig; }
+            { pkg = plenary-nvim; }
+          ];
+          opts = {
+            settings = {
+              # tsserver_path = "/home/dev-rb/.nix-profile/bin/typescript-language-server";
+              expose_as_code_action = "all";
+            };
+          };
+        }
+        {
           pkg = nvim-autopairs;
           opts = {
             fast_wrap = { };
@@ -18,7 +31,51 @@ in
               "vim"
             ];
           };
+        }
+        {
+          pkg = none-ls-nvim;
+          config = ''
+            function()
+              local null_ls = require('null-ls')
+              local b = null_ls.builtins
 
+              local sources = {
+
+                -- webdev stuff
+                -- b.formatting.deno_fmt, -- choosed deno for ts/js files cuz its very fast!
+                b.formatting.prettier.with {
+                  "javascript",
+                  "javascriptreact",
+                  "typescript",
+                  "typescriptreact",
+                  "vue",
+                  "css",
+                  "scss",
+                  "less",
+                  "html",
+                  "json",
+                  "jsonc",
+                  "yaml",
+                  "markdown",
+                  "markdown.mdx",
+                  "graphql",
+                  "handlebars",
+                }, -- so prettier works only on these filetypes
+
+                -- Lua
+                b.formatting.stylua,
+
+                -- cpp
+                b.formatting.clang_format,
+                null_ls.builtins.code_actions.eslint_d,
+              }
+
+              null_ls.setup {
+                debug = true,
+                sources = sources,
+              }
+            end
+          '';
         }
         {
           pkg = nvim-cmp;
