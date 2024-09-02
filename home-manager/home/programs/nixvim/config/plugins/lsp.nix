@@ -140,6 +140,19 @@
     };
     autoCmd = [
       {
+
+        event = [
+          "BufRead"
+          "BufWinEnter"
+          "BufNewFile"
+        ];
+        callback.__raw = ''
+          function(event)
+            vim.cmd "silent! do FileType"
+          end
+        '';
+      }
+      {
         event = [ "LspAttach" ];
         callback = {
           __raw = # lua
@@ -149,6 +162,7 @@
                     vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
                   end
                   local telescope = require('telescope.builtin')
+
 
                   map('gd', telescope.lsp_definitions, '[G]oto [D]efinition')
                   map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')

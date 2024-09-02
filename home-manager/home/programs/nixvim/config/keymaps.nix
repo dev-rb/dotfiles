@@ -2,6 +2,14 @@
   programs.nixvim = {
     keymaps = [
       {
+        mode = "n";
+        key = "<C-n>";
+        action = "<cmd>NvimTreeToggle<CR>";
+        options = {
+          desc = "Nvim-tree [T]oggle";
+        };
+      }
+      {
         mode = [
           "n"
           "x"
@@ -23,6 +31,14 @@
         action = "<cmd>w<CR>";
         options = {
           desc = "Save file remap";
+        };
+      }
+      {
+        mode = "n";
+        key = "K";
+        action.__raw = "vim.lsp.buf.hover";
+        options = {
+          desc = "LSP Rename";
         };
       }
       {

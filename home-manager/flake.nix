@@ -14,6 +14,11 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    none-ls-extras = {
+      url = "github:nvimtools/none-ls-extras.nvim";
+      flake = false;
+    };
   };
 
   outputs =

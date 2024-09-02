@@ -232,6 +232,22 @@
         "type": "github"
       }
     },
+    "none-ls-extras": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1723884684,
+        "narHash": "sha256-T5UE6eBpmfU2y9/c4dtSR9Ngbssjg4GlmYL/xYpXOhA=",
+        "owner": "nvimtools",
+        "repo": "none-ls-extras.nvim",
+        "rev": "dfdc998a8c7bb728abab156942bd43ed2345845a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvimtools",
+        "repo": "none-ls-extras.nvim",
+        "type": "github"
+      }
+    },
     "nuschtosSearch": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -258,7 +274,8 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixvim": "nixvim"
+        "nixvim": "nixvim",
+        "none-ls-extras": "none-ls-extras"
       }
     },
     "systems": {

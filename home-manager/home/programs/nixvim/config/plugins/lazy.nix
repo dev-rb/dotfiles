@@ -34,6 +34,7 @@ in
         }
         {
           pkg = none-ls-nvim;
+          dependencies = [ { pkg = none-ls-extras; } ];
           config = ''
             function()
               local null_ls = require('null-ls')
@@ -67,7 +68,7 @@ in
 
                 -- cpp
                 b.formatting.clang_format,
-                null_ls.builtins.code_actions.eslint_d,
+                require("none-ls.code_actions.eslint"),
               }
 
               null_ls.setup {
@@ -184,7 +185,18 @@ in
             indent = {
               enable = true;
             };
-            ensure_installed = "all";
+            ensure_installed = [
+              "css"
+              "html"
+              "javascript"
+              "lua"
+              "python"
+              "scss"
+              "tsx"
+              "nix"
+              "typescript"
+            ];
+
           };
           config = ''
             function() 
@@ -230,7 +242,7 @@ in
           pkg = smart-splits-nvim;
           lazy = false;
           opts = {
-            multiplexer = "wezterm";
+            multiplexer_integration = "wezterm";
             at_edge = "stop";
           };
         }
@@ -341,6 +353,21 @@ in
         }
         { pkg = nvim-surround; }
         { pkg = nvim-web-devicons; }
+        {
+          pkg = indent-blankline-nvim;
+          config = ''
+            function(opts)
+              require('ibl').setup({
+                scope = {
+                  enabled = false
+                },
+                indent = {
+                  char = "▏"
+                },
+              })
+            end
+          '';
+        }
         {
           pkg = nvim-tree-lua;
           opts = {
