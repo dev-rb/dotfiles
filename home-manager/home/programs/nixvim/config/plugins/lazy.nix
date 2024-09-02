@@ -2,7 +2,6 @@
 
 let
   plugins = config.programs.nixvim.plugins;
-  opts = config.modules.plugins;
 in
 {
   programs.nixvim = {
@@ -168,14 +167,6 @@ in
               end
             '';
 
-          };
-        }
-        {
-          pkg = smart-splits-nvim;
-          lazy = false;
-          opts = {
-            multiplexer = "wezterm";
-            at_edge = "stop";
           };
         }
         {

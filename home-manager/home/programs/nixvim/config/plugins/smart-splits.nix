@@ -1,7 +1,7 @@
 {
   programs.nixvim = {
     plugins.smart-splits = {
-      enable = false;
+      enable = true;
       settings = {
         multiplexer = "wezterm";
         at_edge = "stop";
