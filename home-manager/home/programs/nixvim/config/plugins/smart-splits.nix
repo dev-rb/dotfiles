@@ -3,7 +3,7 @@
     plugins.smart-splits = {
       enable = true;
       settings = {
-        multiplexer = "wezterm";
+        multiplexer_integration = "wezterm";
         at_edge = "stop";
       };
 

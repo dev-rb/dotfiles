@@ -227,6 +227,14 @@ in
           };
         }
         {
+          pkg = smart-splits-nvim;
+          lazy = false;
+          opts = {
+            multiplexer = "wezterm";
+            at_edge = "stop";
+          };
+        }
+        {
           pkg = telescope-nvim;
           config = ''
             function(_, opts)
