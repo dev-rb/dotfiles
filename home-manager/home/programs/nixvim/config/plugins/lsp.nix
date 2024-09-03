@@ -178,7 +178,7 @@
                   local group = vim.api.nvim_create_augroup("LspSignature", { clear = false })
                   local client = vim.lsp.get_client_by_id(event.data.client_id)
 
-                  vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
+                  vim.api.nvim_clear_autocmds({ group = group, buffer = event.buf })
 
                   if client and client.supports_method('textDocument/documentHighlight') then
                     vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {

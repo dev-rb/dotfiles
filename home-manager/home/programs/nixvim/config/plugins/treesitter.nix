@@ -3,11 +3,11 @@
   programs.nixvim = {
     plugins = {
       treesitter = {
-        enable = false;
+        enable = true;
         settings = {
           highlight.enable = true;
           indent.enable = true;
-          ensureInstalled = [
+          ensure_installed = [
             "css"
             "html"
             "javascript"
