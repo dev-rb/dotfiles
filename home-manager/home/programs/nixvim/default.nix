@@ -13,6 +13,7 @@
     };
 
     extraConfigLuaPre = ''
+      vim.opt.runtimepath:append("/home/dev-rb/treesitter/parsers")
 
       local builtin_plugins = {
         "2html_plugin",
@@ -48,6 +49,19 @@
         vim.g['loaded_' .. builtin_plugins[i]] = true
       end
 
+      local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+      if not vim.loop.fs_stat(lazypath) then
+        vim.fn.system({
+          "git",
+          "clone",
+          "--filter=blob:none",
+          "https://github.com/folke/lazy.nvim.git",
+          "--branch=stable", -- latest stable release
+          lazypath,
+        })
+      end
+      vim.opt.rtp:prepend(lazypath)
+
 
     '';
 
@@ -73,13 +87,15 @@
       #markdown
     ];
 
-    extraConfigLua = '''';
+    extraConfigLua = ''
 
-    extraFiles = {
-      "lua/local-term.lua".text = builtins.readFile ./config/lua/local-term/init.lua;
-      "lua/lsp-utils/init.lua".text = builtins.readFile ./config/lua/lsp-utils/init.lua;
-      "lua/lsp-utils/renamer.lua".text = builtins.readFile ./config/lua/lsp-utils/renamer.lua;
-    };
+    '';
+
+    # extraFiles = {
+    #   "lua/local-term.lua".text = builtins.readFile ./config/lua/local-term/init.lua;
+    #   "lua/lsp-utils/init.lua".text = builtins.readFile ./config/lua/lsp-utils/init.lua;
+    #   "lua/lsp-utils/renamer.lua".text = builtins.readFile ./config/lua/lsp-utils/renamer.lua;
+    # };
 
   };
 

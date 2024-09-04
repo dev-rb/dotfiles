@@ -1,7 +1,7 @@
 {
   programs.nixvim = {
     plugins.comment = {
-      enable = false;
+      enable = true;
       settings = {
 
         pre_hook.__raw = ''

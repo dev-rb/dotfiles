@@ -5,7 +5,7 @@
       local HEIGHT_RATIO = 0.5 -- You can change this
     '';
     plugins.nvim-tree = {
-      enable = false;
+      enable = true;
       extraOptions = {
         view = {
           side = "right";
