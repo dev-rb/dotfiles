@@ -1,6 +1,6 @@
 {
   programs.nixvim = {
-    plugins.ts-context-commentstring.enable = false;
+    plugins.ts-context-commentstring.enable = true;
     extraConfigLua = # lua
       ''
         local get_option = vim.filetype.get_option

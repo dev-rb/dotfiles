@@ -1,7 +1,7 @@
 {
   programs.nixvim = {
     plugins.nvim-autopairs = {
-      enable = false;
+      enable = true;
       settings = {
         fast_wrap = { };
         disable_filetype = [

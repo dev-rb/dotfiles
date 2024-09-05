@@ -60,14 +60,27 @@
           #n = { ["q"] = require("telescope.actions").close };
           #};
         };
-        # extensions = {
-        #   frecency = {
-        #     enable = true;
-        #   };
-        #   undo = {
-        #     enable = true;
-        #   };
-        # };
+      };
+
+      extensions = {
+        frecency = {
+          enable = true;
+        };
+        undo = {
+          enable = true;
+        };
+        ui-select = {
+          enable = true;
+          settings.__raw = ''
+            {
+               require('telescope.themes').get_cursor {},
+               specific_opts = {
+                 codeactions = true
+               }
+            } '';
+          # settings.__raw = "";
+        };
+
       };
 
       keymaps = {
@@ -101,6 +114,14 @@
         action = "<cmd>Telescope find_files<CR>";
         options = {
           desc = "[F]ind [F]iles";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>fw";
+        action.__raw = "require('telescope').extensions.live_grep_args.live_grep_args";
+        options = {
+          desc = "[F]ind by [G]rep";
         };
       }
       {

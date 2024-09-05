@@ -17,7 +17,7 @@
       {
         group = "restore_session";
         desc = "Loaded persisted session";
-        event = [ "VimEnter" ];
+        event = [ "UIEnter" ];
         nested = true;
         callback.__raw = ''
           function()

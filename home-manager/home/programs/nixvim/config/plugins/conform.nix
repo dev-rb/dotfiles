@@ -1,7 +1,7 @@
 {
   programs.nixvim = {
     plugins.conform-nvim = {
-      enable = false;
+      enable = true;
       notifyOnError = true;
       formatOnSave = # lua
         ''

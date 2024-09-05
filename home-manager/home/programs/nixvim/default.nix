@@ -8,7 +8,7 @@
 
     performance = {
       byteCompileLua = {
-        enable = false;
+        enable = true;
       };
     };
 
@@ -46,7 +46,7 @@
       }
 
       for i = 1, #builtin_plugins do 
-        vim.g['loaded_' .. builtin_plugins[i]] = true
+        vim.g['loaded_' .. builtin_plugins[i]] = false
       end
 
       local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -78,12 +78,13 @@
     };
 
     extraPlugins = with pkgs.vimPlugins; [
+      nvim-surround
       #nvim-web-devicons
       # smart-splits-nvim
       #cmp-tailwind-colors
       #catppuccin
       #everforest-lua
-      # telescope-live-grep-args-nvim
+      telescope-live-grep-args-nvim
       #markdown
     ];
 

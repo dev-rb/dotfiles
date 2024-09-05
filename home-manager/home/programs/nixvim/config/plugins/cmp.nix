@@ -1,8 +1,8 @@
 {
   programs.nixvim.plugins = {
-    luasnip.enable = false;
+    luasnip.enable = true;
     cmp = {
-      enable = false;
+      enable = true;
       settings = {
         snippet.expand.__raw = # lua
           ''
