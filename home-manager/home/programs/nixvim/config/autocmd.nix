@@ -1,7 +1,9 @@
 {
   programs.nixvim = {
     autoGroups = {
-      restore_session = { };
+      restore_session = {
+        clear = true;
+      };
     };
     autoCmd = [
       {

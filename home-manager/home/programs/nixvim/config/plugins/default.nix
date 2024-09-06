@@ -4,6 +4,7 @@
     ./cmp.nix
     ./comment.nix
     ./conform.nix
+    ./gitsigns.nix
     ./indent-blankline.nix
     ./lazy.nix
     ./lsp.nix

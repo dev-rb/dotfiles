@@ -5,8 +5,15 @@
     plugins.lazy = {
       enable = true;
       plugins = with pkgs.vimPlugins; [
-        nvim-treesitter
+        { pkg = nvim-treesitter; }
         nvim-autopairs
+        {
+          pkg = gitsigns-nvim;
+          ft = [
+            "gitcommit"
+            "diff"
+          ];
+        }
         {
           pkg = nvim-cmp;
           event = [ "InsertEnter" ];
@@ -27,7 +34,7 @@
         oil-nvim
         indent-blankline-nvim
         conform-nvim
-        comment-nvim
+        { pkg = comment-nvim; }
         nvim-ts-context-commentstring
         {
           pkg = which-key-nvim;
