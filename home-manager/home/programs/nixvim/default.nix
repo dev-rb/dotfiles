@@ -63,7 +63,6 @@
     };
 
     extraPlugins = with pkgs.vimPlugins; [
-      nvim-surround
       #nvim-web-devicons
       # smart-splits-nvim
       #cmp-tailwind-colors

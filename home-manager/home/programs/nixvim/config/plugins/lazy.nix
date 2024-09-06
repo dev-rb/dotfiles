@@ -5,7 +5,14 @@
     plugins.lazy = {
       enable = true;
       plugins = with pkgs.vimPlugins; [
-        { pkg = nvim-surround; }
+        {
+          pkg = nvim-surround;
+          event = [ "VeryLazy" ];
+          config.__raw = ''
+            function()
+              require('nvim-surround').setup()
+            end '';
+        }
         { pkg = nvim-treesitter; }
         nvim-autopairs
         {
