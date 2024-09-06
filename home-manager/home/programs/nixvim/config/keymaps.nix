@@ -9,6 +9,18 @@
           desc = "Nvim-tree [T]oggle";
         };
       }
+      # {
+      #   mode = "n";
+      #   key = "<leader>tt";
+      #   action.__raw = ''
+      #     function() 
+      #       TOGGLED_TRANSPARENT = false
+      #       require('nightfox').compile()
+      #     end'';
+      #   options = {
+      #     desc = "[T]oggle [T]ransparent";
+      #   };
+      # }
       {
         mode = [
           "n"

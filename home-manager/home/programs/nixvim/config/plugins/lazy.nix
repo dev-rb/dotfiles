@@ -5,6 +5,7 @@
     plugins.lazy = {
       enable = true;
       plugins = with pkgs.vimPlugins; [
+        { pkg = nvim-surround; }
         { pkg = nvim-treesitter; }
         nvim-autopairs
         {

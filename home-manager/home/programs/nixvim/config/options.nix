@@ -7,7 +7,8 @@
     hlsearch = true;
     inccommand = "split";
     list = true;
-    listchars = "tab:⇥ ,trail:·,nbsp:␣,space:·";
+    # listchars = "tab:⇥ ,trail:·,nbsp:␣,space:·";
+    fillchars = "eob: ,fold: ,foldopen:,foldsep: ,foldclose:";
     mouse = "a";
     number = true;
     relativenumber = false;

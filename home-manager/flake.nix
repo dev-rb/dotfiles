@@ -19,6 +19,31 @@
       url = "github:nvimtools/none-ls-extras.nvim";
       flake = false;
     };
+    vesper-nvim = {
+      url = "github:datsfilipe/vesper.nvim";
+      flake = false;
+    };
+
+    night-nvim = {
+      url = "github:NightCS/night.nvim";
+      flake = false;
+    };
+    everblush-nvim = {
+      url = "github:Everblush/nvim";
+      flake = false;
+    };
+    horizon-nvim = {
+      url = "github:LunarVim/horizon.nvim";
+      flake = false;
+    };
+    nvim-noirbuddy = {
+      url = "github:jesseleite/nvim-noirbuddy";
+      flake = false;
+    };
+    tokyodark-nvim = {
+      url = "github:tiagovla/tokyodark.nvim";
+      flake = false;
+    };
   };
 
   outputs =

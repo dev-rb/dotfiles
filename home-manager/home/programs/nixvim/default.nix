@@ -46,27 +46,12 @@
       }
 
       for i = 1, #builtin_plugins do 
-        vim.g['loaded_' .. builtin_plugins[i]] = false
+        vim.g['loaded_' .. builtin_plugins[i]] = true
       end
-
-      local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-      if not vim.loop.fs_stat(lazypath) then
-        vim.fn.system({
-          "git",
-          "clone",
-          "--filter=blob:none",
-          "https://github.com/folke/lazy.nvim.git",
-          "--branch=stable", -- latest stable release
-          lazypath,
-        })
-      end
-      vim.opt.rtp:prepend(lazypath)
-
-
     '';
 
     enableMan = true;
-    colorscheme = "terafox";
+    colorscheme = "tokyodark";
 
     defaultEditor = true;
     viAlias = true;
@@ -85,10 +70,11 @@
       #catppuccin
       #everforest-lua
       telescope-live-grep-args-nvim
+      tokyodark-nvim
       #markdown
     ];
 
-    extraConfigLua = ''
+    extraConfigLua = '''';
 
     extraFiles = {
       "lua/local-term.lua".text = builtins.readFile ./config/lua/local-term/init.lua;
