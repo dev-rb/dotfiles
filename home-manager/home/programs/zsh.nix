@@ -43,7 +43,7 @@
       bindkey '^n' history-search-forward
 
       export PATH="/home/dev-rb/.local/share/fnm:$PATH"
-      export PATH=$PATH:/mnt/e/WezTerm/wezterm.exe
+      export PATH="$PATH:/mnt/e/WezTerm/"
 
       eval "`fnm env`"
 

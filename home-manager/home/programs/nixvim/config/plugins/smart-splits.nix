@@ -6,7 +6,6 @@
         multiplexer_integration = "wezterm";
         at_edge = "stop";
       };
-
     };
   };
 }

@@ -42,7 +42,6 @@
         }
         {
           pkg = nvim-tree-lua;
-
           cmd = [
             "NvimTreeToggle"
             "NvimTreeFocus"
