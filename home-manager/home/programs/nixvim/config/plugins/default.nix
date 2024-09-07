@@ -4,6 +4,7 @@
     ./cmp.nix
     ./comment.nix
     ./conform.nix
+    ./git-conflict.nix
     ./gitsigns.nix
     ./indent-blankline.nix
     ./lazy.nix
@@ -17,6 +18,7 @@
     ./treesitter.nix
     ./ts-context-commentstring.nix
     ./typescript-tools.nix
+    ./ufo.nix
     ./which-key.nix
   ];
 }

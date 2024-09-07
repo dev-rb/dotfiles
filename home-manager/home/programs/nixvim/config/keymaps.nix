@@ -30,6 +30,16 @@
         action = "<nop>";
       }
       {
+        mode = [ "n" ];
+        key = "<leader>cf";
+        action = "<cmd> foldclose <CR>";
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>of";
+        action = "<cmd> foldopen <CR>";
+      }
+      {
         mode = "n";
         key = "<Esc>";
         action = "<cmd>nohlsearch<CR>";

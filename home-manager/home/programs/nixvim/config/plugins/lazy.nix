@@ -15,6 +15,11 @@
         }
         { pkg = nvim-treesitter; }
         {
+          pkg = nvim-ufo;
+          event = "VeryLazy";
+          dependencies = [ { pkg = promise-async; } ];
+        }
+        {
           pkg = typescript-tools-nvim;
           lazy = false;
         }
