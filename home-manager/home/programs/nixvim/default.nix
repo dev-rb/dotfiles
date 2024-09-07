@@ -70,6 +70,10 @@
       #everforest-lua
       telescope-live-grep-args-nvim
       tokyodark-nvim
+      # night-nvim
+      # vesper-nvim
+      # horizon-nvim
+      everblush-nvim
       #markdown
     ];
 
