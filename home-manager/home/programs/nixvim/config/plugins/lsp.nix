@@ -6,7 +6,7 @@
       servers = {
         nil-ls.enable = true;
         tsserver = {
-          enable = true;
+          enable = false;
           extraOptions = {
             init_options = {
               preferences = {

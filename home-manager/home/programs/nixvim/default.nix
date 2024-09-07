@@ -51,7 +51,7 @@
     '';
 
     enableMan = true;
-    colorscheme = "tokyodark";
+    colorscheme = "tokyonight-night";
 
     defaultEditor = true;
     viAlias = true;
