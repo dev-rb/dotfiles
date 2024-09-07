@@ -16,6 +16,7 @@
     ./telescope.nix
     ./treesitter.nix
     ./ts-context-commentstring.nix
+    ./typescript-tools.nix
     ./which-key.nix
   ];
 }

@@ -14,6 +14,10 @@
             end '';
         }
         { pkg = nvim-treesitter; }
+        {
+          pkg = typescript-tools-nvim;
+          lazy = false;
+        }
         nvim-autopairs
         {
           pkg = gitsigns-nvim;
@@ -28,9 +32,14 @@
           dependencies = [
             nvim-lspconfig
             cmp-nvim-lsp
+            cmp-path
+            cmp-buffer
           ];
         }
-        smart-splits-nvim
+        {
+          pkg = smart-splits-nvim;
+          lazy = false;
+        }
         {
           pkg = nvim-tree-lua;
 
