@@ -1,6 +1,7 @@
 {
   imports = [
     ./autopairs.nix
+    ./ts-autotag.nix
     ./cmp.nix
     ./comment.nix
     ./conform.nix
