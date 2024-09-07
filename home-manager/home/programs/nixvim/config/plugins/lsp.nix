@@ -175,10 +175,16 @@
                   map('<leader>lr', "<cmd> LspRestart <CR>", '[L]SP [R]estart')
                   map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-                  local group = vim.api.nvim_create_augroup("LspSignature", { clear = false })
+                  local group = vim.api.nvim_create_augroup("DocumentHighlight", { clear = false })
                   local client = vim.lsp.get_client_by_id(event.data.client_id)
 
                   vim.api.nvim_clear_autocmds({ group = group, buffer = event.buf })
+
+
+                  local signatureProvider = client.server_capabilities.signatureHelpProvider
+                  if signatureProvider and signatureProvider.triggerCharacters then
+                    require("lsp-utils.signature").setup(client, event.buf)
+                  end
 
                   if client and client.supports_method('textDocument/documentHighlight') then
                     vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
