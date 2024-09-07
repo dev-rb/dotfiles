@@ -30,6 +30,10 @@ inputs: self: super: {
         name = "tokyodark-nvim";
         src = inputs.tokyodark-nvim;
       };
+      telescope-recent-files = super.vimUtils.buildVimPlugin {
+        name = "telescope-recent-files";
+        src = inputs.telescope-recent-files;
+      };
       # local-term = super.vimUtils.buildVimPlugin {
       #   name = "local-term";
       #   src = inputs.local-term;

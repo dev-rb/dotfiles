@@ -118,6 +118,14 @@
       }
       {
         mode = "n";
+        key = "<leader>rf";
+        action.__raw = "require('telescope').extensions['recent-files'].recent_files";
+        options = {
+          desc = "Find [R]ecent [F]iles";
+        };
+      }
+      {
+        mode = "n";
         key = "<leader>fw";
         action.__raw = "require('telescope').extensions.live_grep_args.live_grep_args";
         options = {

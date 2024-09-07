@@ -80,6 +80,7 @@
       # vesper-nvim
       # horizon-nvim
       everblush-nvim
+      telescope-recent-files
       #markdown
     ];
 
