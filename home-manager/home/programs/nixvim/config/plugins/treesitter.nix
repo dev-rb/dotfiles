@@ -14,6 +14,7 @@
             "lua"
             "python"
             "scss"
+            "nix"
             "tsx"
             "typescript"
           ];

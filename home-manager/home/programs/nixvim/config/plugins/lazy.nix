@@ -13,6 +13,7 @@
               require('nvim-surround').setup()
             end '';
         }
+        none-ls-nvim
         {
           pkg = nvim-treesitter;
           dependencies = [ { pkg = nvim-ts-autotag; } ];
