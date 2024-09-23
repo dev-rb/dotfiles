@@ -31,6 +31,8 @@ export JAVA_HOME=/usr/lib/jvm/jdk-20.0.2
 export PATH="$PATH:/mnt/c/Windows/System32"
 export ZSH=$HOME/dotfiles/.zsh
 export PATH="$PATH:/nix/var/nix/profiles/default/bin"
+export PATH="$PATH:/nix/var/nix/profiles/default/bin"
+export PATH=$PATH:~/.nix-profile/bin
 
 export NIX_PATH=$NIX_PATH:$HOME/.nix-defexpr/channels
 

@@ -26,9 +26,14 @@
     fnm
 
     # LSPs
-    # lua-language-server
-    # tailwindcss-language-server
-    # typescript-language-server
+    lua-language-server
+    tailwindcss-language-server
+    #unocss-language-server
+    typescript-language-server
+
+    # formatters
+    nixfmt-rfc-style
+    stylua
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the

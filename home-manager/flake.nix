@@ -14,14 +14,58 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    none-ls-extras = {
+      url = "github:nvimtools/none-ls-extras.nvim";
+      flake = false;
+    };
+    vesper-nvim = {
+      url = "github:datsfilipe/vesper.nvim";
+      flake = false;
+    };
+
+    night-nvim = {
+      url = "github:NightCS/night.nvim";
+      flake = false;
+    };
+    everblush-nvim = {
+      url = "github:Everblush/nvim";
+      flake = false;
+    };
+    horizon-nvim = {
+      url = "github:LunarVim/horizon.nvim";
+      flake = false;
+    };
+    nvim-noirbuddy = {
+      url = "github:jesseleite/nvim-noirbuddy";
+      flake = false;
+    };
+    tokyodark-nvim = {
+      url = "github:tiagovla/tokyodark.nvim";
+      flake = false;
+    };
+    telescope-recent-files = {
+      url = "github:mollerhoj/telescope-recent-files.nvim";
+      flake = false;
+    };
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, ... }:
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      nixvim,
+      ...
+    }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ (import ./overlays.nix inputs) ];
+      };
+    in
+    {
+
       nix.extraOptions = ''
         auto-optimise-store = true
         experimental-features = nix-command flakes
@@ -32,9 +76,9 @@
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [ 
+        modules = [
           nixvim.homeManagerModules.nixvim
-          ./home/home.nix 
+          ./home/home.nix
         ];
 
         # Optionally use extraSpecialArgs

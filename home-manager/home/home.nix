@@ -31,7 +31,7 @@
   };
 
   # users.users.defaultUserShell = pkgs.zsh;
-  
+
   imports = [
     ./packages.nix
     ./programs/general.nix
