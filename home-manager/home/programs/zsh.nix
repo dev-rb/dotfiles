@@ -6,6 +6,14 @@
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    historySubstringSearch.enable = true;
+
+    history = {
+      ignoreAllDups = true;
+      ignoreDups = true;
+      ignoreSpace = true;
+    };
+
     plugins = [
       # {
       #    name = "fzf-tab";
