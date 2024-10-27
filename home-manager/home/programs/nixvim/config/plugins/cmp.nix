@@ -59,7 +59,7 @@
               "menu"
             ];
             format.__raw = ''
-              function(_, item)
+              function(entry, item)
                 -- https://github.com/NvChad/ui/blob/v2.5/lua/nvchad/icons/lspkind.lua
                 local lspkind = {
                   Namespace = "󰌗",
@@ -107,6 +107,24 @@
                 local icons = lspkind
                 local icon = icons[item.kind] or ""
 
+                -- print(item.kind, vim.inspect(entry:get_completion_item().documentation))
+                --
+                --
+                -- if (item.kind == 'Color' or item.kind == 'Constant') and entry.completion_item.documentation then
+                --   local _, _, r, g, b = string.find(entry.completion_item.documentation, '^rgb%((%d+),? (%d+),? (%d+)')
+                --   print(r, g, b)
+                --   if r then
+                --     local color = string.format('%02x', r) .. string.format('%02x', g) ..string.format('%02x', b)
+                --     local group = 'Tw_' .. color
+                --     if vim.fn.hlID(group) < 1 then
+                --       vim.api.nvim_set_hl(0, group, {fg = '#' .. color})
+                --     end
+                --     item.kind = "■" -- or "⬤" or anything
+                --     item.kind_hl_group = group
+                --     return item
+                --   end
+                -- end
+
                 -- if cmp_style == "atom" or cmp_style == "atom_colored" then
                 --   icon = " " .. icon .. " "
                 --   item.menu = cmp_ui.lspkind_text and "   (" .. item.kind .. ")" or ""
@@ -115,7 +133,8 @@
                   icon = (" " .. icon .. " ") 
                   item.kind = string.format("%s %s", icon, item.kind or "")
                 -- end
-                return item
+                
+                return require("nvim-highlight-colors").format(entry, item)
               end
             '';
 

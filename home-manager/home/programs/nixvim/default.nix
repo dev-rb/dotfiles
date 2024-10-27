@@ -67,6 +67,7 @@
     };
 
     extraPlugins = with pkgs.vimPlugins; [
+      nvim-highlight-colors
       #nvim-web-devicons
       # smart-splits-nvim
       #cmp-tailwind-colors
@@ -82,7 +83,12 @@
       #markdown
     ];
 
-    extraConfigLua = '''';
+    extraConfigLua = ''
+      vim.opt.termguicolors = true
+      require('nvim-highlight-colors').setup({
+        enable_tailwind = true
+      })
+    '';
 
     extraFiles = {
       "lua/local-term.lua".text = builtins.readFile ./config/lua/local-term/init.lua;

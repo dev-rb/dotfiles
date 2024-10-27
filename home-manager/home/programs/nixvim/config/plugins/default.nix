@@ -11,7 +11,7 @@
     ./lazy.nix
     ./lsp.nix
     ./lualine.nix
-    ./none-ls.nix
+    # ./none-ls.nix
     ./nvim-tree.nix
     ./oil.nix
     ./persistence.nix

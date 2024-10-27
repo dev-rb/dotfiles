@@ -13,7 +13,7 @@
               require('nvim-surround').setup()
             end '';
         }
-        none-ls-nvim
+        # none-ls-nvim
         {
           pkg = nvim-treesitter;
           dependencies = [ { pkg = nvim-ts-autotag; } ];
@@ -37,7 +37,7 @@
         }
         {
           pkg = nvim-cmp;
-          event = [ "InsertEnter" ];
+          # event = [ "InsertEnter" ];
           dependencies = [
             nvim-lspconfig
             cmp-nvim-lsp

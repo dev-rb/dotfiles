@@ -27,7 +27,7 @@
             };
           };
         };
-        tailwindcss.enable = false;
+        tailwindcss.enable = true;
         cssls.enable = true;
         html.enable = true;
         lua-ls = {
