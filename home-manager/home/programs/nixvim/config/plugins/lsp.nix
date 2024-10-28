@@ -42,20 +42,24 @@
             };
           };
         };
-        # eslint = {
-        #   enable = true;
-        #   extraOptions = {
-        #     on_attach.__raw = # lua
-        #       ''
-        #         function(_, bufnr)
-        #           vim.api.nvim_create_autocmd('BufWritePre', {
-        #             buffer = bufnr,
-        #             command = 'EslintFixAll',
-        #           })
-        #         end
-        #       '';
-        #   };
-        # };
+        eslint = {
+          enable = true;
+          extraOptions = {
+            settings = {
+              codeActionsOnSave.enable = true;
+              experimental.useFlatConfig = true;
+            };
+            on_attach.__raw = # lua
+              ''
+                function(_, bufnr)
+                  vim.api.nvim_create_autocmd('BufWritePre', {
+                    buffer = bufnr,
+                    command = 'EslintFixAll',
+                  })
+                end
+              '';
+          };
+        };
         elixirls = {
           enable = true;
           cmd = [ "elixir-ls" ];
