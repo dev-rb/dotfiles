@@ -36,7 +36,7 @@
     ./packages.nix
     ./programs/general.nix
     ./programs/zsh.nix
-    ./programs/nixvim
+    ./programs/neovim.nix
   ];
 
   # Home Manager can also manage your environment variables through
