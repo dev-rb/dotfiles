@@ -36,3 +36,5 @@ end)
 map("n", "<C-l>", function()
   require("smart-splits").move_cursor_right()
 end)
+
+map("n", "<leader>lr", "<cmd> LspRestart <CR>")
