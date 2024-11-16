@@ -7,6 +7,7 @@
     ".config/nvim" = {
       source = ../../../nvim;
       recursive = true;
+      onChange = "install -Dm777 ~/dotfiles/nvim/lua/chadrc.lua ~/.config/nvim/lua/chadrc.lua";
     };
   };
 }
