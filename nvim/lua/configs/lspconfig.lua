@@ -17,11 +17,64 @@ for _, lsp in ipairs(servers) do
 end
 
 -- configuring single server, example: typescript
-lspconfig.ts_ls.setup {
+-- lspconfig.ts_ls.setup {
+--   on_attach = nvlsp.on_attach,
+--   on_init = nvlsp.on_init,
+--   capabilities = nvlsp.capabilities,
+-- }
+
+-- https://github.com/yioneko/vtsls
+-- npm install -g @vtsls/language-server
+-- pnpm add -g @vtsls/language-server
+lspconfig.vtsls.setup {
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
 }
+
+lspconfig.eslint.setup {
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+  on_attach = function(client, bufnr)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      command = "EslintFixAll",
+    })
+  end,
+  settings = {
+    codeAction = {
+      disableRuleComment = {
+        enable = true,
+        location = "separateLine",
+      },
+      showDocumentation = {
+        enable = true,
+      },
+    },
+    codeActionOnSave = {
+      enable = false,
+      mode = "all",
+    },
+    experimental = {
+      useFlatConfig = false,
+    },
+    format = true,
+    nodePath = "",
+    onIgnoredFiles = "off",
+    problems = {
+      shortenToSingleLine = false,
+    },
+    quiet = false,
+    rulesCustomizations = {},
+    run = "onType",
+    useESLintClass = false,
+    validate = "on",
+    workingDirectory = {
+      mode = "location",
+    },
+  },
+}
+
 lspconfig.unocss.setup {
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
