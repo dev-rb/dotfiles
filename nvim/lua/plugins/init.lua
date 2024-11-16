@@ -110,6 +110,32 @@ return {
     },
   },
 
+  {
+    "nvim-telescope/telescope-ui-select.nvim",
+    version = "*",
+  },
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = {
+      "nvim-telescope/telescope-ui-select.nvim",
+    },
+    opts = function(_, conf)
+      conf.extensions_list = { "themes", "terms", "ui-select" }
+
+      require("telescope").setup {
+        extensions = {
+          ["ui-select"] = {
+            require("telescope.themes").get_cursor {},
+            specific_opts = {
+              codeactions = true,
+            },
+          },
+        },
+      }
+      require("telescope").load_extension "ui-select"
+    end,
+  },
+
   -- {
   -- 	"nvim-treesitter/nvim-treesitter",
   -- 	opts = {
