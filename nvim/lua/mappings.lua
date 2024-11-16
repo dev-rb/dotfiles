@@ -38,3 +38,7 @@ map("n", "<C-l>", function()
 end)
 
 map("n", "<leader>lr", "<cmd> LspRestart <CR>")
+
+map("n", "<leader>f", function()
+  vim.diagnostic.open_float { border = "rounded" }
+end)
