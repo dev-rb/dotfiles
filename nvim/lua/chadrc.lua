@@ -22,4 +22,10 @@ M.ui = {
   statusline = { theme = "minimal" },
 }
 
+M.lsp = {
+  signature = true,
+}
+
+M.colorify = { highlight = { lspvars = false } }
+
 return M
