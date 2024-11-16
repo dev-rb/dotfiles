@@ -3,13 +3,13 @@
     plugins.conform-nvim = {
       enable = true;
       notifyOnError = true;
-      formatOnSave = # lua
+      formatAfterSave = # lua
         ''
           function(bufnr)
             if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
               return
             end
-            return { timeout_ms = 1500, lsp_fallback = false }
+            return { timeout_ms = 1500, lsp_fallback = true }
           end
         '';
       formattersByFt = {
@@ -18,19 +18,19 @@
         nix = [ "nixfmt" ];
         javascript = [
           "biome"
-          "prettier"
+          "prettierd"
         ];
         javascriptreact = [
           "biome"
-          "prettier"
+          "prettierd"
         ];
         typescript = [
           "biome"
-          "prettier"
+          "prettierd"
         ];
         typescriptreact = [
           "biome"
-          "prettier"
+          "prettierd"
         ];
       };
     };
