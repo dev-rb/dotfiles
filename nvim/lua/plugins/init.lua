@@ -12,7 +12,24 @@ return {
       require "configs.lspconfig"
     end,
   },
-
+  {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup {
+        -- Configuration here, or leave empty to use defaults
+      }
+    end,
+  },
+  {
+    "echasnovski/mini.cursorword",
+    lazy = false,
+    version = "*",
+    config = function(_, opts)
+      require("mini.cursorword").setup(opts)
+    end,
+  },
   {
     "folke/persistence.nvim",
     event = "BufReadPre", -- this will only start session saving when an actual file was opened
