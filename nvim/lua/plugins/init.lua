@@ -40,11 +40,12 @@ return {
   {
     "mrjones2014/smart-splits.nvim",
     lazy = false,
-    opts = {
-      at_edge = "stop",
-      multiplexer = "wezterm",
-      disable_multiplexer_nav_when_zoomed = false,
-    },
+    config = function(_, opts)
+      require("smart-splits").setup {
+        at_edge = "stop",
+        disable_multiplexer_nav_when_zoomed = false,
+      }
+    end,
   },
 
   {
@@ -71,7 +72,12 @@ return {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
       "windwp/nvim-ts-autotag",
-      "JoosepAlviste/nvim-ts-context-commentstring",
+      {
+        "JoosepAlviste/nvim-ts-context-commentstring",
+        config = function()
+          require("ts_context_commentstring").setup {}
+        end,
+      },
       "nvim-treesitter/nvim-treesitter-textobjects",
     },
     opts = {
@@ -91,10 +97,6 @@ return {
       },
 
       indent = { enable = true },
-      context_commentstring = {
-        enable = true,
-        enable_autocmd = false,
-      },
       autotag = {
         enable = true,
       },

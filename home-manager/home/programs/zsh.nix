@@ -30,6 +30,7 @@
       cat = "bat";
       # Windows path for explorer
       explorer = "/mnt/c/Windows/explorer.exe";
+      wezterm = "/mnt/c/Program\\ Files/WezTerm/wezterm.exe";
     };
 
     defaultKeymap = "emacs";
@@ -52,6 +53,7 @@
 
       export PATH="/home/dev-rb/.local/share/fnm:$PATH"
       export PATH="$PATH:/mnt/e/WezTerm/"
+      export PATH=$PATH:"/mnt/c/Program Files/WezTerm/"
 
       eval "`fnm env`"
 

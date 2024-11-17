@@ -10,3 +10,5 @@ o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease
 o.foldlevelstart = 99
 o.foldenable = true
 o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+
+vim.g.skip_ts_context_commentstring_module = true
