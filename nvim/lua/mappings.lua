@@ -3,6 +3,8 @@ require "nvchad.mappings"
 -- add yours here
 
 local map = vim.keymap.set
+vim.keymap.del("n", "<Tab>")
+vim.keymap.del("n", "<S-Tab>")
 
 map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
