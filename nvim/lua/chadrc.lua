@@ -23,7 +23,11 @@ M.ui = {
     enabled = false,
   },
   cmp = { format_colors = { tailwind = true }, icons_left = true, icons = true },
-  statusline = { theme = "minimal" },
+  statusline = {
+    theme = "vscode_colored",
+    separator_style = "round",
+    order = { "mode", "file", "git", "%=", "lsp_msg", "%=", "diagnostics", "lsp", "cwd" },
+  },
 }
 
 M.lsp = {
