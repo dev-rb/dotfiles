@@ -8,17 +8,21 @@ local M = {}
 M.base46 = {
   theme = "onedark",
 
-  -- hl_override = {
-  -- 	Comment = { italic = true },
-  -- 	["@comment"] = { italic = true },
-  -- },
+  hl_override = {
+    IblScopeChar = { underline = false, link = "Visual" },
+  },
+  hl_add = {
+    ["IlluminatedWordText"] = { link = "Visual", underline = false },
+    ["IlluminatedWordRead"] = { link = "Visual", underline = false },
+    ["IlluminatedWordWrite"] = { link = "Visual", underline = false },
+  },
 }
 
 M.ui = {
   tabufline = {
     enabled = false,
   },
-  cmp = { format_colors = { tailwind = true }, icons_left = true },
+  cmp = { format_colors = { tailwind = true }, icons_left = true, icons = true },
   statusline = { theme = "minimal" },
 }
 

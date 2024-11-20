@@ -22,14 +22,7 @@ return {
       }
     end,
   },
-  {
-    "echasnovski/mini.cursorword",
-    lazy = false,
-    version = "*",
-    config = function(_, opts)
-      require("mini.cursorword").setup(opts)
-    end,
-  },
+
   {
     "folke/persistence.nvim",
     event = "BufReadPre", -- this will only start session saving when an actual file was opened
@@ -37,10 +30,11 @@ return {
       -- add any custom options here
     },
   },
+
   {
     "mrjones2014/smart-splits.nvim",
     lazy = false,
-    config = function(_, opts)
+    config = function()
       require("smart-splits").setup {
         at_edge = "stop",
         disable_multiplexer_nav_when_zoomed = false,
@@ -102,8 +96,6 @@ return {
         enable = true,
         use_languagetree = true,
       },
-
-      indent = { enable = true },
       textobjects = {
         move = {
           enable = true,
@@ -113,6 +105,13 @@ return {
           goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer" },
         },
       },
+    },
+  },
+
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    opts = {
+      scope = { enabled = false },
     },
   },
 
@@ -141,14 +140,37 @@ return {
       require("telescope").load_extension "ui-select"
     end,
   },
-
-  -- {
-  -- 	"nvim-treesitter/nvim-treesitter",
-  -- 	opts = {
-  -- 		ensure_installed = {
-  -- 			"vim", "lua", "vimdoc",
-  --      "html", "css"
-  -- 		},
-  -- 	},
-  -- },
+  {
+    "RRethy/vim-illuminate",
+    event = { "CursorHold", "CursorHoldI" },
+    dependencies = "nvim-treesitter",
+    config = function()
+      require("illuminate").configure {
+        under_cursor = true,
+        max_file_lines = nil,
+        delay = 100,
+        providers = {
+          "lsp",
+          "treesitter",
+          "regex",
+        },
+        filetypes_denylist = {
+          "NvimTree",
+          "Trouble",
+          "Outline",
+          "TelescopePrompt",
+          "Empty",
+          "dirvish",
+          "fugitive",
+          "alpha",
+          "packer",
+          "neogitstatus",
+          "spectre_panel",
+          "toggleterm",
+          "DressingSelect",
+          "aerial",
+        },
+      }
+    end,
+  },
 }
