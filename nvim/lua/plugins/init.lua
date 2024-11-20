@@ -69,9 +69,16 @@ return {
   },
 
   {
+    "windwp/nvim-ts-autotag",
+    lazy = false,
+    config = function(_, opts)
+      require("nvim-ts-autotag").setup(opts)
+    end,
+  },
+
+  {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
-      "windwp/nvim-ts-autotag",
       {
         "JoosepAlviste/nvim-ts-context-commentstring",
         config = function()
@@ -97,9 +104,6 @@ return {
       },
 
       indent = { enable = true },
-      autotag = {
-        enable = true,
-      },
       textobjects = {
         move = {
           enable = true,
