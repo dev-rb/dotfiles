@@ -5,26 +5,30 @@ local options = {
     html = { "prettier" },
     nix = { "nixfmt" },
     javascript = {
-      "biome",
       "prettierd",
+      "biome",
+      stop_after_first = true
     },
     javascriptreact = {
-      "biome",
       "prettierd",
+      "biome",
+      stop_after_first = true
     },
     typescript = {
-      "biome",
       "prettierd",
+      "biome",
+      stop_after_first = true
     },
     typescriptreact = {
-      "biome",
       "prettierd",
+      "biome",
+      stop_after_first = true
     },
   },
 
-  format_on_save = {
+  format_after_save = {
     -- These options will be passed to conform.format()
-    timeout_ms = 500,
+    timeout_ms = 2500,
     lsp_fallback = true,
   },
 }
