@@ -5,6 +5,8 @@ require "nvchad.options"
 local o = vim.o
 -- o.cursorlineopt ='both' -- to enable cursorline!
 
+o.shell = "/bin/zsh"
+
 o.foldcolumn = "0"
 o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 o.foldlevelstart = 99

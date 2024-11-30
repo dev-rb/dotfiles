@@ -32,15 +32,16 @@ lspconfig.vtsls.setup {
   capabilities = nvlsp.capabilities,
 }
 
+lspconfig.tailwindcss.setup {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+}
+
 lspconfig.eslint.setup {
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
-  on_attach = function(client, bufnr)
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      buffer = bufnr,
-      command = "EslintFixAll",
-    })
-  end,
+  on_attach = nvlsp.on_attach,
   settings = {
     codeAction = {
       disableRuleComment = {
@@ -51,14 +52,10 @@ lspconfig.eslint.setup {
         enable = true,
       },
     },
-    codeActionOnSave = {
-      enable = false,
-      mode = "all",
-    },
     experimental = {
       useFlatConfig = false,
     },
-    format = true,
+    format = false,
     nodePath = "",
     onIgnoredFiles = "off",
     problems = {
@@ -66,7 +63,7 @@ lspconfig.eslint.setup {
     },
     quiet = false,
     rulesCustomizations = {},
-    run = "onType",
+    run = "onSave",
     useESLintClass = false,
     validate = "on",
     workingDirectory = {
