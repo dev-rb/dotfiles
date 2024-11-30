@@ -10,6 +10,9 @@ map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
 map("n", "<C-c>", "<ESC>")
 
+map(["n", "x"], "k", "gk")
+map(["n", "x"], "j", "gj")
+
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
 
