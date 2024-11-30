@@ -8,7 +8,7 @@ vim.keymap.del("n", "<S-Tab>")
 
 map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
-map("n", "<C-c>", "<ESC>")
+map({ "n", "i", "v" }, "<C-c>", "<ESC>")
 
 map(["n", "x"], "k", "gk")
 map(["n", "x"], "j", "gj")
