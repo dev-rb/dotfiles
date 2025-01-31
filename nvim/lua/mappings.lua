@@ -47,3 +47,8 @@ map("n", "<leader>lr", "<cmd> LspRestart <CR>")
 map("n", "<leader>f", function()
   vim.diagnostic.open_float { border = "rounded" }
 end)
+
+map("n", "<leader>zn", function()
+  require("focus").toggle {}
+  require("focus").toggle_zen {}
+end)

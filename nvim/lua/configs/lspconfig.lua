@@ -17,10 +17,18 @@ for _, lsp in ipairs(servers) do
 end
 
 -- configuring single server, example: typescript
--- lspconfig.ts_ls.setup {
---   on_attach = nvlsp.on_attach,
---   on_init = nvlsp.on_init,
---   capabilities = nvlsp.capabilities,
+lspconfig.ts_ls.setup {
+  enabled = false,
+}
+
+lspconfig.jsonls.setup {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+}
+
+-- lspconfig.tsserver.setup {
+--   enabled = false,
 -- }
 
 -- https://github.com/yioneko/vtsls
@@ -30,47 +38,79 @@ lspconfig.vtsls.setup {
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx",
+  },
+  settings = {
+    typescript = {
+      maxTsServerMemory = 8192,
+      useSeparateSyntaxServer = false,
+      useSyntaxServer = "never",
+    },
+    vtsls = {
+      experimental = {
+        completion = {
+          enableServerSideFuzzyMatch = true,
+        },
+      },
+    },
+  },
 }
 
 lspconfig.tailwindcss.setup {
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
-}
-
-lspconfig.eslint.setup {
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
-  on_attach = nvlsp.on_attach,
   settings = {
-    codeAction = {
-      disableRuleComment = {
-        enable = true,
-        location = "separateLine",
+    tailwindCSS = {
+      experimental = {
+        classRegex = {
+          { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+          { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+        },
       },
-      showDocumentation = {
-        enable = true,
-      },
-    },
-    experimental = {
-      useFlatConfig = false,
-    },
-    format = false,
-    nodePath = "",
-    onIgnoredFiles = "off",
-    problems = {
-      shortenToSingleLine = false,
-    },
-    quiet = false,
-    rulesCustomizations = {},
-    run = "onSave",
-    useESLintClass = false,
-    validate = "on",
-    workingDirectory = {
-      mode = "location",
     },
   },
 }
+
+-- lspconfig.eslint.setup {
+--   on_init = nvlsp.on_init,
+--   capabilities = nvlsp.capabilities,
+--   on_attach = nvlsp.on_attach,
+--   settings = {
+--     codeAction = {
+--       disableRuleComment = {
+--         enable = true,
+--         location = "separateLine",
+--       },
+--       showDocumentation = {
+--         enable = true,
+--       },
+--     },
+--     experimental = {
+--       useFlatConfig = false,
+--     },
+--     format = false,
+--     nodePath = "",
+--     onIgnoredFiles = "off",
+--     problems = {
+--       shortenToSingleLine = false,
+--     },
+--     quiet = false,
+--     rulesCustomizations = {},
+--     run = "onSave",
+--     useESLintClass = false,
+--     validate = "on",
+--     workingDirectory = {
+--       mode = "location",
+--     },
+--   },
+-- }
 
 lspconfig.unocss.setup {
   on_attach = nvlsp.on_attach,
