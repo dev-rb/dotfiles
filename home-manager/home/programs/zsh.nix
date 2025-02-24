@@ -31,6 +31,8 @@
       # Windows path for explorer
       explorer = "/mnt/c/Windows/explorer.exe";
       wezterm = "/mnt/c/Program\\ Files/WezTerm/wezterm.exe";
+      gcf = "git checkout $(git branch --list | fzf)";
+      gs = "git status";
     };
 
     defaultKeymap = "emacs";
@@ -63,6 +65,8 @@
         *) export PATH="$PNPM_HOME:$PATH" ;;
       esac
 
+      export GOPATH="/home/dev-rb/go/bin"
+      alias air='$(go env GOPATH)/bin/air'
       source ~/wezterm.sh
 
     '';
