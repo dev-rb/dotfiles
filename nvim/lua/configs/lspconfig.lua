@@ -126,3 +126,5 @@ lspconfig.unocss.setup {
     )(fname)
   end,
 }
+
+lspconfig.biome.setup {}

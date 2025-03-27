@@ -73,6 +73,18 @@ M.setup = function()
       },
     },
 
+    formatters = {
+      prettier = {
+        require_cwd = true,
+      },
+      prettierd = {
+        require_cwd = true,
+      },
+      biome = {
+        require_cwd = true,
+      },
+    },
+
     format_after_save = function()
       local conform = require "conform"
       local formatters = conform.list_formatters(0)
@@ -80,7 +92,7 @@ M.setup = function()
 
       if #formatters == 0 then
         -- vim.print("Formatted with lsp", vim.log.levels.WARN)
-        return { async = false, lsp_format = "fallback", timeout_ms = 8000 }
+        return { lsp_format = "fallback", timeout_ms = 8000 }
       end
 
       local formatter_to_use = nil
@@ -97,7 +109,7 @@ M.setup = function()
       end
 
       -- vim.print("Formatted with " .. formatter_to_use, vim.log.levels.INFO)
-      return { async = false, lsp_format = "never", formatters = { formatter_to_use } }
+      return { lsp_format = "never", formatters = { formatter_to_use } }
     end,
   }
 
