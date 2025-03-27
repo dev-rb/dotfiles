@@ -53,8 +53,11 @@
       bindkey '^p' history-search-backward
       bindkey '^n' history-search-forward
 
+      export GOPATH="/home/dev-rb/go"
+
       export PATH="/home/dev-rb/.local/share/fnm:$PATH"
-      export PATH="$PATH:/mnt/e/WezTerm/"
+      export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+
       export PATH=$PATH:"/mnt/c/Program Files/WezTerm/"
 
       eval "`fnm env`"
@@ -65,7 +68,6 @@
         *) export PATH="$PNPM_HOME:$PATH" ;;
       esac
 
-      export GOPATH="/home/dev-rb/go/bin"
       alias air='$(go env GOPATH)/bin/air'
       source ~/wezterm.sh
 
