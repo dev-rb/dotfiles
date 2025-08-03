@@ -30,6 +30,9 @@
       cat = "bat";
       # Windows path for explorer
       explorer = "/mnt/c/Windows/explorer.exe";
+      wezterm = "/mnt/c/Program\\ Files/WezTerm/wezterm.exe";
+      gcf = "git checkout $(git branch --list | fzf)";
+      gs = "git status";
     };
 
     defaultKeymap = "emacs";
@@ -50,8 +53,12 @@
       bindkey '^p' history-search-backward
       bindkey '^n' history-search-forward
 
+      export GOPATH="/home/dev-rb/go"
+
       export PATH="/home/dev-rb/.local/share/fnm:$PATH"
-      export PATH="$PATH:/mnt/e/WezTerm/"
+      export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+
+      export PATH=$PATH:"/mnt/c/Program Files/WezTerm/"
 
       eval "`fnm env`"
 
@@ -61,6 +68,7 @@
         *) export PATH="$PNPM_HOME:$PATH" ;;
       esac
 
+      alias air='$(go env GOPATH)/bin/air'
       source ~/wezterm.sh
 
     '';
