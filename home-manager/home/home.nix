@@ -1,10 +1,10 @@
-{ config, pkgs, ... }:
+{ vars, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "dev-rb";
-  home.homeDirectory = "/home/dev-rb";
+  home.username = vars.username;
+  home.homeDirectory = "/home/${vars.username}";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -55,9 +55,7 @@
   #
   #  /etc/profiles/per-user/dev-rb/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
-    EDITOR = "nvim";
-  };
+  home.sessionVariables = { EDITOR = "nvim"; };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

@@ -12,10 +12,22 @@
 
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs:
+  # nix = { settings.experimental-features = [ "nix-command" "flakes" ]; };
+
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
+      inherit (self) outputs;
       pkgs = import nixpkgs { inherit system; };
+
+      HomeConfiguration = args:
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ ./home/home.nix ];
+          extraSpecialArgs = {
+            inherit (args) nixpkgs;
+          } // args.extraSpecialArgs;
+        };
     in {
 
       nix.extraOptions = ''
@@ -23,15 +35,39 @@
         experimental-features = nix-command flakes
       '';
 
-      homeConfigurations."dev-rb" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+      homeConfigurations = {
+        "arch" = HomeConfiguration {
+          extraSpecialArgs = {
+            vars = {
+              name = "arch";
+              username = "devrb";
+            };
+            inherit inputs outputs;
+          };
+          services.pipewire.enable = true;
+          services.pipewire.audio.enable = true;
+          services.pipewire.pulse.enable = true;
+          services.pipewire.alsa.enable = true;
+          services.pipewire.wireplumber.enable = true;
+          modules = [
+            (./arch/hyprland.nix)
+            (./arch/hypridle.nix)
+            (./arch/hyprlock.nix)
+          ];
+        };
 
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ ./home/home.nix ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
+        "wsl" = HomeConfiguration {
+          extraSpecialArgs = {
+            vars = {
+              name = "wsl";
+              username = "dev-rb";
+            };
+          };
+          modules = [ ];
+        };
       };
+
+      inherit home-manager;
+      inherit (home-manager) packages;
     };
 }

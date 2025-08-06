@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   programs.bat.enable = true;
@@ -22,7 +22,6 @@
     wget
 
     # javascript/typescript
-    pnpm
     fnm
 
     # LSPs
