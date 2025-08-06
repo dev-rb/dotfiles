@@ -1,10 +1,19 @@
 { pkgs, ... }:
 
 {
+  home.file = {
+    ".config/hypr/" = {
+      source = ../../hyprland;
+      recursive = true;
+      force = true;
+    };
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     package = pkgs.hyprland;
     settings = {
+      monitor = ",1920x1200,auto,1,bitdepth,8";
       xwayland = { force_zero_scaling = true; };
 
       # Set programs that you use
@@ -69,8 +78,8 @@
         border_size = 0;
 
         # https://wiki.hyprland.org/Configuring/Variables/#variable-types for info about colors
-        col.active_border = "rgba(FFFFFF40)";
-        col.inactive_border = "rgba(59595940)";
+        "col.active_border" = "rgba(FFFFFF40)";
+        "col.inactive_border" = "rgba(59595940)";
 
         # Set to true enable resizing windows by clicking and dragging on borders and gaps
         resize_on_border = true;
@@ -99,7 +108,7 @@
           enabled = false;
           range = 4;
           render_power = 3;
-          color = "rgba(1 a1a1aee)";
+          color = "rgba(1a1a1aee)";
         };
 
         # https://wiki.hyprland.org/Configuring/Variables/#blur

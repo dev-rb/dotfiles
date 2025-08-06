@@ -1,0 +1,30 @@
+{
+    "layer": "bottom",
+    "position": "top",
+    "margin": "0 0 0 0",
+    "fixed-center": true,
+    "reload_style_on_change": true,
+    // "mode": "overlay",
+    "passtrough": true,
+
+    "include": ["~/.config/waybar/modules.jsonc"],
+
+    "modules-left": [
+      "hyprland/window",
+      "group/apps"
+      
+    ],
+    
+    "modules-center": [
+      // "group/info",
+      "hyprland/workspaces"
+      // "group/utils"
+      
+    ],
+  
+    "modules-right": [
+      "group/video",
+      "clock",
+      "group/power"
+    ]
+  }

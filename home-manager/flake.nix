@@ -23,7 +23,7 @@
       HomeConfiguration = args:
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ ./home/home.nix ];
+          modules = [ ./home/home.nix ] ++ args.modules or [ ];
           extraSpecialArgs = {
             inherit (args) nixpkgs;
           } // args.extraSpecialArgs;
@@ -49,11 +49,8 @@
           services.pipewire.pulse.enable = true;
           services.pipewire.alsa.enable = true;
           services.pipewire.wireplumber.enable = true;
-          modules = [
-            (./arch/hyprland.nix)
-            (./arch/hypridle.nix)
-            (./arch/hyprlock.nix)
-          ];
+          modules =
+            [ ./arch/hyprland.nix ./arch/hypridle.nix ./arch/hyprlock.nix ];
         };
 
         "wsl" = HomeConfiguration {
