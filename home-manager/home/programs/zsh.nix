@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ vars, ... }:
 
 {
   programs.zsh = {
@@ -29,8 +29,8 @@
       ls = "eza --icons=always";
       cat = "bat";
       # Windows path for explorer
-      explorer = "/mnt/c/Windows/explorer.exe";
-      wezterm = "/mnt/c/Program\\ Files/WezTerm/wezterm.exe";
+      # explorer = "/mnt/c/Windows/explorer.exe";
+      # wezterm = "/mnt/c/Program\\ Files/WezTerm/wezterm.exe";
       gcf = "git checkout $(git branch --list | fzf)";
       gs = "git status";
     };
@@ -39,30 +39,34 @@
 
     # zprof.enable = true;
 
-    completionInit = "
+    completionInit = ''
       autoload -Uz compinit
 
       for dump in ~/.zcompdump(N.mh+24); do
         compinit
       done
       compinit -C
-    ";
+    '';
 
-    initExtra = ''
+    initContent = ''
       eval "$(oh-my-posh init zsh --config ~/dotfiles/pure.omp.json)"
       bindkey '^p' history-search-backward
       bindkey '^n' history-search-forward
 
-      export GOPATH="/home/dev-rb/go"
+      export GOPATH="/home/${vars.username}/go"
 
-      export PATH="/home/dev-rb/.local/share/fnm:$PATH"
+      export PATH="/home/${vars.username}/.local/share/fnm:$PATH"
       export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
-      export PATH=$PATH:"/mnt/c/Program Files/WezTerm/"
+      export BUN_INSTALL="$HOME/.bun"
+      export PAGER=cat
+      export PATH="$BUN_INSTALL/bin:$PATH"
+
+      # export PATH=$PATH:"/mnt/c/Program Files/WezTerm/"
 
       eval "`fnm env`"
 
-      export PNPM_HOME="/home/dev-rb/.local/share/pnpm"
+      export PNPM_HOME="/home/${vars.username}/.local/share/pnpm"
       case ":$PATH:" in
         *":$PNPM_HOME:"*) ;;
         *) export PATH="$PNPM_HOME:$PATH" ;;
