@@ -10,6 +10,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hyprland = {
+      type = "git";
+      url = "https://github.com/hyprwm/hyprland";
+      submodules = true;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   # nix = { settings.experimental-features = [ "nix-command" "flakes" ]; };

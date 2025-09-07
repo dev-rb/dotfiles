@@ -11,7 +11,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    package = pkgs.hyprland;
+    package = null;
     settings = {
       monitor = ",1920x1200,auto,1,bitdepth,8";
       xwayland = { force_zero_scaling = true; };
@@ -27,6 +27,7 @@
         "HYPRCURSOR_SIZE,10"
         "LIBVA_DRIVER_NAME,nvidia"
         "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+        "AQ_DRM_DEVICES,/dev/dri/card0:/dev/dri/card1"
         # Force all apps to use Wayland
         "GDK_BACKEND,wayland"
         "QT_QPA_PLATFORM,wayland"
@@ -35,6 +36,7 @@
         "MOZ_ENABLE_WAYLAND,1"
         "ELECTRON_OZONE_PLATFORM_HINT,wayland"
         "OZONE_PLATFORM,wayland"
+        "QT_QPA_PLATFORMTHEME,qt6ct" # for Qt apps# Theme
 
         # Make Chromium use XCompose and all Wayland
         ''
