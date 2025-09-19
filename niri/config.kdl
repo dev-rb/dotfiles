@@ -1,0 +1,159 @@
+spawn-at-startup "waybar"
+spawn-at-startup "dunst"
+spawn-at-startup "swww-daemon"
+spawn-sh-at-startup "vicinae server"
+spawn-sh-at-startup "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'" // for GTK4 apps
+spawn-sh-at-startup "gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3'" // for GTK3 apps
+spawn-sh-at-startup "~/.config/scripts/wallpapers.sh"
+
+
+prefer-no-csd
+hotkey-overlay {
+    skip-at-startup
+}
+input {
+    keyboard {
+        xkb {
+            layout ""
+            model ""
+            rules ""
+            variant ""
+        }
+        repeat-delay 300
+        repeat-rate 50
+        track-layout "global"
+    }
+    touchpad {
+        left-handed
+        tap
+        dwt
+        natural-scroll
+        click-method "clickfinger"
+    }
+    mouse { left-handed; }
+    trackpoint { left-handed; }
+    trackball { left-handed; }
+    focus-follows-mouse
+}
+output "eDP-1" {
+    scale 1.0
+    transform "normal"
+}
+layout {
+    gaps 16
+    struts {
+        left 0
+        right 0
+        top 0
+        bottom 0
+    }
+    focus-ring { 
+        width 2; 
+        active-color "rgba(255 255 255 0.4)"; 
+        inactive-color "rgba(59 59 59 0.4)";
+    }
+    border { off; }
+    default-column-width
+    center-focused-column "never"
+}
+cursor {
+    xcursor-theme "default"
+    xcursor-size 24
+    hide-after-inactive-ms 5000
+}
+binds {
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+B { spawn "firefox"; }
+    Mod+BracketLeft { consume-or-expel-window-left; }
+    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+C { center-column; }
+    Mod+Comma { consume-window-into-column; }
+    Mod+Ctrl+Down { focus-monitor-down; }
+    Mod+Ctrl+H { focus-monitor-left; }
+    Mod+Ctrl+J { focus-monitor-down; }
+    Mod+Ctrl+K { focus-monitor-up; }
+    Mod+Ctrl+L { focus-monitor-right; }
+    Mod+Ctrl+Left { focus-monitor-left; }
+    Mod+Ctrl+R { reset-window-height; }
+    Mod+Ctrl+Right { focus-monitor-right; }
+    Mod+Ctrl+Shift+Down { move-column-to-monitor-down; }
+    Mod+Ctrl+Shift+H { move-column-to-monitor-left; }
+    Mod+Ctrl+Shift+J { move-column-to-monitor-down; }
+    Mod+Ctrl+Shift+K { move-column-to-monitor-up; }
+    Mod+Ctrl+Shift+L { move-column-to-monitor-right; }
+    Mod+Ctrl+Shift+Left { move-column-to-monitor-left; }
+    Mod+Ctrl+Shift+Right { move-column-to-monitor-right; }
+    Mod+Ctrl+Shift+Up { move-column-to-monitor-up; }
+    Mod+Ctrl+Up { focus-monitor-up; }
+    Mod+Down { focus-window-or-workspace-down; }
+    Mod+E { spawn "bash" "-c" "tofi-run | xargs niri msg action spawn --"; }
+    Mod+Equal { set-column-width "+10%"; }
+    Mod+F { maximize-column; }
+    Mod+H { focus-column-left; }
+    Mod+I { focus-workspace-up; }
+    Mod+J { focus-window-or-workspace-down; }
+    Mod+K { focus-window-or-workspace-up; }
+    Mod+L { focus-column-right; }
+    Mod+Left { focus-column-left; }
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Period { expel-window-from-column; }
+    Mod+Q { close-window; }
+    Mod+R { switch-preset-column-width; }
+    Mod+Return { spawn "wezterm"; }
+    Mod+Right { focus-column-right; }
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+    Mod+Shift+Ctrl+R { reset-window-height; }
+    Mod+Shift+Down { move-window-down-or-to-workspace-down; }
+    Mod+Shift+E { quit; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+    Mod+Shift+F { fullscreen-window; }
+    Mod+Shift+H { move-column-left; }
+    Mod+Shift+I { move-column-to-workspace-up; }
+    Mod+Shift+J { move-window-down-or-to-workspace-down; }
+    Mod+Shift+K { move-window-up-or-to-workspace-up; }
+    Mod+Shift+L { move-column-right; }
+    Mod+Shift+Left { move-column-left; }
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+R { switch-preset-window-height; }
+    Mod+Shift+Right { move-column-right; }
+    Mod+Shift+Slash { show-hotkey-overlay; }
+    Mod+Shift+U { move-column-to-workspace-down; }
+    Mod+Shift+Up { move-window-up-or-to-workspace-up; }
+    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+    Mod+Shift+WheelScrollDown { focus-window-or-workspace-down; }
+    Mod+Shift+WheelScrollUp { focus-window-or-workspace-up; }
+    Mod+Tab { toggle-overview; }
+    Mod+U { focus-workspace-down; }
+    Mod+Up { focus-window-or-workspace-up; }
+    Mod+V { toggle-window-floating; }
+    Mod+W { toggle-column-tabbed-display; }
+    Mod+WheelScrollDown { focus-column-right; }
+    Mod+WheelScrollUp { focus-column-left; }
+    Mod+Escape { spawn  "hyprlock"; }
+    Alt+Space { spawn  "vicinae"; }
+    Print { screenshot-screen; }
+    Shift+Print { screenshot; }
+    XF86AudioLowerVolume { spawn-sh "sh $HOME/.config/scripts/volume.sh down"; }
+    XF86AudioRaiseVolume { spawn-sh "sh $HOME/.config/scripts/volume.sh up"; }
+    XF86AudioMute { spawn-sh "$HOME/.config/scripts/volume.sh mute"; }
+    XF86Favorites { toggle-overview; }
+    XF86HangupPhone { toggle-overview; }
+    XF86MonBrightnessDown { spawn-sh "sh $HOME/.config/scripts/brightness.sh down"; }
+    XF86MonBrightnessUp { spawn-sh "sh $HOME/.config/scripts/brightness.sh up"; }
+}

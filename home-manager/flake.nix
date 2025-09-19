@@ -17,11 +17,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    niri.url = "github:sodiboo/niri-flake";
+
   };
 
   # nix = { settings.experimental-features = [ "nix-command" "flakes" ]; };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, niri, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
       inherit (self) outputs;
@@ -56,8 +58,14 @@
           services.pipewire.pulse.enable = true;
           services.pipewire.alsa.enable = true;
           services.pipewire.wireplumber.enable = true;
-          modules =
-            [ ./arch/hyprland.nix ./arch/hypridle.nix ./arch/hyprlock.nix ];
+          modules = [
+            niri.homeModules.niri
+            ./arch/hyprland.nix
+            ./arch/hypridle.nix
+            ./arch/hyprlock.nix
+            ./arch/niri.nix
+            ./arch/scripts.nix
+          ];
         };
 
         "wsl" = HomeConfiguration {
