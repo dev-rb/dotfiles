@@ -1,16 +1,8 @@
 { pkgs, ... }:
 
 {
-  home.file = {
-    ".config/hypr/" = {
-      source = ../../hyprland;
-      recursive = true;
-      force = true;
-    };
-  };
-
   wayland.windowManager.hyprland = {
-    enable = true;
+    enable = false;
     package = null;
     settings = {
       monitor = ",1920x1200,auto,1,bitdepth,8";
@@ -167,9 +159,17 @@
       master = { new_status = "master"; };
 
       exec-once = [
+        #for libadwaita gtk4 apps you can use this command:
+        "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'" # for GTK4 apps
+
+        #for gtk3 apps you need to install adw-gtk3 theme (in arch linux sudo pacman -S adw-gtk-theme)
+        "gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3'" # for GTK3 apps
+
+        #for kde apps you need to install: sudo pacman -S qt5ct qt6ct kvantum kvantum breeze-icons   
+        #you will need to set dark theme for qt apps from kde more difficult thans with gnome :D:
         "hypridle"
         "swww-daemon &"
-        "./wallpapers.sh"
+        "$HOME/.config/scripts/wallpapers.sh"
         "waybar "
         "dunst"
 
@@ -270,12 +270,12 @@
 
       bindel = [
         # Laptop multimedia keys for volume and LCD brightness
-        ",XF86AudioRaiseVolume, exec, sh $HOME/.config/hypr/volume.sh up"
-        ",XF86AudioLowerVolume, exec, sh $HOME/.config/hypr/volume.sh down"
-        ",XF86AudioMute, exec, sh $HOME/.config/hypr/volume.sh mute"
+        ",XF86AudioRaiseVolume, exec, sh $HOME/.config/scripts/volume.sh up"
+        ",XF86AudioLowerVolume, exec, sh $HOME/.config/scripts/volume.sh down"
+        ",XF86AudioMute, exec, sh $HOME/.config/scripts/volume.sh mute"
         ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-        ",XF86MonBrightnessUp, exec, sh $HOME/.config/hypr/brightness.sh up"
-        ",XF86MonBrightnessDown, exec, sh $HOME/.config/hypr/brightness.sh down"
+        ",XF86MonBrightnessUp, exec, sh $HOME/.config/scripts/brightness.sh up"
+        ",XF86MonBrightnessDown, exec, sh $HOME/.config/scripts/brightness.sh down"
       ];
 
       bindl = [
