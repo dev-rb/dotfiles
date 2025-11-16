@@ -52,3 +52,17 @@ map("n", "<leader>zn", function()
   require("focus").toggle {}
   require("focus").toggle_zen {}
 end)
+
+map("n", "<leader>ca", vim.lsp.buf.code_action)
+map("n", "gr", vim.lsp.buf.references)
+map("n", "K", vim.lsp.buf.hover)
+
+map("n", "<C-w>1", "<cmd> Vr 10 <CR>")
+map("n", "<C-w>2", "<cmd> Vr 20 <CR>")
+map("n", "<C-w>3", "<cmd> Vr 30 <CR>")
+map("n", "<C-w>4", "<cmd> Vr 40 <CR>")
+map("n", "<C-w>5", "<cmd> Vr 50 <CR>")
+map("n", "<C-w>6", "<cmd> Vr 60 <CR>")
+map("n", "<C-w>7", "<cmd> Vr 70 <CR>")
+map("n", "<C-w>8", "<cmd> Vr 80 <CR>")
+map("n", "<C-w>9", "<cmd> Vr 90 <CR>")
