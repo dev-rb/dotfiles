@@ -9,6 +9,7 @@ M.base46 = {
   theme = "onedark",
 
   hl_override = {
+    NormalFloat = { bg = "darker_black" },
     IblScopeChar = { underline = false, link = "Visual" },
   },
   hl_add = {
