@@ -27,7 +27,7 @@
 
             # Windows path for explorer
             explorer = "/mnt/c/Windows/explorer.exe";
-            wezterm = "/mnt/c/Program\\ Files/WezTerm/wezterm.exe";
+            wezterm = "$WEZTERM";
           }
         else
           { }
@@ -46,40 +46,43 @@
       compinit -C
     '';
 
-    initContent = ''
-      eval "$(oh-my-posh init zsh --config ~/dotfiles/pure.omp.json)"
-      bindkey '^p' history-search-backward
-      bindkey '^n' history-search-forward
-
-      export GOPATH="$HOME/go"
-
-      export PATH="$HOME/.local/share/fnm:$PATH"
-      export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
-
-      export BUN_INSTALL="$HOME/.bun"
-      export PAGER=cat
-      export PATH="$BUN_INSTALL/bin:$PATH"
-
-      export ANDROID_HOME="$HOME/Android/Sdk"
-      export PATH=$PATH:$ANDROID_HOME/emulator
-      export PATH=$PATH:$ANDROID_HOME/platform-tools
+    initContent =
+      ''
+        eval "$(oh-my-posh init zsh --config ~/dotfiles/pure.omp.json)"
+        bindkey '^p' history-search-backward
+        bindkey '^n' history-search-forward
 
 
+        export GOPATH="$HOME/go"
 
-      export PATH="$BUN_INSTALL/bin:$PATH"
+        export PATH="$HOME/.local/share/fnm:$PATH"
+        export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
-      eval "`fnm env`"
+        export BUN_INSTALL="$HOME/.bun"
+        export PAGER=cat
+        export PATH="$BUN_INSTALL/bin:$PATH"
 
-      export PNPM_HOME="$HOME/.local/share/pnpm"
-      case ":$PATH:" in
-        *":$PNPM_HOME:"*) ;;
-        *) export PATH="$PNPM_HOME:$PATH" ;;
-      esac
+        export ANDROID_HOME="$HOME/Android/Sdk"
+        export PATH=$PATH:$ANDROID_HOME/emulator
+        export PATH=$PATH:$ANDROID_HOME/platform-tools
 
-      alias air='$(go env GOPATH)/bin/air'
-      source ~/wezterm.sh
 
-    '';
+
+        export PATH="$BUN_INSTALL/bin:$PATH"
+
+        eval "`fnm env`"
+
+        export PNPM_HOME="$HOME/.local/share/pnpm"
+        case ":$PATH:" in
+          *":$PNPM_HOME:"*) ;;
+          *) export PATH="$PNPM_HOME:$PATH" ;;
+        esac
+
+        alias air='$(go env GOPATH)/bin/air'
+        source ~/wezterm.sh
+
+      ''
+      + (if vars.name == "wsl" then ''export WEZTERM="$(fd wezterm.exe /mnt --max-results 1)"'' else "");
   };
 
   programs.oh-my-posh = {
