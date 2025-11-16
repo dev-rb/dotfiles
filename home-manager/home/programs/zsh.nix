@@ -14,24 +14,10 @@
       ignoreSpace = true;
     };
 
-    plugins = [
-      # {
-      #    name = "fzf-tab";
-      #    src = pkgs.fetchFromGitHub {
-      #      owner = "Aloxaf";
-      #      repo = "fzf-tab";
-      #      rev = "v1.1.2";
-      #      sha256 = "7fed01afba9392b6392408b9a0cf888522ed7a10";
-      #    };
-      #  }
-    ];
     shellAliases = {
       ls = "eza --icons=always";
       cat = "bat";
-      # Windows path for explorer
-      # explorer = "/mnt/c/Windows/explorer.exe";
-      # wezterm = "/mnt/c/Program\\ Files/WezTerm/wezterm.exe";
-      gcf = "git checkout $(git branch --list | fzf)";
+      gcf = "git checkout $(git branch --sort=committerdate | fzf --tac --exact)";
       gs = "git status";
     };
 
