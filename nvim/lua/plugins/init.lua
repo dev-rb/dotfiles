@@ -118,9 +118,11 @@ return {
   {
     "nvim-telescope/telescope-ui-select.nvim",
     version = "*",
+    enabled = false,
   },
   {
     "nvim-telescope/telescope.nvim",
+    enabled = false,
     dependencies = {
       "nvim-telescope/telescope-ui-select.nvim",
     },
@@ -148,4 +150,12 @@ return {
   },
   { "nvim-mini/mini.ai", event = "VeryLazy", version = false, opts = { search_method = "cover_or_nearest" } },
   { "nvim-mini/mini.move", event = "VeryLazy", version = false, opts = {} },
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    event = "VeryLazy",
+    config = function()
+      require "configs.snacks"
+    end,
+  },
 }
