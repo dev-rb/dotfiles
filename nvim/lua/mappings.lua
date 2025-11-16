@@ -1,10 +1,6 @@
 require "nvchad.mappings"
 
--- add yours here
-
 local map = vim.keymap.set
-vim.keymap.del("n", "<Tab>")
-vim.keymap.del("n", "<S-Tab>")
 
 map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
@@ -48,13 +44,7 @@ map("n", "<leader>f", function()
   vim.diagnostic.open_float { border = "rounded" }
 end)
 
-map("n", "<leader>zn", function()
-  require("focus").toggle {}
-  require("focus").toggle_zen {}
-end)
-
 map("n", "<leader>ca", vim.lsp.buf.code_action)
-map("n", "gr", vim.lsp.buf.references)
 map("n", "K", vim.lsp.buf.hover)
 
 map("n", "<C-w>1", "<cmd> Vr 10 <CR>")
