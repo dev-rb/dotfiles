@@ -13,9 +13,7 @@ M.base46 = {
     IblScopeChar = { underline = false, link = "Visual" },
   },
   hl_add = {
-    ["IlluminatedWordText"] = { link = "Visual", underline = false },
-    ["IlluminatedWordRead"] = { link = "Visual", underline = false },
-    ["IlluminatedWordWrite"] = { link = "Visual", underline = false },
+    MiniCursorword = { link = "Visual", underline = false },
   },
 }
 

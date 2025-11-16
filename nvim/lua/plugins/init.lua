@@ -149,36 +149,11 @@ return {
     end,
   },
   {
-    "RRethy/vim-illuminate",
-    event = { "CursorHold", "CursorHoldI" },
-    dependencies = "nvim-treesitter",
+    "nvim-mini/mini.nvim",
+    lazy = false,
+    version = false,
     config = function()
-      require("illuminate").configure {
-        under_cursor = true,
-        max_file_lines = nil,
-        delay = 100,
-        providers = {
-          "lsp",
-          "treesitter",
-          "regex",
-        },
-        filetypes_denylist = {
-          "NvimTree",
-          "Trouble",
-          "Outline",
-          "TelescopePrompt",
-          "Empty",
-          "dirvish",
-          "fugitive",
-          "alpha",
-          "packer",
-          "neogitstatus",
-          "spectre_panel",
-          "toggleterm",
-          "DressingSelect",
-          "aerial",
-        },
-      }
+      require("mini.cursorword").setup()
     end,
   },
 }
