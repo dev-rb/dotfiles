@@ -14,12 +14,24 @@
       ignoreSpace = true;
     };
 
-    shellAliases = {
-      ls = "eza --icons=always";
-      cat = "bat";
-      gcf = "git checkout $(git branch --sort=committerdate | fzf --tac --exact)";
-      gs = "git status";
-    };
+    shellAliases =
+      {
+        ls = "eza --icons=always";
+        cat = "bat";
+        gcf = "git checkout $(git branch --sort=committerdate | fzf --tac --exact)";
+        gs = "git status";
+      }
+      // (
+        if vars.name == "wsl" then
+          {
+
+            # Windows path for explorer
+            explorer = "/mnt/c/Windows/explorer.exe";
+            wezterm = "/mnt/c/Program\\ Files/WezTerm/wezterm.exe";
+          }
+        else
+          { }
+      );
 
     defaultKeymap = "emacs";
 
