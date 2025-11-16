@@ -1,4 +1,9 @@
 return {
+  {
+    "OXY2DEV/markview.nvim",
+    lazy = false,
+    dependencies = { "saghen/blink.cmp" },
+  },
   { import = "nvchad.blink.lazyspec" },
   {
     "stevearc/conform.nvim",
