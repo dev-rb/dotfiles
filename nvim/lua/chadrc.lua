@@ -14,6 +14,19 @@ M.base46 = {
   },
   hl_add = {
     MiniCursorword = { link = "Visual", underline = false },
+    SnacksPickerInput = { link = "TelescopeNormal" },
+    SnacksPickerDir = { link = "TelescopeNormal" },
+    SnacksPickerPreview = { link = "TelescopeNormal" },
+    SnacksPickerList = { link = "TelescopeNormal" },
+    SnacksPickerListTitle = { link = "TelescopePromptTitle" },
+    SnacksPickerInputTitle = { link = "TelescopePromptTitle" },
+    SnacksPickerInputSearch = { link = "TelescopeNormal" },
+    SnacksPickerBorder = { link = "TelescopeBorder" },
+    SnacksNormal = { link = "TelescopePromptTitle" },
+    SnacksNormalNC = { link = "TelescopePromptTitle" },
+    SnacksPickerFooter = { link = "TelescopePromptTitle" },
+    SnacksPickerCol = { link = "Text" },
+    SnacksPickerTitle = { link = "TelescopePromptTitle" },
   },
 }
 
