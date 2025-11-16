@@ -21,6 +21,7 @@
     ripgrep
     wget
     jq
+    btop
 
     # javascript/typescript
     fnm
