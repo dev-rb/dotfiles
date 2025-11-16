@@ -51,9 +51,9 @@
       bindkey '^p' history-search-backward
       bindkey '^n' history-search-forward
 
-      export GOPATH="/home/${vars.username}/go"
+      export GOPATH="$HOME/go"
 
-      export PATH="/home/${vars.username}/.local/share/fnm:$PATH"
+      export PATH="$HOME/.local/share/fnm:$PATH"
       export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
       export BUN_INSTALL="$HOME/.bun"
@@ -66,11 +66,11 @@
 
 
 
-      # export PATH=$PATH:"/mnt/c/Program Files/WezTerm/"
+      export PATH="$BUN_INSTALL/bin:$PATH"
 
       eval "`fnm env`"
 
-      export PNPM_HOME="/home/${vars.username}/.local/share/pnpm"
+      export PNPM_HOME="$HOME/.local/share/pnpm"
       case ":$PATH:" in
         *":$PNPM_HOME:"*) ;;
         *) export PATH="$PNPM_HOME:$PATH" ;;
