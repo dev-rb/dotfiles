@@ -7,7 +7,7 @@ return {
   { import = "nvchad.blink.lazyspec" },
   {
     "stevearc/conform.nvim",
-    event = "BufWritePre", -- uncomment for format on save
+    event = "BufWritePre",
     config = require("configs.conform").setup,
   },
   {
@@ -15,23 +15,19 @@ return {
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
-      require("nvim-surround").setup {
-        -- Configuration here, or leave empty to use defaults
-      }
+      require("nvim-surround").setup {}
     end,
   },
 
   {
     "folke/persistence.nvim",
-    event = "BufReadPre", -- this will only start session saving when an actual file was opened
-    opts = {
-      -- add any custom options here
-    },
+    event = "BufReadPre",
+    opts = {},
   },
 
   {
     "mrjones2014/smart-splits.nvim",
-    lazy = false,
+    event = "VeryLazy",
     config = function()
       require("smart-splits").setup {
         at_edge = "stop",
@@ -42,6 +38,7 @@ return {
 
   {
     "nvim-tree/nvim-tree.lua",
+    event = "VeryLazy",
     opts = require "configs.nvim-tree",
     config = function(_, opts)
       require("nvim-tree").setup(opts)
@@ -64,7 +61,7 @@ return {
 
   {
     "windwp/nvim-ts-autotag",
-    lazy = false,
+    event = "VeryLazy",
     config = function(_, opts)
       require("nvim-ts-autotag").setup(opts)
     end,
@@ -72,9 +69,11 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
+    event = "VeryLazy",
     dependencies = {
       {
         "JoosepAlviste/nvim-ts-context-commentstring",
+        event = "VeryLazy",
         config = function()
           require("ts_context_commentstring").setup {}
         end,
@@ -110,6 +109,7 @@ return {
 
   {
     "lukas-reineke/indent-blankline.nvim",
+    event = "VeryLazy",
     opts = {
       scope = { enabled = false },
     },
