@@ -1,7 +1,7 @@
 return {
   {
     "OXY2DEV/markview.nvim",
-    lazy = false,
+    event = "VeryLazy",
     dependencies = { "saghen/blink.cmp" },
   },
   { import = "nvchad.blink.lazyspec" },
@@ -9,14 +9,6 @@ return {
     "stevearc/conform.nvim",
     event = "BufWritePre", -- uncomment for format on save
     config = require("configs.conform").setup,
-  },
-
-  -- These are some examples, uncomment them if you want to see them work!
-  {
-    "neovim/nvim-lspconfig",
-    config = function()
-      require "configs.lspconfig"
-    end,
   },
   {
     "kylechui/nvim-surround",
@@ -149,11 +141,11 @@ return {
     end,
   },
   {
-    "nvim-mini/mini.nvim",
-    lazy = false,
+    "nvim-mini/mini.cursorword",
+    event = "VeryLazy",
     version = false,
-    config = function()
-      require("mini.cursorword").setup()
-    end,
+    opts = {},
   },
+  { "nvim-mini/mini.ai", event = "VeryLazy", version = false, opts = { search_method = "cover_or_nearest" } },
+  { "nvim-mini/mini.move", event = "VeryLazy", version = false, opts = {} },
 }
