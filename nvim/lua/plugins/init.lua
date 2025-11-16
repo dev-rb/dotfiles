@@ -1,4 +1,5 @@
 return {
+  { import = "nvchad.blink.lazyspec" },
   {
     "stevearc/conform.nvim",
     event = "BufWritePre", -- uncomment for format on save
@@ -32,16 +33,6 @@ return {
   },
 
   {
-    "cdmill/focus.nvim",
-    cmd = { "Focus", "Zen", "Narrow" },
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    },
-  },
-
-  {
     "mrjones2014/smart-splits.nvim",
     lazy = false,
     config = function()
@@ -67,8 +58,6 @@ return {
     opts = require("configs.ufo").options,
     config = require("configs.ufo").setup,
   },
-
-  { "akinsho/git-conflict.nvim", version = "*", config = true },
 
   {
     "numToStr/Comment.nvim",
