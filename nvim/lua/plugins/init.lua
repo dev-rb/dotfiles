@@ -160,8 +160,12 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     event = "VeryLazy",
-    config = function()
-      require "configs.snacks"
-    end,
+    opts = require "configs.snacks",
+  },
+  {
+    "windwp/nvim-autopairs",
+    opts = {
+      disable_filetype = { "snacks_picker_input" },
+    },
   },
 }
