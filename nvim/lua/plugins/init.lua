@@ -6,6 +6,12 @@ return {
   },
   { import = "nvchad.blink.lazyspec" },
   {
+    "neovim/nvim-lspconfig",
+    config = function()
+      require "configs.lspconfig"
+    end,
+  },
+  {
     "stevearc/conform.nvim",
     event = "BufWritePre",
     config = require("configs.conform").setup,
