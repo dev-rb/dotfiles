@@ -154,7 +154,7 @@ return {
     version = false,
     opts = {},
   },
-  { "nvim-mini/mini.ai", event = "VeryLazy", version = false, opts = { search_method = "cover_or_nearest" } },
+  -- { "nvim-mini/mini.ai", event = "VeryLazy", version = false, opts = { search_method = "cover_or_nearest" } },
   { "nvim-mini/mini.move", event = "VeryLazy", version = false, opts = {} },
   {
     "folke/snacks.nvim",
