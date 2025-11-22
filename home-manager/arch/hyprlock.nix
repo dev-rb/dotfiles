@@ -1,6 +1,7 @@
-{ ... }: {
+{ config, pkgs, ... }: {
   programs.hyprlock = {
     enable = true;
+    package = (config.lib.nixGL.wrap pkgs.hyprlock);
 
     settings = {
       "$font" = "Monospace";
@@ -8,17 +9,10 @@
       general = {
         hide_cursor = false;
         fail_timeout = 500;
+        screencopy_mode = 1;
       };
 
-      # uncomment to enable fingerprint authentication
-      auth = {
-        fingerprint = {
-          enabled = true;
-          ready_message = "Scan fingerprint to unlock";
-          present_message = "Scanning...";
-          retry_delay = 250; # in milliseconds
-        };
-      };
+      animations = { enabled = false; };
 
       background = {
         monitor = "";
@@ -85,7 +79,6 @@
           monitor = "";
           text = "$LAYOUT[en,ru]";
           font_size = 24;
-          onclick = "hyprctl switchxkblayout all next";
 
           position = "250, -20";
           halign = "center";
