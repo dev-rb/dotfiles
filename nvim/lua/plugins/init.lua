@@ -6,6 +6,12 @@ return {
   },
   { import = "nvchad.blink.lazyspec" },
   {
+    "neovim/nvim-lspconfig",
+    config = function()
+      require "configs.lspconfig"
+    end,
+  },
+  {
     "stevearc/conform.nvim",
     event = "BufWritePre",
     config = require("configs.conform").setup,
@@ -148,14 +154,18 @@ return {
     version = false,
     opts = {},
   },
-  { "nvim-mini/mini.ai", event = "VeryLazy", version = false, opts = { search_method = "cover_or_nearest" } },
+  -- { "nvim-mini/mini.ai", event = "VeryLazy", version = false, opts = { search_method = "cover_or_nearest" } },
   { "nvim-mini/mini.move", event = "VeryLazy", version = false, opts = {} },
   {
     "folke/snacks.nvim",
     priority = 1000,
     event = "VeryLazy",
-    config = function()
-      require "configs.snacks"
-    end,
+    opts = require "configs.snacks",
+  },
+  {
+    "windwp/nvim-autopairs",
+    opts = {
+      disable_filetype = { "snacks_picker_input" },
+    },
   },
 }
