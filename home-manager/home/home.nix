@@ -13,6 +13,7 @@
   # release notes.
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
+  fonts.fontconfig.enable = true;
   imports = [
     ./packages.nix
     ./programs/general.nix
@@ -20,9 +21,7 @@
     ./programs/neovim.nix
   ];
 
-  home.sessionVariables = {
-    EDITOR = "nvim";
-  };
+  home.sessionVariables = { EDITOR = "nvim"; };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
