@@ -39,7 +39,14 @@ output "eDP-1" {
     scale 1.0
     transform "normal"
 }
+
+layer-rule {
+  match namespace="^swww-daemon$"
+  place-within-backdrop true
+}
+
 layout {
+    background-color "transparent"
     gaps 16
     struts {
         left 0
