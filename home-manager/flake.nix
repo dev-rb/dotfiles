@@ -4,6 +4,10 @@
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixgl = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -17,17 +21,29 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    niri.url = "github:sodiboo/niri-flake";
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprlock = {
+      url = "github:hyprwm/hyprlock";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
   };
 
   # nix = { settings.experimental-features = [ "nix-command" "flakes" ]; };
 
-  outputs = { self, nixpkgs, niri, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, niri, nixgl, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
       inherit (self) outputs;
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ (import ./overlays.nix) nixgl.overlay ];
+        config.allowUnfree = true;
+      };
 
       HomeConfiguration = args:
         home-manager.lib.homeManagerConfiguration {
@@ -35,6 +51,7 @@
           modules = [ ./home/home.nix ] ++ args.modules or [ ];
           extraSpecialArgs = {
             inherit (args) nixpkgs;
+            inherit nixgl;
           } // args.extraSpecialArgs;
         };
     in {
@@ -59,6 +76,7 @@
           services.pipewire.alsa.enable = true;
           services.pipewire.wireplumber.enable = true;
           modules = [
+            { nixGL.packages = nixgl.packages; }
             niri.homeModules.niri
             ./arch/hyprland.nix
             ./arch/hypridle.nix
