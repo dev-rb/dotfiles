@@ -1,4 +1,4 @@
-{ pkgs, nixgl, ... }:
+{ pkgs, ... }:
 
 {
   programs.bat.enable = true;
@@ -11,18 +11,6 @@
   };
 
   # fonts.fontconfig.enable = true;
-
-  nixGL.packages = nixgl.packages;
-  nixGL.defaultWrapper = "mesa";
-  #nixGL.offloadWrapper = "nvidiaPrime";
-  nixGL.installScripts = [ "mesa" ];
-
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = (pkg: true);
-    };
-  };
 
   home.packages = with pkgs; [
     nerd-fonts.iosevka-term

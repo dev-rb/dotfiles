@@ -76,7 +76,17 @@
           services.pipewire.alsa.enable = true;
           services.pipewire.wireplumber.enable = true;
           modules = [
-            { nixGL.packages = nixgl.packages; }
+            {
+              targets.genericLinux.nixGL.packages = nixgl.packages;
+              targets.genericLinux.nixGL.defaultWrapper = "mesa";
+              targets.genericLinux.nixGL.installScripts = [ "mesa" ];
+              nixpkgs = {
+                config = {
+                  allowUnfree = true;
+                  allowUnfreePredicate = (pkg: true);
+                };
+              };
+            }
             niri.homeModules.niri
             ./arch/hyprland.nix
             ./arch/hypridle.nix
