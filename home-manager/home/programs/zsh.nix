@@ -17,14 +17,6 @@
     shellAliases = {
       ls = "eza --icons=always";
       cat = "bat";
-      gds = "git diff --staged";
-      gd = "git diff";
-      gcf =
-        "git checkout $(git branch --sort=committerdate | fzf --tac --exact)";
-      gcrf = ''
-        git checkout $(git branch --remote --sort=-committerdate | fzf | sed 's/[[:alnum:]_]\{1,\}\///')
-      '';
-      gs = "git status";
     } // (if vars.name == "wsl" then {
 
       # Windows path for explorer
@@ -58,7 +50,8 @@
       export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
       export BUN_INSTALL="$HOME/.bun"
-      export PAGER=cat
+      export PAGER=less
+      export BAT_PAGING=always
       export PATH="$BUN_INSTALL/bin:$PATH"
 
       export ANDROID_HOME="$HOME/Android/Sdk"
@@ -89,5 +82,6 @@
   programs.oh-my-posh = {
     enable = true;
     enableZshIntegration = true;
+    configFile = "~/dotfiles/pure.omp.json";
   };
 }

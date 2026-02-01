@@ -25,17 +25,12 @@
   };
 
   home.packages = with pkgs; [
-    # nixgl.auto.nixGLNvidia
-    # nixgl.auto.nixVulkanNvidia
-    # nixgl.nixGLIntel
-    # nixgl.nixVulkanIntel
-
-    # fonts
+    nerd-fonts.iosevka-term
+    nerd-fonts.jetbrains-mono
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-emoji
     adwaita-fonts
-    nerd-fonts.jetbrains-mono
 
     # cli
     bat
@@ -60,6 +55,8 @@
     #unocss-language-server
     typescript-language-server
     nil
+
+    tree-sitter
 
     # formatters
     nixfmt-rfc-style

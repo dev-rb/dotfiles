@@ -153,9 +153,9 @@ binds {
     Mod+WheelScrollDown { focus-column-right; }
     Mod+WheelScrollUp { focus-column-left; }
     Mod+Escape { spawn  "hyprlock"; }
-    Alt+Space { spawn  "vicinae"; }
+    Alt+Space { spawn-sh  "vicinae toggle"; }
     Print { screenshot-screen; }
-    Shift+Print { screenshot; }
+    Mod+Shift+S { screenshot; }
     XF86AudioLowerVolume { spawn-sh "sh $HOME/.config/scripts/volume.sh down"; }
     XF86AudioRaiseVolume { spawn-sh "sh $HOME/.config/scripts/volume.sh up"; }
     XF86AudioMute { spawn-sh "$HOME/.config/scripts/volume.sh mute"; }

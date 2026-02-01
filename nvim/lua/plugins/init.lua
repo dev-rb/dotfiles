@@ -75,44 +75,55 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    event = "VeryLazy",
-    dependencies = {
-      {
-        "JoosepAlviste/nvim-ts-context-commentstring",
-        event = "VeryLazy",
-        config = function()
-          require("ts_context_commentstring").setup {}
-        end,
-      },
-      "nvim-treesitter/nvim-treesitter-textobjects",
-    },
-    opts = {
-      ensure_installed = {
+    lazy = false,
+    event = "BufRead",
+    branch = "main",
+    build = ":TSUpdate",
+    config = function()
+      require("nvim-treesitter").setup {
+        install_dir = vim.fn.stdpath "data" .. "/site",
+      }
+
+      local parsers = {
+        "bash",
         "css",
+        "diff",
+        "editorconfig",
+        "git_config",
+        "git_rebase",
+        "gitattributes",
+        "gitcommit",
+        "gitignore",
         "html",
         "javascript",
+        "jsdoc",
+        "json",
         "lua",
+        "make",
+        "markdown",
+        "markdown_inline",
         "python",
-        "scss",
+        "query",
+        "regex",
+        "toml",
         "tsx",
         "typescript",
-      },
-      highlight = {
-        enable = true,
-        use_languagetree = true,
-      },
-      textobjects = {
-        move = {
-          enable = true,
-          goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer" },
-          goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer" },
-          goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer" },
-          goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer" },
-        },
-      },
-    },
-  },
+        "typst",
+        "vim",
+        "vimdoc",
+        "xml",
+        "yaml",
+      }
 
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "LazyDone",
+        once = true,
+        callback = function()
+          require("nvim-treesitter").install(parsers)
+        end,
+      })
+    end,
+  },
   {
     "lukas-reineke/indent-blankline.nvim",
     event = "VeryLazy",
