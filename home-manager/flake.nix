@@ -64,6 +64,7 @@
             ./arch/hypridle.nix
             ./arch/hyprlock.nix
             ./arch/niri.nix
+            ./arch/waybar.nix
             ./arch/scripts.nix
           ];
         };
