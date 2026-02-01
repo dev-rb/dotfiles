@@ -11,6 +11,9 @@
   };
 
   home.packages = with pkgs; [
+    nerd-fonts.iosevka-term
+    nerd-fonts.jetbrains-mono
+
     # cli
     bat
     eza
@@ -33,6 +36,8 @@
     #unocss-language-server
     typescript-language-server
     nil
+
+    tree-sitter
 
     # formatters
     nixfmt-rfc-style
