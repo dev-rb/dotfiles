@@ -17,7 +17,7 @@
     nerd-fonts.jetbrains-mono
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     adwaita-fonts
 
     # cli
@@ -47,7 +47,7 @@
     tree-sitter
 
     # formatters
-    nixfmt-rfc-style
+    nixfmt
     stylua
     biome
   ];
