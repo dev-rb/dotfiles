@@ -20,6 +20,11 @@
 
   programs.zsh.shellAliases = {
     gcf = "git checkout $(git branch --sort=committerdate | fzf --tac --exact)";
+    gcrf = ''
+      git checkout $(git branch --remote --sort=-committerdate | fzf | sed 's/[[:alnum:]_]\{1,\}\///')
+    '';
     gs = "git status";
+    gds = "git diff --staged";
+    gd = "git diff";
   };
 }
