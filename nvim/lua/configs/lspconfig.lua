@@ -103,6 +103,9 @@ local servers = {
       -- },
     },
   },
+  rust_analyzer = {},
+  oxlint = {},
+  oxfmt = {},
 }
 
 for name, opts in pairs(servers) do

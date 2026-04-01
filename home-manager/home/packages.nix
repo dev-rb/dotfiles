@@ -36,6 +36,8 @@
     # javascript/typescript
     fnm
     bun
+    oxlint
+    oxfmt
 
     # LSPs
     lua-language-server
@@ -50,6 +52,8 @@
     nixfmt
     stylua
     biome
+
+    rustup
   ];
 
 }
