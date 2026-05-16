@@ -54,6 +54,10 @@
     biome
 
     rustup
+
+    go
+
+    just
   ];
 
 }
