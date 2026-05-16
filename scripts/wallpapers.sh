@@ -10,4 +10,4 @@
 dir=${HOME}/wallpapers
 img=wallhaven-3qkggv.jpg
 
-swww img ${dir}/$img --transition-type=wipe
+awww img ${dir}/$img --transition-type=wipe

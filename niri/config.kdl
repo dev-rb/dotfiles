@@ -1,16 +1,63 @@
 spawn-at-startup "waybar"
-spawn-at-startup "dunst"
-spawn-at-startup "swww-daemon"
+spawn-at-startup "awww-daemon"
 spawn-sh-at-startup "vicinae server"
 spawn-sh-at-startup "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'" // for GTK4 apps
 spawn-sh-at-startup "gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3'" // for GTK3 apps
 spawn-sh-at-startup "~/.config/scripts/wallpapers.sh"
+
+workspace "entertainment" {
+  open-on-output "DP-1"
+}
+
+window-rule {
+    clip-to-geometry true
+    // geometry-corner-radius 8
+}
+
+window-rule {
+    match app-id=r#"^discord$"#
+    open-on-workspace "entertainment"
+}
+
+window-rule {
+    match app-id=r#"^spotify$"#
+    open-on-workspace "entertainment"
+}
+
+window-rule {
+    match app-id=r#"^steam$"#
+    open-on-workspace "entertainment"
+}
+
+window-rule {
+    match app-id=r#"^brave-browser$"#
+    match title="General"
+    open-on-output "DP-2"
+    open-maximized true
+}
 
 
 prefer-no-csd
 hotkey-overlay {
     skip-at-startup
 }
+
+layer-rule {
+    match namespace="^awww-daemon$"
+    place-within-backdrop true
+}
+
+overview {
+    workspace-shadow {
+        off
+    }
+}
+
+environment {
+    QT_QPA_PLATFORM "wayland"
+    QT_QPA_PLATFORMTHEME "qt6ct"
+}
+
 input {
     keyboard {
         xkb {
@@ -23,31 +70,43 @@ input {
         repeat-rate 50
         track-layout "global"
     }
+
     touchpad {
-        left-handed
         tap
         dwt
         natural-scroll
         click-method "clickfinger"
     }
-    mouse { left-handed; }
-    trackpoint { left-handed; }
-    trackball { left-handed; }
-    focus-follows-mouse
-}
-output "eDP-1" {
-    scale 1.0
-    transform "normal"
+
+    mouse {
+        accel-profile "flat"
+    }
+    focus-follows-mouse max-scroll-amount="0%"
 }
 
-layer-rule {
-  match namespace="^swww-daemon$"
-  place-within-backdrop true
+gestures {
+    hot-corners {
+      top-left
+    }
+
+}
+
+output "DP-1" {
+    scale 1.0
+    transform "normal"
+    mode "2560x1440@164.956"
+    focus-at-startup
+}
+
+output "DP-2" {
+    scale 1.0
+    transform "normal"
+    mode "1920x1080@143.981"
+    position x=0 y=0
 }
 
 layout {
-    background-color "transparent"
-    gaps 16
+    gaps 8
     struts {
         left 0
         right 0
@@ -62,12 +121,15 @@ layout {
     border { off; }
     default-column-width
     center-focused-column "never"
+    background-color "transparent"
 }
+
 cursor {
     xcursor-theme "default"
     xcursor-size 24
     hide-after-inactive-ms 5000
 }
+
 binds {
     Mod+1 { focus-workspace 1; }
     Mod+2 { focus-workspace 2; }
@@ -78,7 +140,7 @@ binds {
     Mod+7 { focus-workspace 7; }
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
-    Mod+B { spawn "firefox"; }
+    Mod+B { spawn "brave"; }
     Mod+BracketLeft { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
     Mod+C { center-column; }

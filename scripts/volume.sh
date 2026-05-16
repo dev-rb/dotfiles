@@ -22,7 +22,7 @@ send_notification() {
 	if [ "$1" = "mute" ]; then ICON="mute"; elif [ "$VOLUME" -lt 33 ]; then ICON="low"; elif [ "$VOLUME" -lt 66 ]; then ICON="medium"; else ICON="high"; fi
 	if [ "$1" = "mute" ]; then TEXT="Muted"; else TEXT="$space ${VOLUME}%"; fi
 
-	dunstify -a "Volume" -u low -r 9993 -h int:value:"$VOLUME" -i "volume-$ICON" "Volume $TEXT" -t 2000
+	notify-send -a "Volume" -u low -i "volume-$ICON" "Volume $TEXT" -t 2000
 }
 
 case $1 in
