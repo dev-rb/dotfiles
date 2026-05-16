@@ -31,30 +31,46 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    wezterm.url = "github:wezterm/wezterm?dir=nix";
+
   };
 
   # nix = { settings.experimental-features = [ "nix-command" "flakes" ]; };
 
-  outputs = { self, nixpkgs, niri, nixgl, home-manager, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      niri,
+      nixgl,
+      home-manager,
+      ...
+    }@inputs:
     let
       system = "x86_64-linux";
       inherit (self) outputs;
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [ (import ./overlays.nix) nixgl.overlay ];
+        overlays = [
+          (import ./overlays.nix)
+          nixgl.overlay
+        ];
         config.allowUnfree = true;
       };
 
-      HomeConfiguration = args:
+      HomeConfiguration =
+        args:
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [ ./home/home.nix ] ++ args.modules or [ ];
           extraSpecialArgs = {
             inherit (args) nixpkgs;
             inherit nixgl;
-          } // args.extraSpecialArgs;
+          }
+          // args.extraSpecialArgs;
         };
-    in {
+    in
+    {
 
       nix.extraOptions = ''
         auto-optimise-store = true
