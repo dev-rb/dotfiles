@@ -17,13 +17,18 @@
     shellAliases = {
       ls = "eza --icons=always";
       cat = "bat";
-    } // (if vars.name == "wsl" then {
+    }
+    // (
+      if vars.name == "wsl" then
+        {
 
-      # Windows path for explorer
-      explorer = "/mnt/c/Windows/explorer.exe";
-      wezterm = "$WEZTERM";
-    } else
-      { });
+          # Windows path for explorer
+          explorer = "/mnt/c/Windows/explorer.exe";
+          wezterm = "$WEZTERM";
+        }
+      else
+        { }
+    );
 
     defaultKeymap = "emacs";
 
@@ -72,10 +77,8 @@
       alias air='$(go env GOPATH)/bin/air'
       source ~/wezterm.sh
 
-    '' + (if vars.name == "wsl" then
-      ''export WEZTERM="$(fd wezterm.exe /mnt --max-results 1)"''
-    else
-      "");
+    ''
+    + (if vars.name == "wsl" then ''export WEZTERM="$(fd wezterm.exe /mnt --max-results 1)"'' else "");
   };
 
   programs.oh-my-posh = {
