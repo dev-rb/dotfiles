@@ -9,12 +9,24 @@ M.base46 = {
   theme = "onedark",
 
   hl_override = {
+    NormalFloat = { bg = "darker_black" },
     IblScopeChar = { underline = false, link = "Visual" },
   },
   hl_add = {
-    ["IlluminatedWordText"] = { link = "Visual", underline = false },
-    ["IlluminatedWordRead"] = { link = "Visual", underline = false },
-    ["IlluminatedWordWrite"] = { link = "Visual", underline = false },
+    MiniCursorword = { link = "Visual", underline = false },
+    SnacksPickerInput = { link = "TelescopeNormal" },
+    SnacksPickerDir = { link = "TelescopeNormal" },
+    SnacksPickerPreview = { link = "TelescopeNormal" },
+    SnacksPickerList = { link = "TelescopeNormal" },
+    SnacksPickerListTitle = { link = "TelescopePromptTitle" },
+    SnacksPickerInputTitle = { link = "TelescopePromptTitle" },
+    SnacksPickerInputSearch = { link = "TelescopeNormal" },
+    SnacksPickerBorder = { link = "TelescopeBorder" },
+    SnacksNormal = { link = "TelescopePromptTitle" },
+    SnacksNormalNC = { link = "TelescopePromptTitle" },
+    SnacksPickerFooter = { link = "TelescopePromptTitle" },
+    SnacksPickerCol = { link = "Text" },
+    SnacksPickerTitle = { link = "TelescopePromptTitle" },
   },
 }
 

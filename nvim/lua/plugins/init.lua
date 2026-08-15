@@ -1,11 +1,10 @@
 return {
   {
-    "stevearc/conform.nvim",
-    event = "BufWritePre", -- uncomment for format on save
-    config = require("configs.conform").setup,
+    "OXY2DEV/markview.nvim",
+    event = "VeryLazy",
+    dependencies = { "saghen/blink.cmp" },
   },
-
-  -- These are some examples, uncomment them if you want to see them work!
+  { import = "nvchad.blink.lazyspec" },
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -13,37 +12,28 @@ return {
     end,
   },
   {
+    "stevearc/conform.nvim",
+    event = "BufWritePre",
+    config = require("configs.conform").setup,
+  },
+  {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
-      require("nvim-surround").setup {
-        -- Configuration here, or leave empty to use defaults
-      }
+      require("nvim-surround").setup {}
     end,
   },
 
   {
     "folke/persistence.nvim",
-    event = "BufReadPre", -- this will only start session saving when an actual file was opened
-    opts = {
-      -- add any custom options here
-    },
-  },
-
-  {
-    "cdmill/focus.nvim",
-    cmd = { "Focus", "Zen", "Narrow" },
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    },
+    event = "BufReadPre",
+    opts = {},
   },
 
   {
     "mrjones2014/smart-splits.nvim",
-    lazy = false,
+    event = "VeryLazy",
     config = function()
       require("smart-splits").setup {
         at_edge = "stop",
@@ -54,6 +44,7 @@ return {
 
   {
     "nvim-tree/nvim-tree.lua",
+    event = "VeryLazy",
     opts = require "configs.nvim-tree",
     config = function(_, opts)
       require("nvim-tree").setup(opts)
@@ -68,8 +59,6 @@ return {
     config = require("configs.ufo").setup,
   },
 
-  { "akinsho/git-conflict.nvim", version = "*", config = true },
-
   {
     "numToStr/Comment.nvim",
     event = "BufReadPre",
@@ -78,7 +67,7 @@ return {
 
   {
     "windwp/nvim-ts-autotag",
-    lazy = false,
+    event = "VeryLazy",
     config = function(_, opts)
       require("nvim-ts-autotag").setup(opts)
     end,
@@ -86,44 +75,58 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    dependencies = {
-      {
-        "JoosepAlviste/nvim-ts-context-commentstring",
-        config = function()
-          require("ts_context_commentstring").setup {}
-        end,
-      },
-      "nvim-treesitter/nvim-treesitter-textobjects",
-    },
-    opts = {
-      ensure_installed = {
+    lazy = false,
+    event = "BufRead",
+    branch = "main",
+    build = ":TSUpdate",
+    config = function()
+      require("nvim-treesitter").setup {
+        install_dir = vim.fn.stdpath "data" .. "/site",
+      }
+
+      local parsers = {
+        "bash",
         "css",
+        "diff",
+        "editorconfig",
+        "git_config",
+        "git_rebase",
+        "gitattributes",
+        "gitcommit",
+        "gitignore",
         "html",
         "javascript",
+        "jsdoc",
+        "json",
         "lua",
+        "make",
+        "markdown",
+        "markdown_inline",
         "python",
-        "scss",
+        "query",
+        "regex",
+        "toml",
         "tsx",
         "typescript",
-      },
-      highlight = {
-        enable = true,
-        use_languagetree = true,
-      },
-      textobjects = {
-        move = {
-          enable = true,
-          goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer" },
-          goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer" },
-          goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer" },
-          goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer" },
-        },
-      },
-    },
-  },
+        "typst",
+        "vim",
+        "vimdoc",
+        "xml",
+        "yaml",
+      }
 
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "LazyDone",
+        once = true,
+        callback = function()
+          require("nvim-treesitter").install(parsers)
+        end,
+      })
+    end,
+  },
   {
     "lukas-reineke/indent-blankline.nvim",
+    event = "VeryLazy",
     opts = {
       scope = { enabled = false },
     },
@@ -132,9 +135,11 @@ return {
   {
     "nvim-telescope/telescope-ui-select.nvim",
     version = "*",
+    enabled = false,
   },
   {
     "nvim-telescope/telescope.nvim",
+    enabled = false,
     dependencies = {
       "nvim-telescope/telescope-ui-select.nvim",
     },
@@ -155,36 +160,23 @@ return {
     end,
   },
   {
-    "RRethy/vim-illuminate",
-    event = { "CursorHold", "CursorHoldI" },
-    dependencies = "nvim-treesitter",
-    config = function()
-      require("illuminate").configure {
-        under_cursor = true,
-        max_file_lines = nil,
-        delay = 100,
-        providers = {
-          "lsp",
-          "treesitter",
-          "regex",
-        },
-        filetypes_denylist = {
-          "NvimTree",
-          "Trouble",
-          "Outline",
-          "TelescopePrompt",
-          "Empty",
-          "dirvish",
-          "fugitive",
-          "alpha",
-          "packer",
-          "neogitstatus",
-          "spectre_panel",
-          "toggleterm",
-          "DressingSelect",
-          "aerial",
-        },
-      }
-    end,
+    "nvim-mini/mini.cursorword",
+    event = "VeryLazy",
+    version = false,
+    opts = {},
+  },
+  -- { "nvim-mini/mini.ai", event = "VeryLazy", version = false, opts = { search_method = "cover_or_nearest" } },
+  { "nvim-mini/mini.move", event = "VeryLazy", version = false, opts = {} },
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    event = "VeryLazy",
+    opts = require "configs.snacks",
+  },
+  {
+    "windwp/nvim-autopairs",
+    opts = {
+      disable_filetype = { "snacks_picker_input" },
+    },
   },
 }

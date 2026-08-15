@@ -1,130 +1,115 @@
--- load defaults i.e lua_lsp
 require("nvchad.configs.lspconfig").defaults()
 
-local lspconfig = require "lspconfig"
+local servers = {
+  -- "basedpyright",
+  biome = {},
+  cssls = {},
+  eslint = {
+    settings = {
+      codeAction = {
+        disableRuleComment = {
+          enable = true,
+          location = "separateLine",
+        },
+        showDocumentation = {
+          enable = true,
+        },
+      },
+      experimental = {
+        useFlatConfig = false,
+      },
+      format = false,
+      nodePath = "",
+      onIgnoredFiles = "off",
+      problems = {
+        shortenToSingleLine = false,
+      },
+      quiet = false,
+      rulesCustomizations = {},
+      run = "onSave",
+      useESLintClass = false,
+      validate = "on",
+      workingDirectory = {
+        mode = "location",
+      },
+    },
+  },
+  gopls = {},
+  html = {},
+  jsonls = {},
+  nil_ls = {},
+  prettierd = {},
+  -- pylsp = {},
+  tailwindcss = {
+    settings = {
+      tailwindCSS = {
+        experimental = {
+          classRegex = {
+            { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+            { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+          },
+        },
+      },
+    },
+  },
+  unocss = {
+    filetypes = { "html", "javascriptreact", "rescript", "typescriptreact", "vue", "svelte", "typescript.tsx" },
+    settings = {
+      root_dir = function(fname)
+        return require("vim.lsp.config.util").root_pattern(
+          "unocss.config.js",
+          "unocss.config.ts",
+          "uno.config.js",
+          "uno.config.ts"
+        )(fname)
+      end,
+    },
+  },
+  vtsls = {
+    -- https://github.com/yioneko/vtsls
+    -- npm install -g @vtsls/language-server
+    -- pnpm add -g @vtsls/language-server
+    filetypes = {
+      "javascript",
+      "javascriptreact",
+      "javascript.jsx",
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx",
+    },
+    settings = {
+      typescript = {
+        tsdk = "./node_modules/typescript/lib",
+        maxTsServerMemory = 8192,
+        useSeparateSyntaxServer = false,
+        useSyntaxServer = "never",
+        preferences = {
+          importModuleSpecifier = "non-relative",
+          updateImportsOnFileMove = {
+            enabled = "always",
+          },
+          suggest = {
+            completeFunctionCalls = true,
+          },
+        },
+      },
+      -- vtsls = {
+      --   autoUseWorkspaceTsdk = true,
+      --   experimental = {
+      --     completion = {
+      --       enableServerSideFuzzyMatch = true,
+      --     },
+      --   },
+      -- },
+    },
+  },
+  rust_analyzer = {},
+  oxlint = {},
+  oxfmt = {},
+}
 
--- EXAMPLE
-local servers = { "html", "cssls", "gopls" }
-local nvlsp = require "nvchad.configs.lspconfig"
-
--- lsps with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = nvlsp.on_attach,
-    on_init = nvlsp.on_init,
-    capabilities = nvlsp.capabilities,
-  }
+for name, opts in pairs(servers) do
+  vim.lsp.config(name, opts)
 end
 
--- configuring single server, example: typescript
-lspconfig.ts_ls.setup {
-  enabled = false,
-}
-
-lspconfig.jsonls.setup {
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
-}
-
--- lspconfig.tsserver.setup {
---   enabled = false,
--- }
-
--- https://github.com/yioneko/vtsls
--- npm install -g @vtsls/language-server
--- pnpm add -g @vtsls/language-server
-lspconfig.vtsls.setup {
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
-  filetypes = {
-    "javascript",
-    "javascriptreact",
-    "javascript.jsx",
-    "typescript",
-    "typescriptreact",
-    "typescript.tsx",
-  },
-  settings = {
-    typescript = {
-      maxTsServerMemory = 8192,
-      useSeparateSyntaxServer = false,
-      useSyntaxServer = "never",
-    },
-    vtsls = {
-      experimental = {
-        completion = {
-          enableServerSideFuzzyMatch = true,
-        },
-      },
-    },
-  },
-}
-
-lspconfig.tailwindcss.setup {
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
-  settings = {
-    tailwindCSS = {
-      experimental = {
-        classRegex = {
-          { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-          { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-        },
-      },
-    },
-  },
-}
-
--- lspconfig.eslint.setup {
---   on_init = nvlsp.on_init,
---   capabilities = nvlsp.capabilities,
---   on_attach = nvlsp.on_attach,
---   settings = {
---     codeAction = {
---       disableRuleComment = {
---         enable = true,
---         location = "separateLine",
---       },
---       showDocumentation = {
---         enable = true,
---       },
---     },
---     experimental = {
---       useFlatConfig = false,
---     },
---     format = false,
---     nodePath = "",
---     onIgnoredFiles = "off",
---     problems = {
---       shortenToSingleLine = false,
---     },
---     quiet = false,
---     rulesCustomizations = {},
---     run = "onSave",
---     useESLintClass = false,
---     validate = "on",
---     workingDirectory = {
---       mode = "location",
---     },
---   },
--- }
-
-lspconfig.unocss.setup {
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
-  filetypes = { "html", "javascriptreact", "rescript", "typescriptreact", "vue", "svelte", "typescript.tsx" },
-  root_dir = function(fname)
-    return require("lspconfig.util").root_pattern(
-      "unocss.config.js",
-      "unocss.config.ts",
-      "uno.config.js",
-      "uno.config.ts"
-    )(fname)
-  end,
-}
-
-lspconfig.biome.setup {}
+vim.lsp.enable(vim.tbl_keys(servers))
