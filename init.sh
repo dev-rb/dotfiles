@@ -13,7 +13,17 @@ fi
 mode=$1
 host=$2
 shift 2
-repo_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+script=${BASH_SOURCE[0]}
+while [[ -L $script ]]; do
+  script_dir=$(cd -P -- "$(dirname -- "$script")" && pwd)
+  target=$(readlink "$script")
+  if [[ $target = /* ]]; then
+    script=$target
+  else
+    script=$script_dir/$target
+  fi
+done
+repo_root=$(cd -P -- "$(dirname -- "$script")" && pwd)
 
 if [[ ! $host =~ ^[a-zA-Z0-9_-]+$ ]]; then
   printf 'Invalid host selector: %s\n' "$host" >&2

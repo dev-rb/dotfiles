@@ -23,6 +23,17 @@ cmp "$work/expected" "$CALL_LOG"
 printf '%s\n' sudo darwin-rebuild switch --flake "$repo_root#macbook-pro" --show-trace > "$work/expected"
 cmp "$work/expected" "$CALL_LOG"
 
+# Resolve both file symlinks and symlinked parent directories outside the repo.
+mkdir "$work/links"
+ln -s "$repo_root/init.sh" "$work/bin/dotfiles-init"
+ln -s ../bin/dotfiles-init "$work/links/relative-init"
+ln -s "$work/links/relative-init" "$work/links/chain-init"
+ln -s "$repo_root" "$work/repo-link"
+printf '%s\n' nix run "$repo_root#home-manager" -- switch --flake "$repo_root#wsl-dev" -b backup --show-trace > "$work/expected"
+for wrapper in dotfiles-init "$work/links/relative-init" "$work/links/chain-init" "$work/repo-link/init.sh"; do
+  "$wrapper" home wsl-dev --show-trace
+  cmp "$work/expected" "$CALL_LOG"
+done
 for args in '' 'invalid host' 'home bad.host'; do
   rm -f "$CALL_LOG"
   # Deliberately split fixed test cases to exercise invalid argument handling.
