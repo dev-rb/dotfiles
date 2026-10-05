@@ -26,6 +26,7 @@
     fd
     fzf
     gh
+    google-cloud-sdk
     jless
     ripgrep
     wget
@@ -51,7 +52,7 @@
     # formatters
     nixfmt
     stylua
-    biome
+    # biome
 
     rustup
 

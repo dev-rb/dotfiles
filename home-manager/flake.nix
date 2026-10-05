@@ -34,6 +34,9 @@
 
     wezterm.url = "github:wezterm/wezterm?dir=nix";
 
+    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
   };
 
   # nix = { settings.experimental-features = [ "nix-command" "flakes" ]; };
@@ -44,6 +47,7 @@
       nixpkgs,
       niri,
       nixgl,
+      nix-darwin,
       home-manager,
       ...
     }@inputs:
@@ -123,6 +127,35 @@
           };
           modules = [ ];
         };
+      };
+
+      darwinConfigurations."macos" = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        pkgs = import nixpkgs { system = "aarch64-darwin"; };
+        modules = [
+          {
+            system.stateVersion = 6;
+          }
+          home-manager.darwinModules.home-manager
+          {
+            users.users.devrb.home = "/Users/devrb";
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = {
+                vars = {
+                  name = "macos";
+                  username = "devrb";
+                };
+              };
+              backupFileExtension = "backup";
+
+              users.devrb.imports = [ ./home/home.nix ];
+            };
+          }
+        ]
+
+        ;
       };
 
       inherit home-manager;
