@@ -58,6 +58,8 @@
     go
 
     just
+
+    docker
   ];
 
 }
