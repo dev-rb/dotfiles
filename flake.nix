@@ -98,6 +98,18 @@
           ];
         };
       };
+      mkHostChecks =
+        system: configs:
+        assert import ./tests/hosts.nix { inherit self; };
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        pkgs.runCommand "host-settings" { nativeBuildInputs = [ pkgs.zsh ]; } ''
+          ${nixpkgs.lib.concatMapStringsSep "\n" (
+            config: "zsh -n ${nixpkgs.lib.escapeShellArg (toString config.home.file."./.zshrc".source)}"
+          ) configs}
+          touch "$out"
+        '';
     in
     {
       overlays.hyprlock-pam = import ./overlays/hyprlock-pam.nix;
@@ -121,8 +133,17 @@
         x86_64-linux = {
           arch-desktop = homes.arch-desktop.activationPackage;
           wsl-dev = homes.wsl-dev.activationPackage;
+          host-settings = mkHostChecks "x86_64-linux" [
+            homes.arch-desktop.config
+            homes.wsl-dev.config
+          ];
         };
-        aarch64-darwin.macbook-pro = darwinHosts.macbook-pro.system;
+        aarch64-darwin = {
+          macbook-pro = darwinHosts.macbook-pro.system;
+          host-settings = mkHostChecks "aarch64-darwin" [
+            darwinHosts.macbook-pro.config.home-manager.users.devrb
+          ];
+        };
       };
     };
 }
