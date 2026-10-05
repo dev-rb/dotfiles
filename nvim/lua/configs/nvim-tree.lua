@@ -1,4 +1,5 @@
-local WIDTH_RATIO = 0.3 -- You can change this too
+local responsive_width = require "configs.responsive-width"
+
 local HEIGHT_RATIO = 0.5 -- You can change this
 
 local options = {
@@ -9,7 +10,7 @@ local options = {
         local screen_w = vim.opt.columns:get()
         local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
 
-        local window_w = screen_w * WIDTH_RATIO
+        local window_w = screen_w * responsive_width.get(screen_w)
         local window_h = screen_h * HEIGHT_RATIO
         local window_w_int = math.floor(window_w)
         local window_h_int = math.floor(window_h)
@@ -26,7 +27,8 @@ local options = {
       end,
     },
     width = function()
-      return math.floor(vim.opt.columns:get() * WIDTH_RATIO)
+      local screen_w = vim.opt.columns:get()
+      return math.floor(screen_w * responsive_width.get(screen_w))
     end,
   },
 }

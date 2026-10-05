@@ -1,6 +1,20 @@
 require "nvchad.mappings"
 
 local map = vim.keymap.set
+local responsive_width = require "configs.responsive-width"
+
+map({ "n", "t" }, "<A-i>", function()
+  local width = responsive_width.get(vim.o.columns)
+
+  require("nvchad.term").toggle {
+    pos = "float",
+    id = "floatTerm",
+    float_opts = {
+      width = width,
+      col = (1 - width) / 2,
+    },
+  }
+end, { desc = "terminal toggle floating term" })
 
 map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 

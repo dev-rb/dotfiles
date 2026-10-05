@@ -1,5 +1,14 @@
+local responsive_width = require "configs.responsive-width"
+
 local options = {
   quickfile = { enabled = true },
+  terminal = {
+    win = {
+      width = function()
+        return responsive_width.get(vim.o.columns)
+      end,
+    },
+  },
   picker = {
     win = {
       input = {
