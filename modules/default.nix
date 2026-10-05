@@ -1,3 +1,7 @@
 {
-  imports = [ ./outputs.nix ];
+  imports = [
+    ./outputs.nix
+    ./features
+    ./profiles
+  ];
 }

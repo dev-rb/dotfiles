@@ -1,0 +1,24 @@
+{
+  imports = [
+    ./base
+    ./cli
+    ./devtools
+    ./fonts
+    ./git
+    ./zsh
+    ./oh-my-posh
+    ./neovim
+    ./wezterm
+    ./tmux
+    ./linux
+    ./wsl
+    ./darwin
+    ./nixgl
+    ./niri
+    ./hyprland
+    ./hypridle
+    ./hyprlock
+    ./waybar
+    ./desktop-scripts
+  ];
+}

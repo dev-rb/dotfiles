@@ -12,6 +12,12 @@ let
       ${lib.concatMapStringsSep "\n" (
         config: "zsh -n ${lib.escapeShellArg (toString config.home.file."./.zshrc".source)}"
       ) configs}
+      ${lib.concatMapStringsSep "\n" (
+        config:
+        "test \"$(readlink ${
+          lib.escapeShellArg (toString config.home.file.".config/nvim".source)
+        })\" = ${lib.escapeShellArg "${config.home.homeDirectory}/dotfiles/modules/features/neovim/config"}"
+      ) configs}
       touch "$out"
     '';
 in
@@ -45,6 +51,21 @@ in
       helpers =
         assert import ../tests/helpers.nix { inherit inputs; };
         pkgs.runCommand "helper-settings" { } "touch $out";
+      native-configs =
+        pkgs.runCommand "native-configs"
+          {
+            nativeBuildInputs = [
+              pkgs.lua
+              pkgs.tmux
+            ];
+          }
+          ''
+            bash ${../tests/native-configs.sh} ${self.outPath}
+            touch "$out"
+          '';
+      nixos-helper =
+        assert import ../tests/nixos-helper.nix { inherit self; };
+        pkgs.runCommand "nixos-helper-settings" { } "touch $out";
     }
     // lib.optionalAttrs (system == "x86_64-linux") {
       arch-desktop = self.homeConfigurations.arch-desktop.activationPackage;
