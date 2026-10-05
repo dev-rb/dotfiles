@@ -13,4 +13,4 @@ o.foldlevelstart = 99
 o.foldenable = true
 o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
-vim.g.skip_ts_context_commentstring_module = true
+vim.opt.sessionoptions = "buffers,curdir,help,tabpages,winsize"

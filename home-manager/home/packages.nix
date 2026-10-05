@@ -10,7 +10,16 @@
     extraOptions = [ "--group-directories-first" ];
   };
 
+  # fonts.fontconfig.enable = true;
+
   home.packages = with pkgs; [
+    nerd-fonts.iosevka-term
+    nerd-fonts.jetbrains-mono
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-color-emoji
+    adwaita-fonts
+
     # cli
     bat
     eza
@@ -20,34 +29,37 @@
     jless
     ripgrep
     wget
+    jq
+    btop
+    oh-my-posh
 
     # javascript/typescript
-    pnpm
     fnm
+    bun
+    oxlint
+    oxfmt
 
     # LSPs
     lua-language-server
     tailwindcss-language-server
     #unocss-language-server
     typescript-language-server
+    nil
+
+    tree-sitter
 
     # formatters
-    nixfmt-rfc-style
+    nixfmt
     stylua
+    biome
 
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    rustup
 
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+    go
 
+    just
+
+    docker
   ];
 
 }

@@ -21,11 +21,6 @@ require("lazy").setup({
     branch = "v2.5",
     import = "nvchad.plugins",
   },
-  {
-    "NvChad/base46",
-    lazy = false,
-    branch = "v3.0",
-  },
 
   { import = "plugins" },
 }, lazy_config)
