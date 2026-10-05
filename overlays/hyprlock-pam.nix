@@ -1,6 +1,7 @@
-(self: super:
+(
+  final: prev:
   let
-    patchedPam = super.linux-pam.overrideAttrs (old: {
+    patchedPam = prev.linux-pam.overrideAttrs (old: {
       # Replace upstream patch, this is fragile and may break in the future
       # https://github.com/nix-community/home-manager/issues/7027
       postPatch = ''
@@ -9,4 +10,8 @@
       '';
     });
 
-  in { hyprlock = super.hyprlock.override { pam = patchedPam; }; })
+  in
+  {
+    hyprlock = prev.hyprlock.override { pam = patchedPam; };
+  }
+)

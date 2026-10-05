@@ -6,7 +6,9 @@
     package = null;
     settings = {
       monitor = ",1920x1200,auto,1,bitdepth,8";
-      xwayland = { force_zero_scaling = true; };
+      xwayland = {
+        force_zero_scaling = true;
+      };
 
       # Set programs that you use
       "$terminal " = "wezterm";
@@ -31,8 +33,7 @@
         "QT_QPA_PLATFORMTHEME,qt6ct" # for Qt apps# Theme
 
         # Make Chromium use XCompose and all Wayland
-        ''
-          CHROMIUM_FLAGS,"--enable-features=UseOzonePlatform --ozone-platform=wayland --gtk-version=4"''
+        ''CHROMIUM_FLAGS,"--enable-features=UseOzonePlatform --ozone-platform=wayland --gtk-version=4"''
 
       ];
 
@@ -55,7 +56,9 @@
         # -1.0 - 1.0, 0 means no modification.
         sensitivity = 0;
 
-        touchpad = { natural_scroll = true; };
+        touchpad = {
+          natural_scroll = true;
+        };
       };
 
       gestures = {
@@ -156,7 +159,9 @@
       };
 
       # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-      master = { new_status = "master"; };
+      master = {
+        new_status = "master";
+      };
 
       exec-once = [
         #for libadwaita gtk4 apps you can use this command:
@@ -165,7 +170,7 @@
         #for gtk3 apps you need to install adw-gtk3 theme (in arch linux sudo pacman -S adw-gtk-theme)
         "gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3'" # for GTK3 apps
 
-        #for kde apps you need to install: sudo pacman -S qt5ct qt6ct kvantum kvantum breeze-icons   
+        #for kde apps you need to install: sudo pacman -S qt5ct qt6ct kvantum kvantum breeze-icons
         #you will need to set dark theme for qt apps from kde more difficult thans with gnome :D:
         "hypridle"
         "swww-daemon &"

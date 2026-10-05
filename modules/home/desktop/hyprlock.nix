@@ -12,7 +12,9 @@
         screencopy_mode = 1;
       };
 
-      animations = { enabled = false; };
+      animations = {
+        enabled = false;
+      };
 
       background = {
         monitor = "";
@@ -55,8 +57,7 @@
       label = [
         {
           monitor = "";
-          text =
-            "$TIME12"; # ref. https://wiki.hyprland.org/Hypr-Ecosystem/hyprlock/#variable-substitution
+          text = "$TIME12"; # ref. https://wiki.hyprland.org/Hypr-Ecosystem/hyprlock/#variable-substitution
           font_size = 90;
           font_family = "$font";
 
@@ -66,8 +67,7 @@
         }
         {
           monitor = "";
-          text = ''
-            cmd[update:60000] date +"%A, %d %B %Y"''; # update every 60 seconds
+          text = ''cmd[update:60000] date +"%A, %d %B %Y"''; # update every 60 seconds
           font_size = 25;
           font_family = "$font";
 
