@@ -1,9 +1,15 @@
-{
-  system.stateVersion = 6;
-  system.primaryUser = "devrb";
-  users.users.devrb.home = "/Users/devrb";
+{ mkDarwin, ... }:
+mkDarwin {
+  name = "macbook-pro";
+  system = "aarch64-darwin";
+  user = "devrb";
+  stateVersions = {
+    home = "26.05";
+    system = 6;
+  };
 
-  home-manager.users.devrb.imports = [
+  modules = [ ../../modules/darwin ];
+  homeModules = [
     ../../modules/home
     ./home.nix
   ];
