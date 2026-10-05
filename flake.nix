@@ -53,17 +53,38 @@
           lib = inputs.nixpkgs.lib;
         };
       }
-      {
-        imports = [
-          inputs.flake-parts.flakeModules.modules
-          ./modules
-          ./hosts
-        ];
+      (
+        { lib, self, ... }: {
+          imports = [
+            inputs.flake-parts.flakeModules.modules
+            ./modules
+            ./hosts
+          ];
 
-        systems = [
-          "x86_64-linux"
-          "aarch64-linux"
-          "aarch64-darwin"
-        ];
-      };
+          # Keep host configurations opaque and lazy when their outputs are merged.
+          options.flake = lib.genAttrs [ "homeConfigurations" "darwinConfigurations" ] (
+            _:
+            lib.mkOption {
+              type = lib.types.lazyAttrsOf lib.types.raw;
+              default = { };
+            }
+          );
+
+          config = {
+            systems = [
+              "x86_64-linux"
+              "aarch64-linux"
+              "aarch64-darwin"
+            ];
+
+            perSystem = { pkgs, system, ... }: {
+              packages = {
+                home-manager = inputs.home-manager.packages.${system}.home-manager;
+                default = self.packages.${system}.home-manager;
+              };
+              formatter = pkgs.nixfmt;
+            };
+          };
+        }
+      );
 }

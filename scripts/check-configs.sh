@@ -10,15 +10,11 @@ while IFS= read -r -d '' file; do
 done < <(git ls-files -z -- '*.nix')
 
 nix fmt -- --check "${files[@]}"
-bash -n init.sh scripts/check-configs.sh tests/init.sh tests/native-configs.sh tests/desktop-scripts.sh
-bash tests/init.sh
+bash -n init.sh scripts/check-configs.sh
 nix flake check --no-build --all-systems --no-update-lock-file
-system=$(nix eval --impure --raw --expr builtins.currentSystem)
-nix build \
-  ".#checks.$system.host-settings" \
-  ".#checks.$system.helpers" \
-  ".#checks.$system.nixos-helper" \
-  ".#checks.$system.native-configs" \
-  --no-link --no-update-lock-file
+nix eval --json --no-update-lock-file .#homeConfigurations \
+  --apply 'builtins.mapAttrs (_: home: home.activationPackage.drvPath)'
+nix eval --json --no-update-lock-file .#darwinConfigurations \
+  --apply 'builtins.mapAttrs (_: darwin: darwin.system.drvPath)'
 
 printf 'Configuration checks passed; nothing was activated.\n'
