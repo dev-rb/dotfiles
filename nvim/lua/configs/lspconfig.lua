@@ -79,10 +79,16 @@ local servers = {
     },
     settings = {
       typescript = {
+        tsserver = {
+          -- useSeparateSyntaxServer = false,
+          maxTsServerMemory = 8192,
+          useSyntaxServer = "never",
+          enableRegionDiagnostics = true,
+          experimental = {
+            useVsCodeWatcher = true,
+          },
+        },
         tsdk = "./node_modules/typescript/lib",
-        maxTsServerMemory = 8192,
-        useSeparateSyntaxServer = false,
-        useSyntaxServer = "never",
         preferences = {
           importModuleSpecifier = "non-relative",
           updateImportsOnFileMove = {
