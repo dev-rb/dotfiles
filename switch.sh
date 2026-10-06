@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Select and activate a compatible host from this checkout's flake.
+# Validate the platform, account, and home directory before activating a host.
+# Activation requires terminal confirmation, or an explicit HOST with --yes.
 set -euo pipefail
 
 usage() {
@@ -11,10 +14,13 @@ fail() {
   exit 1
 }
 
+# Prompts use the controlling terminal rather than consuming piped stdin.
 have_tty() {
   ( : </dev/tty ) 2>/dev/null
 }
 
+# Find the real checkout when invoked elsewhere or through symlink chains.
+# Resolve relative symlink targets against each link's containing directory.
 script=${BASH_SOURCE[0]}
 while [[ -L $script ]]; do
   script_dir=$(cd -P -- "$(dirname -- "$script")" && pwd)
@@ -27,6 +33,8 @@ while [[ -L $script ]]; do
 done
 repo_root=$(cd -P -- "$(dirname -- "$script")" && pwd)
 
+# Accept one host selector. Everything after -- is passed unchanged to the
+# activation tool; --yes skips confirmation but cannot select a host for you.
 host=''
 yes=0
 forwarded=()
@@ -47,6 +55,8 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+# Restrict selectors to names safe to embed in Nix attribute references.
 if [[ -n $host && ! $host =~ ^[a-zA-Z0-9_-]+$ ]]; then
   fail "Invalid host selector: $host. Use a name from the configuration list."
 fi
@@ -54,10 +64,14 @@ if [[ $yes -eq 1 && -z $host ]]; then
   usage
   exit 2
 fi
+
+# Reuse an installed Nix even if this shell has not loaded its profile yet.
+# Prerequisite installation belongs to init.sh, not this activation script.
 if ! command -v nix >/dev/null 2>&1; then
   for nix_profile in /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh "$HOME/.nix-profile/etc/profile.d/nix.sh"; do
     if [[ -f $nix_profile ]]; then
       # The installed Nix profile sets PATH; it does not change user configuration.
+      # Installed profiles can reference unset variables while initializing.
       set +u
       # shellcheck source=/dev/null
       . "$nix_profile"
@@ -68,10 +82,14 @@ if ! command -v nix >/dev/null 2>&1; then
 fi
 command -v nix >/dev/null 2>&1 || fail 'Nix is not on PATH. Run init.sh first or load the installed Nix shell profile.'
 
+# Evaluate without updating flake.lock or reading interactive input.
+# Experimental features apply to this command, not the user's config file.
 nix_eval() {
   nix --extra-experimental-features 'nix-command flakes' eval --no-update-lock-file --raw "$@" </dev/null
 }
 
+# Match the native OS and architecture to Nix's system names.
+# WSL uses the same Linux platform identifiers as other Linux installations.
 case "$(uname -s):$(uname -m)" in
   Darwin:arm64|Darwin:aarch64) platform=aarch64-darwin ;;
   Darwin:x86_64) platform=x86_64-darwin ;;
@@ -80,14 +98,20 @@ case "$(uname -s):$(uname -m)" in
   *) fail "Unsupported native platform: $(uname -s) $(uname -m)." ;;
 esac
 
+# Discover explicit outputs from the flake rather than maintaining a host list.
 home_names=$(nix_eval --apply 'c: builtins.concatStringsSep "\n" (builtins.attrNames c)' "$repo_root#homeConfigurations")
 darwin_names=$(nix_eval --apply 'c: builtins.concatStringsSep "\n" (builtins.attrNames c)' "$repo_root#darwinConfigurations")
 
+# Parallel arrays store each candidate's name, activation mode, and account.
 names=()
 modes=()
 platforms=()
 users=()
 homes=()
+
+# Inspect either standalone Home Manager or integrated nix-darwin outputs.
+# A named host fails on platform mismatch; menu discovery skips mismatches.
+# Filtering checks OS and architecture, not distro or desktop hardware.
 collect() {
   local mode=$1 name_list=$2 name ref system user home_dir
   while IFS= read -r name; do
@@ -108,6 +132,7 @@ collect() {
       fi
       continue
     fi
+    # Read the account declared by the selected configuration, not the shell.
     if [[ $mode = home ]]; then
       user=$(nix_eval --apply 'h: h.config.home.username' "$ref")
       home_dir=$(nix_eval --apply 'h: h.config.home.homeDirectory' "$ref")
@@ -133,6 +158,8 @@ if [[ ${#names[@]} -eq 0 ]]; then
   fail "No configurations target $platform. Check the flake host declarations."
 fi
 
+# Menu selection is terminal-only. Explicit HOST bypasses the menu but
+# still validates the account. Only --yes bypasses activation confirmation.
 selection=0
 if [[ -z $host ]]; then
   printf 'Compatible configurations for %s:\n' "$platform" >&2
@@ -154,6 +181,8 @@ else
   done
 fi
 
+# Check the actual account record as well as HOME, which can be overridden.
+# Refuse activation into another account or a different home directory.
 actual_user=$(id -un)
 selected_user=${users[selection]}
 selected_home=${homes[selection]}
@@ -168,6 +197,8 @@ fi
 [[ $actual_home = "$selected_home" ]] || fail "Home directory mismatch: ${names[selection]} requires $selected_home, but $actual_user has $actual_home. Correct the host declaration or use the matching account."
 [[ $HOME = "$selected_home" ]] || fail "Home directory mismatch: HOME is $HOME, but ${names[selection]} requires $selected_home. Set HOME to your account's home directory before activation."
 
+# Default to cancellation; only an explicit affirmative answer activates.
+# Noninteractive runs must supply both HOST and --yes.
 if [[ $yes -eq 0 ]]; then
   have_tty || fail 'Activation requires confirmation on a terminal. Pass HOST and --yes for noninteractive activation.'
   printf 'Activate %s (%s) for %s at %s? [y/N] ' "${names[selection]}" "${modes[selection]}" "$selected_user" "$selected_home" >&2
@@ -175,15 +206,22 @@ if [[ $yes -eq 0 ]]; then
   [[ $answer = y || $answer = Y || $answer = yes || $answer = YES ]] || fail 'Activation cancelled.'
 fi
 
+# Preserve quoting and argument boundaries when forwarding tool arguments.
 # Bash 3.2 treats empty arrays as unset under nounset.
 set -- ${forwarded[@]+"${forwarded[@]}"}
 
+# Use activation tools pinned by this flake, not whichever CLI is on PATH.
+# exec hands control to the tool; its exit status becomes this script's status.
 if [[ ${modes[selection]} = home ]]; then
   # Home Manager also invokes Nix internally, including its flake-support check.
   export NIX_CONFIG="${NIX_CONFIG:+$NIX_CONFIG$'\n'}extra-experimental-features = nix-command flakes"
+  # Back up conflicting unmanaged dotfiles with the backup suffix instead
+  # of overwriting them; existing backup collisions still stop activation.
   exec nix --extra-experimental-features 'nix-command flakes' run --no-update-lock-file "$repo_root#home-manager" -- switch --flake "$repo_root#${names[selection]}" -b backup --no-update-lock-file --extra-experimental-features 'nix-command flakes' "$@"
 else
   # Build as the account owner; the pinned CLI includes Nix in its own PATH.
   cli_package=$(nix --extra-experimental-features 'nix-command flakes' build --no-update-lock-file --no-link --print-out-paths "$repo_root#darwin-rebuild")
+  # Only Darwin system activation uses sudo; CLI realization above stays
+  # unprivileged. The Darwin host also activates its integrated Home Manager.
   exec sudo "$cli_package/bin/darwin-rebuild" switch --flake "$repo_root#${names[selection]}" --no-update-lock-file "$@"
 fi
