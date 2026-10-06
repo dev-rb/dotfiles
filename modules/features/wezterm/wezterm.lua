@@ -9,6 +9,8 @@ if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
+config.automatically_reload_config = true
+
 local icons = wezterm.nerdfonts
 
 local function space(string, repLeft, repRight)
@@ -21,12 +23,11 @@ end
 config.scrollback_lines = 3500
 -- For example, changing the color scheme:
 config.color_scheme = "Argonaut (Gogh)"
--- Fonts:
--- Monaspace Neon
--- JetBrainsMono Nerd Font Mono
-config.font = wezterm.font("JetBrainsMono Nerd Font Mono")
-config.font_size = 16
+config.font = wezterm.font("IosevkaTerm Nerd Font Mono")
+config.font_size = 12
 config.line_height = 1.1
+config.freetype_load_flags = "NO_HINTING"
+config.cell_width = 1.0
 -- config.default_gui_startup_args = { 'connect', 'unix' }
 -- config.default_prog = { 'wsl' }
 -- config.unix_domains = {
@@ -46,11 +47,11 @@ config.window_padding = {
 }
 
 if wezterm.target_triple:find("windows") then
-	dofile(wezterm.home_dir .. "/.config/wezterm/windows.lua")(config)
+	dofile(wezterm.config_dir .. "/windows.lua")(config)
 end
 
 config.window_background_image_hsb = {}
-config.window_background_opacity = 1
+config.window_background_opacity = 0.88
 config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 config.adjust_window_size_when_changing_font_size = false
 -- config.win32_system_backdrop = "Acrylic"
@@ -71,12 +72,11 @@ config.tab_bar_style = {
 		{ Text = window_close },
 	}),
 }
-config.font_size = 10
 local color_bg = wezterm.color.parse("#1D61D9")
 local color_fg = wezterm.color.parse("#1DA0D8")
 config.colors = {
 	tab_bar = {
-		background = "transparent",
+		background = "black",
 
 		active_tab = {
 			fg_color = color_fg:lighten(0.8),
@@ -84,7 +84,7 @@ config.colors = {
 		},
 
 		new_tab = {
-			bg_color = "none",
+			bg_color = "black",
 			fg_color = "#ffffff",
 		},
 
@@ -133,13 +133,13 @@ wezterm.on("format-tab-title", function(tab, _, _, _, hover, max_width)
 	return wezterm.format({
 		{ Attribute = { Italic = false } },
 		{ Attribute = { Intensity = "Normal" } },
-		{ Background = { Color = "transparent" } },
+		{ Background = { Color = "black" } },
 		{ Foreground = { Color = edge_fg } },
 		{ Text = "" },
 		{ Background = { Color = bg } },
 		{ Foreground = { Color = fg } },
 		{ Text = title },
-		{ Background = { Color = "transparent" } },
+		{ Background = { Color = "black" } },
 		{ Foreground = { Color = edge_fg } },
 		{ Text = " " },
 	})
@@ -175,7 +175,7 @@ wezterm.on("update-right-status", function(window, pane)
 
 	-- figure out a way to center it
 	window:set_right_status(wezterm.format({
-		{ Background = { Color = "transparent" } },
+		{ Background = { Color = "black" } },
 		{ Text = bat .. " " .. date },
 	}))
 end)
@@ -246,10 +246,10 @@ config.keys = {
 	-- 		win:perform_action({ SendKey = { key = "Tab", mods = "CTRL|SHIFT" } }, pane)
 	-- 	end),
 	-- },
-	-- split_nav("move", "h"),
-	-- split_nav("move", "j"),
-	-- split_nav("move", "k"),
-	-- split_nav("move", "l"),
+	split_nav("move", "h"),
+	split_nav("move", "j"),
+	split_nav("move", "k"),
+	split_nav("move", "l"),
 	{
 		key = "v",
 		mods = "CTRL|SHIFT|ALT",

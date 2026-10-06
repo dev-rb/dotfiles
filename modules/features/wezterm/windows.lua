@@ -21,9 +21,8 @@ return function(config)
 			vertical_align = "Middle",
 			horizontal_align = "Center",
 			hsb = {
-
-				-- Darken the background image by reducing it to 1/3rd
-				brightness = 0.05,
+				-- Keep the wallpaper dim behind terminal text.
+				brightness = 0.15,
 
 				-- You can adjust the hue by scaling its value.
 				-- a multiplier of 1.0 leaves the value unchanged.

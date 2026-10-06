@@ -6,8 +6,9 @@ mkFeature {
     { pkgs, ... }:
     {
       programs.wezterm.enable = pkgs.stdenv.isLinux;
-
-      home.file.".wezterm.lua".source = ./wezterm.lua;
     }
-    // mkConfigFiles { "wezterm/windows.lua" = ./windows.lua; };
+    // mkConfigFiles {
+      "wezterm/wezterm.lua" = ./wezterm.lua;
+      "wezterm/windows.lua" = ./windows.lua;
+    };
 }

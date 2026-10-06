@@ -24,6 +24,8 @@ The macOS profile combines system fundamentals, shared macOS preferences, and th
 
 Native Neovim, Niri, Waybar, WezTerm, tmux, prompt, and desktop-script assets live beside their owning feature modules. Niri display facts live under `hosts/arch-desktop/`. Windows-specific WezTerm settings are isolated in `modules/features/wezterm/windows.lua`.
 
+WezTerm uses `~/.config/wezterm/wezterm.lua`, where its native directory watcher detects Home Manager symlink replacements. When migrating from the old managed `~/.wezterm.lua` location, activate the new generation and restart WezTerm once.
+
 Neovim uses a live checkout link for immediate editing and writable NvChad settings. All other native configurations use store-backed deployment. Live Neovim changes are not restored by a Nix generation rollback. Older `.zsh/` assets remain legacy and are not activated.
 
 ## Commands
