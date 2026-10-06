@@ -98,62 +98,59 @@ case "$(uname -s):$(uname -m)" in
   *) fail "Unsupported native platform: $(uname -s) $(uname -m)." ;;
 esac
 
-# Discover explicit outputs from the flake rather than maintaining a host list.
-home_names=$(nix_eval --apply 'c: builtins.concatStringsSep "\n" (builtins.attrNames c)' "$repo_root#homeConfigurations")
-darwin_names=$(nix_eval --apply 'c: builtins.concatStringsSep "\n" (builtins.attrNames c)' "$repo_root#darwinConfigurations")
-
+# Constructors expose plain identity records, without evaluating host modules.
+# One query loads the menu; TSV preserves spaces without requiring jq at setup.
+# Reject delimiters inside fields so parsing cannot truncate an identity.
+host_metadata=$(nix_eval --apply '
+  hosts: let
+    format = h: let fields = [ h.name h.mode h.system h.user h.homeDirectory ];
+      in assert builtins.all (v: builtins.isString v && builtins.match "[^\t\n\r]+" v != null) fields;
+        builtins.concatStringsSep "\t" fields;
+    ordered = builtins.sort (a: b: a.name < b.name || (a.name == b.name && a.mode < b.mode)) hosts;
+  in builtins.concatStringsSep "\n" (map format ordered)
+' "$repo_root#hostMetadata")
 # Parallel arrays store each candidate's name, activation mode, and account.
 names=()
 modes=()
 platforms=()
 users=()
 homes=()
+unsupported_mode=''
 
-# Inspect either standalone Home Manager or integrated nix-darwin outputs.
-# A named host fails on platform mismatch; menu discovery skips mismatches.
-# Filtering checks OS and architecture, not distro or desktop hardware.
-collect() {
-  local mode=$1 name_list=$2 name ref system user home_dir
-  while IFS= read -r name; do
-    [[ -n $name ]] || continue
-    if [[ -n $host && $host != "$name" ]]; then
-      continue
-    fi
-    [[ $name =~ ^[a-zA-Z0-9_-]+$ ]] || fail "Unsupported configuration name: $name. Use letters, digits, underscores, or hyphens."
-    ref="$repo_root#${mode}Configurations.\"${name}\""
-    if [[ $mode = home ]]; then
-      system=$(nix_eval --apply 'h: h.activationPackage.system' "$ref")
-    else
-      system=$(nix_eval --apply 'd: d.system.system' "$ref")
-    fi
-    if [[ $system != "$platform" ]]; then
-      if [[ $host = "$name" ]]; then
-        fail "Host $name ($mode) targets $system, but this machine is $platform. Select a compatible host."
+# Filter declared platforms before selection, without forcing configurations.
+# NixOS metadata is reserved for future activation support.
+while IFS=$'\t' read -r name mode system user home_dir; do
+  [[ -n $name ]] || continue
+  if [[ -n $host && $host != "$name" ]]; then
+    continue
+  fi
+  case $mode in
+    home|darwin) ;;
+    *)
+      if [[ -n $host && $host = "$name" ]]; then
+        unsupported_mode=$mode
       fi
       continue
+      ;;
+  esac
+  [[ $name =~ ^[a-zA-Z0-9_-]+$ ]] || fail "Unsupported configuration name: $name. Use letters, digits, underscores, or hyphens."
+  if [[ $system != "$platform" ]]; then
+    if [[ $host = "$name" ]]; then
+      fail "Host $name ($mode) targets $system, but this machine is $platform. Select a compatible host."
     fi
-    # Read the account declared by the selected configuration, not the shell.
-    if [[ $mode = home ]]; then
-      user=$(nix_eval --apply 'h: h.config.home.username' "$ref")
-      home_dir=$(nix_eval --apply 'h: h.config.home.homeDirectory' "$ref")
-    else
-      user=$(nix_eval --apply 'd: d.config.system.primaryUser' "$ref")
-      # shellcheck disable=SC2016 # Interpolation belongs to Nix, not Bash.
-      home_dir=$(nix_eval --apply 'd: d.config.users.users.${d.config.system.primaryUser}.home' "$ref")
-    fi
-    names+=("$name")
-    modes+=("$mode")
-    platforms+=("$system")
-    users+=("$user")
-    homes+=("$home_dir")
-  done <<< "$name_list"
-}
-collect home "$home_names"
-collect darwin "$darwin_names"
+    continue
+  fi
+  names+=("$name")
+  modes+=("$mode")
+  platforms+=("$system")
+  users+=("$user")
+  homes+=("$home_dir")
+done <<< "$host_metadata"
 
 if [[ ${#names[@]} -eq 0 ]]; then
   if [[ -n $host ]]; then
-    fail "Host $host is not in homeConfigurations or darwinConfigurations. Check the host name."
+    [[ -z $unsupported_mode ]] || fail "Host $host uses unsupported activation mode $unsupported_mode."
+    fail "Host $host is not in the flake's host metadata. Check the host name."
   fi
   fail "No configurations target $platform. Check the flake host declarations."
 fi
@@ -181,11 +178,26 @@ else
   done
 fi
 
+# Only the selected host gets full evaluation. Recheck the compiled identity
+# so module overrides cannot bypass platform, account, or home validation.
+ref="$repo_root#${modes[selection]}Configurations.\"${names[selection]}\""
+if [[ ${modes[selection]} = home ]]; then
+  identity_fields='h: [ h.activationPackage.system h.config.home.username h.config.home.homeDirectory ]'
+else
+  # shellcheck disable=SC2016 # Interpolation belongs to Nix, not Bash.
+  identity_fields='d: [ d.system.system d.config.system.primaryUser d.config.users.users.${d.config.system.primaryUser}.home ]'
+fi
+selected_identity=$(nix_eval --apply "host:
+  let fields = ($identity_fields) host;
+  in assert builtins.all (v: builtins.isString v && builtins.match \"[^\\t\\n\\r]+\" v != null) fields;
+    builtins.concatStringsSep \"\\t\" fields
+" "$ref")
+IFS=$'\t' read -r selected_system selected_user selected_home <<< "$selected_identity"
+[[ $selected_system = "$platform" ]] || fail "Host ${names[selection]} evaluates to $selected_system, but this machine is $platform."
+[[ $selected_system = "${platforms[selection]}" && $selected_user = "${users[selection]}" && $selected_home = "${homes[selection]}" ]] || fail "Host metadata for ${names[selection]} differs from its evaluated configuration. Check the host declaration and identity overrides."
 # Check the actual account record as well as HOME, which can be overridden.
 # Refuse activation into another account or a different home directory.
 actual_user=$(id -un)
-selected_user=${users[selection]}
-selected_home=${homes[selection]}
 [[ $actual_user = "$selected_user" ]] || fail "Account mismatch: ${names[selection]} requires $selected_user, but you are $actual_user. Sign in as $selected_user before activation."
 if [[ $platform = *-darwin ]]; then
   account_info=$(dscl . -read "/Users/$actual_user" NFSHomeDirectory) || fail "Cannot look up $actual_user's home directory with dscl. Check the local account."

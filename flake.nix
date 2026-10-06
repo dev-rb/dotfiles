@@ -68,13 +68,21 @@
           ];
 
           # Keep host configurations opaque and lazy when their outputs are merged.
-          options.flake = lib.genAttrs [ "homeConfigurations" "darwinConfigurations" ] (
-            _:
-            lib.mkOption {
-              type = lib.types.lazyAttrsOf lib.types.raw;
-              default = { };
-            }
-          );
+          options.flake =
+            lib.genAttrs [ "homeConfigurations" "darwinConfigurations" ] (
+              _:
+              lib.mkOption {
+                type = lib.types.lazyAttrsOf lib.types.raw;
+                default = { };
+              }
+            )
+            // {
+              # Constructors publish plain records for fast, dependency-light menus.
+              hostMetadata = lib.mkOption {
+                type = lib.types.listOf lib.types.raw;
+                default = [ ];
+              };
+            };
 
           config = {
             systems = [

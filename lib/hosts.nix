@@ -1,5 +1,17 @@
 { inputs }:
 let
+  # Keep discovery independent of Home Manager and system module evaluation.
+  hostMetadata = mode: name: system: user: homeDirectory: [
+    {
+      inherit
+        mode
+        name
+        system
+        user
+        homeDirectory
+        ;
+    }
+  ];
   homeIdentity = user: homeDirectory: stateVersion: {
     home = {
       username = user;
@@ -46,6 +58,7 @@ in
       extraSpecialArgs ? { },
     }:
     {
+      flake.hostMetadata = hostMetadata "home" name system user homeDirectory;
       flake.homeConfigurations.${name} = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = import inputs.nixpkgs {
           inherit system overlays;
@@ -74,6 +87,7 @@ in
       extraSpecialArgs ? { },
     }:
     {
+      flake.hostMetadata = hostMetadata "darwin" name system user homeDirectory;
       flake.darwinConfigurations.${name} = inputs.nix-darwin.lib.darwinSystem {
         inherit system;
         specialArgs = {
@@ -121,6 +135,7 @@ in
       extraSpecialArgs ? { },
     }:
     {
+      flake.hostMetadata = hostMetadata "nixos" name system user homeDirectory;
       flake.nixosConfigurations.${name} = inputs.nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
