@@ -39,6 +39,11 @@
       url = "github:hyprwm/hyprlock";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    pi = {
+      url = "github:earendil-works/pi/v1.0.3";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -79,6 +84,7 @@
               packages = {
                 home-manager = inputs.home-manager.packages.${system}.home-manager;
                 default = self.packages.${system}.home-manager;
+                pi = inputs.pi.packages.${system}.default;
               }
               // lib.optionalAttrs pkgs.stdenv.isDarwin {
                 darwin-rebuild = inputs.nix-darwin.packages.${system}.darwin-rebuild;

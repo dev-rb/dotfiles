@@ -28,7 +28,7 @@ WezTerm uses `~/.config/wezterm/wezterm.lua`, where its native directory watcher
 
 Hosts can override `programs.wezterm.settings` in their Home Manager modules, including fonts, opacity, and `background` layers. Repository wallpaper paths such as `source.File = "${./wallpaper.jpg}"` become store-backed; absolute path strings refer to images outside the repository. Linux uses Home Manager's config writer and package; macOS generates the same configuration while retaining its existing app installation. `extraConfig` runs after settings and can override them.
 
-Neovim uses a live checkout link for immediate editing and writable NvChad settings. All other native configurations use store-backed deployment. Live Neovim changes are not restored by a Nix generation rollback. Older `.zsh/` assets remain legacy and are not activated.
+Neovim uses a live checkout link for immediate editing and writable NvChad settings. Its live changes are not restored by a Nix generation rollback. Pi keeps writable local settings initialized from managed defaults; other native configurations use store-backed deployment. Older `.zsh/` assets remain legacy and are not activated.
 
 ## Commands
 
@@ -57,3 +57,13 @@ nix --extra-experimental-features 'nix-command flakes' develop
 nix --extra-experimental-features 'nix-command flakes' develop \
   --command ./scripts/check-configs.sh
 ```
+
+## Pi coding agent
+
+The development profile includes Pi from its official flake, pinned to `v1.0.3`. The `pi` package output also supports `nix run .#pi`. Pi's wrapper supplies its own Node runtime without changing fnm's ownership of your other Node versions.
+
+`modules/features/pi/settings.nix` supplies non-secret startup defaults. Activation creates writable `~/.pi/agent/settings.json` only if it does not already exist; existing settings and package declarations are never overwritten or merged. The generated baseline is available at `~/.pi/agent/settings.defaults.json`. Later changes to the baseline must be adopted manually through Pi or your editor.
+
+The feature also deploys three standalone skills and the current theme palette as `dotfiles-workbench-dark`, avoiding a name collision with the existing extension package's theme. Authentication, sessions, installed extensions, caches, and machine-local package sources remain outside the repository. No terminal integration hooks are added.
+
+The existing npm installation is not removed automatically. After activation, check `type -a pi`; an fnm-managed global install can take precedence over the Nix package. Verify the Nix CLI before deciding whether to remove the old npm install. Update the release tag and Pi lock entry to upgrade the Nix-managed CLI; `pi update` cannot upgrade it.

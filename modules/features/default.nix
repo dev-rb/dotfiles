@@ -3,6 +3,7 @@
     ./base
     ./cli
     ./devtools
+    ./pi
     ./fonts
     ./git
     ./zsh
