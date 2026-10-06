@@ -4,5 +4,6 @@ mkFeature {
   homeManager.imports = with config.flake.modules.homeManager; [
     devtools
     pi
+    herdr
   ];
 }

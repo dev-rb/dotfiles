@@ -4,6 +4,7 @@
     ./cli
     ./devtools
     ./pi
+    ./herdr
     ./fonts
     ./git
     ./zsh

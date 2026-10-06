@@ -44,6 +44,9 @@
       url = "github:earendil-works/pi/v1.0.3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Keep the release's Rust/Ghostty build dependencies pinned upstream.
+    herdr.url = "github:herdrdev/herdr/v0.9.1";
   };
 
   outputs =
@@ -85,6 +88,7 @@
                 home-manager = inputs.home-manager.packages.${system}.home-manager;
                 default = self.packages.${system}.home-manager;
                 pi = inputs.pi.packages.${system}.default;
+                herdr = inputs.herdr.packages.${system}.default;
               }
               // lib.optionalAttrs pkgs.stdenv.isDarwin {
                 darwin-rebuild = inputs.nix-darwin.packages.${system}.darwin-rebuild;
