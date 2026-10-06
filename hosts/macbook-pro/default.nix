@@ -12,10 +12,10 @@ mkDarwin {
     system = 6;
   };
 
-  modules = [ m.darwin.base ];
+  modules = [ m.darwin.macos ];
   homeModules = [
     m.homeManager.common
     m.homeManager.development
-    m.homeManager.darwin
+    m.homeManager.macos
   ];
 }

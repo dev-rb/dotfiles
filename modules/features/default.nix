@@ -13,6 +13,7 @@
     ./linux
     ./wsl
     ./darwin
+    ./macos-defaults
     ./nixgl
     ./niri
     ./hyprland

@@ -20,6 +20,8 @@ Feature files publish Home Manager, nix-darwin, or NixOS modules through flake-p
 | `wsl-dev` | x86_64 WSL | Standalone Home Manager |
 | `macbook-pro` | Apple Silicon macOS | nix-darwin + Home Manager |
 
+The macOS profile combines system fundamentals, shared macOS preferences, and the macOS user environment. `modules/features/macos-defaults/` captures explicit appearance, keyboard, scrolling, Dock, Finder, and trackpad preferences; unset preferences remain unmanaged. Hosts can override the shared defaults.
+
 Native Neovim, Niri, Waybar, WezTerm, tmux, prompt, and desktop-script assets live beside their owning feature modules. Niri display facts live under `hosts/arch-desktop/`. Windows-specific WezTerm settings are isolated in `modules/features/wezterm/windows.lua`.
 
 Neovim uses a live checkout link for immediate editing and writable NvChad settings. All other native configurations use store-backed deployment. Live Neovim changes are not restored by a Nix generation rollback. Older `.zsh/` assets remain legacy and are not activated.
