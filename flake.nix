@@ -39,8 +39,6 @@
       url = "github:hyprwm/hyprlock";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    wezterm.url = "github:wezterm/wezterm?dir=nix";
   };
 
   outputs =
@@ -86,6 +84,21 @@
                 darwin-rebuild = inputs.nix-darwin.packages.${system}.darwin-rebuild;
               };
               formatter = pkgs.nixfmt;
+
+              # Repository tooling only; entering the shell does not activate a host.
+              devShells.default = pkgs.mkShellNoCC {
+                packages = with pkgs; [
+                  # Shell and repository checks.
+                  bashInteractive
+                  git
+                  shellcheck
+
+                  # Nix and Lua configuration tooling.
+                  nixfmt
+                  lua
+                  stylua
+                ];
+              };
             };
           };
         }

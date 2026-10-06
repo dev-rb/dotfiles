@@ -44,3 +44,16 @@ Neovim uses a live checkout link for immediate editing and writable NvChad setti
 `switch.sh` selects from compatible flake configurations and uses pinned Home Manager or nix-darwin tools. Pass activation-tool arguments after `--`; only one host selector is accepted. Nix commands explicitly enable flakes; neither script patches your user Nix configuration.
 
 Run both scripts as your normal user; administrator access is requested only where required. Back up existing dotfiles before first activation, and check each host's username, home directory, and `checkoutPath`.
+
+## Development
+
+The default development shell provides pinned Bash, Git, ShellCheck, nixfmt, Lua, and StyLua from `flake.lock`. It requires an existing Nix installation and does not activate hosts or replace system packages.
+
+```sh
+# Enter the shell, then run checks or edit configurations.
+nix --extra-experimental-features 'nix-command flakes' develop
+
+# Alternatively, run validation without opening an interactive shell.
+nix --extra-experimental-features 'nix-command flakes' develop \
+  --command ./scripts/check-configs.sh
+```
