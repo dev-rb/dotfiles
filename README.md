@@ -22,9 +22,11 @@ Feature files publish Home Manager, nix-darwin, or NixOS modules through flake-p
 
 The macOS profile combines system fundamentals, shared macOS preferences, and the macOS user environment. `modules/features/macos-defaults/` captures explicit appearance, keyboard, scrolling, Dock, Finder, and trackpad preferences; unset preferences remain unmanaged. Hosts can override the shared defaults.
 
-Native Neovim, Niri, Waybar, WezTerm, tmux, prompt, and desktop-script assets live beside their owning feature modules. Niri display facts live under `hosts/arch-desktop/`. Windows-specific WezTerm settings are isolated in `modules/features/wezterm/windows.lua`.
+Neovim, Niri, Waybar, tmux, prompt, and desktop-script assets live beside their owning feature modules. Niri display facts live under `hosts/arch-desktop/`. WezTerm static settings live in `modules/features/wezterm/settings.nix`, and callbacks and navigation live in `behavior.lua`.
 
 WezTerm uses `~/.config/wezterm/wezterm.lua`, where its native directory watcher detects Home Manager symlink replacements. When migrating from the old managed `~/.wezterm.lua` location, activate the new generation and restart WezTerm once.
+
+Hosts can override `programs.wezterm.settings` in their Home Manager modules, including fonts, opacity, and `background` layers. Repository wallpaper paths such as `source.File = "${./wallpaper.jpg}"` become store-backed; absolute path strings refer to images outside the repository. Linux uses Home Manager's config writer and package; macOS generates the same configuration while retaining its existing app installation. `extraConfig` runs after settings and can override them.
 
 Neovim uses a live checkout link for immediate editing and writable NvChad settings. All other native configurations use store-backed deployment. Live Neovim changes are not restored by a Nix generation rollback. Older `.zsh/` assets remain legacy and are not activated.
 
