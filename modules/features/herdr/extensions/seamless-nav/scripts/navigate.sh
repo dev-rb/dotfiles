@@ -100,6 +100,13 @@ wezterm_bin() {
   fi
 }
 
+# herdr's server outlives WezTerm restarts, so a WEZTERM_UNIX_SOCKET inherited
+# from it can point at a GUI that's gone; let wezterm find the running GUI, and
+# never let it start a mux server of its own.
+wezcli() {
+  env -u WEZTERM_UNIX_SOCKET "$wez" cli --no-auto-start "$@"
+}
+
 # Find the WezTerm pane hosting this herdr client; sets $wez and $host.
 wez="" host=""
 wezterm_host() {
@@ -110,7 +117,7 @@ wezterm_host() {
   # The GUI client with the most recent input is the one this key came from.
   # Don't trust WEZTERM_PANE: herdr panes inherit it from whichever WezTerm
   # pane started the server, which goes stale after reattaching elsewhere.
-  client="$("$wez" cli list-clients --format json 2>/dev/null |
+  client="$(wezcli list-clients --format json 2>/dev/null |
     jq -r 'sort_by(.idle_time.secs, .idle_time.nanos) | .[0] // empty
       | "\(.focused_pane_id) \(.idle_time.secs * 1000 + (.idle_time.nanos / 1000000 | floor))"')"
   host="${client%% *}"
@@ -121,7 +128,7 @@ wezterm_host() {
 
   # Only use a pane that really hosts a herdr client, so herdr running in
   # another terminal never acts on a background WezTerm window.
-  tty="$("$wez" cli list --format json 2>/dev/null |
+  tty="$(wezcli list --format json 2>/dev/null |
     jq -r --argjson id "$host" '.[] | select(.pane_id == $id) | .tty_name // empty')"
   # macOS `pgrep -t` doesn't match terminals reliably, so ask ps.
   # shellcheck disable=SC2009
@@ -138,13 +145,13 @@ wezterm_handoff() {
   [ "${SEAMLESS_NAV_WEZTERM_HANDOFF:-1}" = 1 ] || return 1
   wezterm_host || return 1
   local neighbor
-  neighbor="$("$wez" cli get-pane-direction "$wez_dir" --pane-id "$host" 2>/dev/null)"
+  neighbor="$(wezcli get-pane-direction "$wez_dir" --pane-id "$host" 2>/dev/null)"
   if [ -z "$neighbor" ]; then
     log "no wezterm pane $wez_dir of $host"
     return 1
   fi
   log "wezterm focus $host -> $neighbor"
-  "$wez" cli activate-pane-direction "$wez_dir" --pane-id "$host" >/dev/null 2>&1
+  wezcli activate-pane-direction "$wez_dir" --pane-id "$host" >/dev/null 2>&1
 }
 
 # Only herdr's own keybindings can focus its workspace sidebar, so type them
@@ -157,7 +164,7 @@ open_sidebar() {
   local keys
   keys="$(printf '%b' "${SEAMLESS_NAV_SIDEBAR_KEYS:-$default_sidebar_keys}")"
   log "open sidebar through wezterm pane $host"
-  "$wez" cli send-text --no-paste --pane-id "$host" "$keys" >/dev/null 2>&1
+  wezcli send-text --no-paste --pane-id "$host" "$keys" >/dev/null 2>&1
 }
 
 case "$mode" in
