@@ -86,6 +86,15 @@ local function is_vim(pane)
 	return pane:get_user_vars().IS_NVIM == "true"
 end
 
+-- The Herdr feature provides a store-backed helper before these callbacks.
+local seamless_nav
+if herdr_seamless_nav_path then
+	local ok, helper = pcall(dofile, herdr_seamless_nav_path)
+	if ok then
+		seamless_nav = helper
+	end
+end
+
 local direction_keys = {
 	Left = "h",
 	Down = "j",
@@ -102,6 +111,10 @@ local function split_nav(resize_or_move, key)
 		key = key,
 		mods = resize_or_move == "resize" and "META" or "CTRL",
 		action = wezterm.action_callback(function(win, pane)
+			if resize_or_move == "move" and seamless_nav and seamless_nav.forward(win, pane, key) then
+				return
+			end
+
 			if is_vim(pane) then
 				win:perform_action({
 					SendKey = { key = key, mods = resize_or_move == "resize" and "META" or "CTRL" },

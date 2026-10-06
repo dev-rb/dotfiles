@@ -15,6 +15,7 @@ mkFeature {
       settingsPath = "${config.xdg.configHome}/herdr/config.toml";
     in
     {
+      imports = [ ./extensions/seamless-nav ];
       programs.herdr = {
         enable = true;
         inherit package;

@@ -1,0 +1,43 @@
+id = "seamless-nav"
+name = "seamless-nav"
+version = "0.1.0"
+min_herdr_version = "0.9.0"
+description = "Ctrl+h/j/k/l across Neovim splits, Herdr panes and WezTerm panes"
+platforms = ["linux", "macos"]
+
+[[actions]]
+id = "left"
+title = "Navigate left (Neovim/Herdr/WezTerm)"
+contexts = ["global"]
+command = ["bash", "scripts/navigate.sh", "left"]
+
+[[actions]]
+id = "down"
+title = "Navigate down (Neovim/Herdr/WezTerm)"
+contexts = ["global"]
+command = ["bash", "scripts/navigate.sh", "down"]
+
+[[actions]]
+id = "up"
+title = "Navigate up (Neovim/Herdr/WezTerm)"
+contexts = ["global"]
+command = ["bash", "scripts/navigate.sh", "up"]
+
+[[actions]]
+id = "right"
+title = "Navigate right (Neovim/Herdr/WezTerm)"
+contexts = ["global"]
+command = ["bash", "scripts/navigate.sh", "right"]
+
+# Herdr matches prefix bindings on plain keys while its sidebar is open.
+[[actions]]
+id = "sidebar-left"
+title = "Leave the sidebar to the left (WezTerm)"
+contexts = ["global"]
+command = ["bash", "scripts/navigate.sh", "sidebar", "left"]
+
+[[actions]]
+id = "sidebar-right"
+title = "Leave the sidebar to the right (Herdr panes)"
+contexts = ["global"]
+command = ["bash", "scripts/navigate.sh", "sidebar", "right"]

@@ -37,9 +37,11 @@ return {
     config = function()
       require("smart-splits").setup {
         -- Inside herdr, continue to herdr's sidebar or the neighboring WezTerm pane
-        -- at the outer edge (seamless-nav); "stop" where that plugin isn't checked out.
+        -- at the outer edge; stop when the Herdr feature is not deployed.
         at_edge = (function()
-          local path = vim.fn.expand "~/projects/herdr-extensions/seamless-nav/nvim/at_edge.lua"
+          local root = vim.env.HERDR_SEAMLESS_NAV_DIR
+            or (vim.fn.fnamemodify(vim.fn.stdpath "config", ":h") .. "/herdr/extensions/seamless-nav")
+          local path = root .. "/nvim/at_edge.lua"
           return vim.fn.filereadable(path) == 1 and dofile(path) or "stop"
         end)(),
         disable_multiplexer_nav_when_zoomed = false,
