@@ -71,11 +71,12 @@ if ! command -v nix >/dev/null 2>&1; then
     printf 'No running systemd detected; using single-user Nix.\n'
   fi
   if [[ $install_mode = --daemon ]]; then
+    # Match the upstream installer's guard: permissive SELinux is not enforcing.
     if [[ $platform = Linux ]] && {
-      [[ -e /sys/fs/selinux/enforce ]] ||
-        { command -v getenforce >/dev/null 2>&1 && [[ $(getenforce) != Disabled ]]; }
+      { [[ -r /sys/fs/selinux/enforce ]] && [[ $(</sys/fs/selinux/enforce) = 1 ]]; } ||
+        { command -v getenforce >/dev/null 2>&1 && [[ $(getenforce) = Enforcing ]]; }
     }; then
-      printf 'The upstream Nix daemon installer does not support SELinux-enabled Linux.\n' >&2
+      printf 'The upstream Nix daemon installer does not support enforcing SELinux.\n' >&2
       printf 'Use a supported manual Nix installation, then rerun init.sh.\n' >&2
       exit 1
     fi

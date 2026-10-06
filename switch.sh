@@ -4,6 +4,7 @@ set -euo pipefail
 usage() {
   printf 'Usage: %s [--yes] [HOST] [-- switch arguments...]\n' "$0" >&2
   printf 'Without HOST, select a compatible configuration from the menu. --yes requires HOST.\n' >&2
+  printf 'Use -- before any activation-tool arguments.\n' >&2
 }
 fail() {
   printf '%s\n' "$*" >&2
@@ -37,11 +38,10 @@ while [[ $# -gt 0 ]]; do
     *)
       if [[ -z $host && $1 != -* ]]; then
         host=$1
-      elif [[ -z $host ]]; then
+      else
+        printf 'Unexpected argument: %s. Pass one HOST and use -- before activation-tool arguments.\n' "$1" >&2
         usage
         exit 2
-      else
-        forwarded+=("$1")
       fi
       shift
       ;;

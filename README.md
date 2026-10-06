@@ -29,12 +29,12 @@ Neovim uses a live checkout link for immediate editing and writable NvChad setti
 ```sh
 ./init.sh                                     # install missing prerequisites; no activation
 ./switch.sh                                   # select a host and confirm activation
-./switch.sh macbook-pro --show-trace            # select a host directly; still confirms
+./switch.sh macbook-pro -- --show-trace         # select a host directly; still confirms
 ./scripts/check-configs.sh                     # validate; no activation
 ```
 
-`init.sh` installs Nix only when missing, plus missing Linux installer prerequisites (`curl`, `tar`, `xz`). It uses multi-user Nix on macOS and systemd Linux, and single-user Nix otherwise. SELinux-enabled Linux needs a supported manual daemon installation. Setup does not install Homebrew or external toolchains, change your login shell, or activate dotfiles.
+`init.sh` installs Nix only when missing, plus missing Linux installer prerequisites (`curl`, `tar`, `xz`). It uses multi-user Nix on macOS and systemd Linux, and single-user Nix otherwise. Enforcing SELinux needs a supported manual daemon installation. Setup does not install Homebrew or external toolchains, change your login shell, or activate dotfiles.
 
-`switch.sh` selects from compatible flake configurations and uses pinned Home Manager or nix-darwin tools. Nix commands explicitly enable flakes; neither script patches your user Nix configuration.
+`switch.sh` selects from compatible flake configurations and uses pinned Home Manager or nix-darwin tools. Pass activation-tool arguments after `--`; only one host selector is accepted. Nix commands explicitly enable flakes; neither script patches your user Nix configuration.
 
 Run both scripts as your normal user; administrator access is requested only where required. Back up existing dotfiles before first activation, and check each host's username, home directory, and `checkoutPath`.
