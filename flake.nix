@@ -81,6 +81,9 @@
               packages = {
                 home-manager = inputs.home-manager.packages.${system}.home-manager;
                 default = self.packages.${system}.home-manager;
+              }
+              // lib.optionalAttrs pkgs.stdenv.isDarwin {
+                darwin-rebuild = inputs.nix-darwin.packages.${system}.darwin-rebuild;
               };
               formatter = pkgs.nixfmt;
             };
