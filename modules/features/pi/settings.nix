@@ -4,6 +4,9 @@
   defaultModel = "gpt-6.1-sol";
   defaultThinkingLevel = "xhigh";
 
+  # Enable pi's built-in codemode tool alongside the default tools.
+  defaultTools = [ "+codemode" ];
+
   # Keep the palette independent of machine-local extension checkouts.
   theme = "dotfiles-workbench-dark";
   hideThinkingBlock = true;
