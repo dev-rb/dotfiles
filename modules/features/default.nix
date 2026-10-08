@@ -15,6 +15,7 @@
     ./linux
     ./wsl
     ./darwin
+    ./macos-apps
     ./macos-defaults
     ./nixgl
     ./niri

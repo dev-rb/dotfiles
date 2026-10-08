@@ -10,6 +10,5 @@ mkFeature {
         eval "$(/usr/local/bin/brew shellenv)"
       fi
     '';
-    home.sessionPath = [ "/Applications/WezTerm.app/Contents/MacOS" ];
   };
 }

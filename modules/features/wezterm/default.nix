@@ -6,7 +6,6 @@ mkFeature {
     {
       config,
       lib,
-      pkgs,
       ...
     }:
     let
@@ -16,8 +15,18 @@ mkFeature {
     {
       imports = [ ./settings.nix ];
 
-      programs.wezterm.enable = lib.mkDefault pkgs.stdenv.isLinux;
+      programs.wezterm.enable = lib.mkDefault true;
       programs.wezterm.extraConfig = lib.mkBefore (builtins.readFile ./behavior.lua);
+      programs.wezterm.enableZshIntegration = false;
+      xdg.configFile."wezterm/wezterm.sh".source = ./wezterm.sh;
+
+      # Homebrew shellenv can shadow profile binaries while an old cask remains.
+      programs.zsh.initContent = lib.mkIf cfg.enable (
+        lib.mkAfter ''
+          path=(${lib.escapeShellArg "${cfg.package}/bin"} $path)
+          source "${config.xdg.configHome}/wezterm/wezterm.sh"
+        ''
+      );
 
       # Home Manager writes this file itself when WezTerm is enabled.
       # Keep its settings and extraConfig merge behavior without installing a package.

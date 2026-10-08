@@ -8,7 +8,11 @@ mkFeature {
   darwin.imports = [
     m.darwin.base
     m.darwin.macos-defaults
+    m.darwin.macos-apps
   ];
 
-  homeManager.imports = [ m.homeManager.darwin ];
+  homeManager.imports = [
+    m.homeManager.darwin
+    m.homeManager.macos-apps
+  ];
 }

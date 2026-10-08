@@ -20,6 +20,14 @@ mkFeature {
       go
       just
       docker
+
+      # Portable build and service CLIs; macOS-only tools live in macos-apps.
+      cmake
+      doppler
+      pulumi
+      sccache
+      stripe-cli
+      zig
     ];
   };
 }

@@ -5,12 +5,14 @@ mkFeature {
     home.packages = with pkgs; [
       fd
       fzf
+      gdu
       gh
       jless
       ripgrep
       wget
       jq
       btop
+      parallel
     ];
     programs.bat.enable = true;
     programs.eza = {

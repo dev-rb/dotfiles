@@ -22,6 +22,14 @@ nix --extra-experimental-features 'nix-command flakes' develop  # development to
 
 Run setup and switching as your normal user. Before first activation, back up existing dotfiles and verify the host's username, home directory, and `checkoutPath`. Pass activation-tool arguments after `--`.
 
+## Apps and tools
+
+Portable CLI tools come from Nix; Node uses fnm and Rust uses rustup.
+
+macOS uses Nix for Brave and WezTerm, and Homebrew for other native apps. See `modules/features/macos-apps/default.nix` for the manifest. Install Homebrew before activation; unmanaged apps are not removed automatically.
+
+Nix-managed apps appear in `~/Applications/Home Manager Apps`. Keep `flake.lock` updated for browser security fixes. App data and credentials remain local.
+
 ## Layout
 
 - `hosts/`: machine settings and module selection.
