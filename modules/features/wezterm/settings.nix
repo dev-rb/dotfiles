@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 let
   inline = lib.generators.mkLuaInline;
   spacedIcon = icon: inline ''string.rep(" ", 2) .. wezterm.nerdfonts.${icon} .. string.rep(" ", 2)'';
@@ -12,6 +12,10 @@ in
 
     # Font.
     font = lib.mkDefault (inline ''wezterm.font("IosevkaTerm Nerd Font Mono")'');
+    # Read managed fonts directly when CoreText has not discovered them.
+    font_dirs = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin (
+      lib.mkDefault [ (inline ''wezterm.home_dir .. "/Library/Fonts/HomeManager"'') ]
+    );
     font_size = lib.mkDefault 12;
     line_height = lib.mkDefault 1.1;
     freetype_load_flags = lib.mkDefault "NO_HINTING";
