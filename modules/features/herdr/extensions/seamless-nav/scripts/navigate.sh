@@ -11,10 +11,12 @@
 #      forward the key and let the app decide. smart-splits.nvim crosses back
 #      into herdr at its own edge.
 #   2. herdr has a neighbor in that direction: move herdr focus.
-#   3. herdr is at its left edge: open herdr's workspace sidebar.
-#   4. herdr is at its edge and this client runs inside a WezTerm pane with a
+#   3. On a remote machine with SEAMLESS_NAV_RELAY set: hand the edge to the relay
+#      on the machine you're typing on, which runs steps 4 and 5 there.
+#   4. herdr is at its left edge: open herdr's workspace sidebar.
+#   5. herdr is at its edge and this client runs inside a WezTerm pane with a
 #      neighbor in that direction: move WezTerm focus.
-#   5. Otherwise forward the key, so shell defaults (C-l clear, C-h backspace) work.
+#   6. Otherwise forward the key, so shell defaults (C-l clear, C-h backspace) work.
 #
 # In the sidebar, herdr handles Ctrl+J/K and Enter itself; Ctrl+L returns to the
 # panes and Ctrl+H moves on to the WezTerm pane on the left.
@@ -125,6 +127,12 @@ wezterm_host() {
     log "no wezterm client"
     return 1
   fi
+  # The relay sets this, so only the machine you're typing on acts on a remote edge.
+  if [ -n "${SEAMLESS_NAV_MAX_IDLE_MS:-}" ] && [ "${client##* }" -gt "$SEAMLESS_NAV_MAX_IDLE_MS" ]; then
+    log "wezterm idle for ${client##* } ms: not the machine you're typing on"
+    host=""
+    return 1
+  fi
 
   # Only use a pane that really hosts a herdr client, so herdr running in
   # another terminal never acts on a background WezTerm window.
@@ -167,8 +175,38 @@ open_sidebar() {
   wezcli send-text --no-paste --pane-id "$host" "$keys" >/dev/null 2>&1
 }
 
+# On a remote machine, the sidebar and WezTerm belong to the machine you're
+# typing on. Ask the relay there (scripts/relay.sh) to handle the edge, e.g.
+# SEAMLESS_NAV_RELAY="my-laptop:47100 my-desktop:47100".
+# Succeeds if a relay moved focus or opened the sidebar.
+relay_edge() {
+  [ -n "${SEAMLESS_NAV_RELAY:-}" ] || return 1
+  local replies target
+  replies="$(
+    for target in $SEAMLESS_NAV_RELAY; do
+      relay_send "$target" "$1" &
+    done
+    wait
+  )"
+  log "relay '$1': ${replies//$'\n'/ }"
+  [[ $'\n'$replies$'\n' == *$'\n'moved$'\n'* ]]
+}
+
+relay_send() {
+  # shellcheck disable=SC2016 # expanded by the inner bash
+  local script='exec 3<>"/dev/tcp/${1%:*}/${1##*:}" || exit 1
+    printf "%s\n" "$2" >&3
+    IFS= read -r reply <&3 && printf "%s\n" "$reply"'
+  if command -v timeout >/dev/null 2>&1; then
+    timeout "${SEAMLESS_NAV_RELAY_TIMEOUT:-1}" bash -c "$script" _ "$1" "$2" 2>/dev/null
+  else
+    bash -c "$script" _ "$1" "$2" 2>/dev/null
+  fi
+}
+
 case "$mode" in
   edge)
+    if relay_edge "edge $dir"; then exit 0; fi
     if [ "$dir" = left ] && open_sidebar; then exit 0; fi
     wezterm_handoff
     exit
@@ -177,7 +215,7 @@ case "$mode" in
     # herdr has already closed the sidebar to run this binding, so Ctrl+L is
     # done. Ctrl+H moves on to WezTerm, or reopens the sidebar if nothing's there.
     log "leave sidebar"
-    if [ "$dir" = left ] && ! wezterm_handoff; then
+    if [ "$dir" = left ] && ! relay_edge "sidebar left" && ! wezterm_handoff; then
       open_sidebar
     fi
     exit 0
@@ -199,6 +237,7 @@ if [[ $focus == *'"changed":true'* ]]; then
   exit 0
 fi
 if [[ $focus == *'"reason":"no_neighbor"'* ]]; then
+  if relay_edge "edge $dir"; then exit 0; fi
   if [ "$dir" = left ] && open_sidebar; then exit 0; fi
   if wezterm_handoff; then exit 0; fi
 fi
