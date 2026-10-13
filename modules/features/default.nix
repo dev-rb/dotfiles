@@ -1,0 +1,28 @@
+{
+  imports = [
+    ./base
+    ./cli
+    ./devtools
+    ./pi
+    ./herdr
+    ./fonts
+    ./git
+    ./zsh
+    ./oh-my-posh
+    ./neovim
+    ./wezterm
+    ./tmux
+    ./linux
+    ./wsl
+    ./darwin
+    ./macos-apps
+    ./macos-defaults
+    ./nixgl
+    ./niri
+    ./hyprland
+    ./hypridle
+    ./hyprlock
+    ./waybar
+    ./desktop-scripts
+  ];
+}
