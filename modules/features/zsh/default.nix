@@ -39,7 +39,7 @@ mkFeature {
           export BUN_INSTALL="$HOME/.bun"
           export ANDROID_HOME="$HOME/Android/Sdk"
           export PNPM_HOME="$HOME/.local/share/pnpm"
-          export PAGER=cat
+          export PAGER='less -FR -+X'
           export BAT_PAGING=always
           export GPG_TTY=$(tty)
 

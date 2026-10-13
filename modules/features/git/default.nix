@@ -18,7 +18,8 @@ mkFeature {
             name = "dev-rb";
           };
           core.editor = "nvim";
-          core.pager = "bat";
+          # Undo Git's default LESS=FRX no-init flag for alternate-screen scrolling.
+          core.pager = "bat --paging=always --style=plain --pager='less -FR -+X'";
         };
       };
 
